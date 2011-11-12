@@ -225,6 +225,7 @@ var api = {
 			x = x || 1;
 			var i, m = 3, c = {};
 
+			// Max recusion is 3 levels
 			if (x >= m) return;
 
 			if (o instanceof Array) {
@@ -234,7 +235,6 @@ var api = {
 			}
 			else {
 				for (i in o) {
-					console.log(o + "." + i);
 					if (!o.hasOwnProperty(i)) continue;
 					c[i] = o[i] instanceof Object ? getChildren(o[i], (x + 1)) : {};
 				}
@@ -282,7 +282,9 @@ var twitter = function() {
 	if (typeof twitter.tweet === "undefined") {
 		$("#twitter").loading()
 		             .jsonp("http://search.twitter.com/search.json?callback=?&from=abaaso", "results[0].text")
-		             .on("afterUpdate", function(){ twitter.tweet = this.innerText; });
+		             .on("afterUpdate", function(){
+			            twitter.tweet = this.innerText;
+			         });
 	}
 	else $("#twitter").loading().text(twitter.tweet);
 }
