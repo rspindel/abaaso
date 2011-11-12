@@ -2,7 +2,7 @@
     font-family : 'Apertura-Condensed';
     font-style  : normal;
     font-weight : normal;
-    src         : url('../font/Apertura-Condensed.otf');
+    src         : url('Apertura-Condensed.otf');
 }
 
 html, body {
