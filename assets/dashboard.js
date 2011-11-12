@@ -17,7 +17,7 @@ $.on("ready", function() {
 	this.loading.url = "image/loading.gif";
 
 	// Setting up the GUI
-	$("a")[0].on("click", function() { $("#stage").get("views/intro.htm"); });
+	$("a")[0].on("click", function() { $("#stage").get("/view/intro"); });
 	$("#api").on("click", function() { $.el.hidden(this) ? this.show() : this.hide(); }, "nav", $("#nav-items"));
 	$("#download").on("click", function() {
 		$("#stage").on("afterGet", function() {
@@ -36,8 +36,8 @@ $.on("ready", function() {
 	$("#sample").on("click", function() {
 		$("#stage").on("afterGet", function() {
 			this.un("afterGet", "display");
-			$("#code").get("assets/dashboard.js");
-		}, "display").get("views/sample.htm");
+			$("#code").get("/script/dashboard.js");
+		}, "display").get("/view/sample");
 	});
 
 	$("#stage").on("beforeGet", function() { this.loading(); }, "loading")
@@ -78,11 +78,6 @@ $.on("ready", function() {
 	api.on("afterDataSync", function(){ this.render(); });
 	typeof api.data.setUri === "function" ? api.data.setUri("http://abaaso.com/api") : api.data.uri = "http://abaaso.com/api";
 });
-
-// Getting the intro copy
-$.on("render", function() {
-	$("#stage").get("views/intro.htm");
-})
 
 // Wordpress
 var blog = {id: "blog"};
