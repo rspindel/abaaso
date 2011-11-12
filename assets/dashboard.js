@@ -17,14 +17,14 @@ $.on("ready", function() {
 	this.loading.url = "assets/loading.gif";
 
 	// Setting up the GUI
-	$("a")[0].on("click", function() { $("#stage").get("/view/intro"); });
+	$("a")[0].on("click", function() { $("#stage").get("views/intro.htm"); });
 	$("#api").on("click", function() { $.el.hidden(this) ? this.show() : this.hide(); }, "nav", $("#nav-items"));
 	$("#download").on("click", function() {
 		$("#stage").on("afterGet", function() {
 			this.un("afterGet", "download");
 			$("#download-debugging").on("click", function(){ window.location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/abaaso.js"; });
 			$("#download-production").on("click", function(){ window.location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/abaaso-min.js"; });
-		}, "download").get("/view/download");
+		}, "download").get("views/download.htm");
 	});
 	$("klout")[0].jsonp("http://api.klout.com/1/klout.json?users=jasonmulligan&key=n2789brx4aadvupykc5mt93u&callback=?", "users[0].kscore");
 	$("#nav").opacity(0);
@@ -36,8 +36,8 @@ $.on("ready", function() {
 	$("#sample").on("click", function() {
 		$("#stage").on("afterGet", function() {
 			this.un("afterGet", "display");
-			$("#code").get("/script/dashboard.js");
-		}, "display").get("/view/sample");
+			$("#code").get("assets/dashboard.js");
+		}, "display").get("views/sample.htm");
 	});
 
 	$("#stage").on("beforeGet", function() { this.loading(); }, "loading")
@@ -77,6 +77,10 @@ $.on("ready", function() {
 	api.data.key = "name";
 	api.on("afterDataSync", function(){ this.render(); });
 	typeof api.data.setUri === "function" ? api.data.setUri("http://abaaso.com/api") : api.data.uri = "http://abaaso.com/api";
+});
+
+$.on("render", function() {
+	$("#stage").get("views/intro.htm");
 });
 
 // Wordpress
