@@ -17,7 +17,7 @@ $.on("ready", function() {
 	this.loading.url = "image/loading.gif";
 
 	// Setting up the GUI
-	$("a")[0].on("click", function() { $("#stage").get("/view/intro"); });
+	$("a")[0].on("click", function() { $("#stage").get("views/intro.htm"); });
 	$("#api").on("click", function() { $.el.hidden(this) ? this.show() : this.hide(); }, "nav", $("#nav-items"));
 	$("#download").on("click", function() {
 		$("#stage").on("afterGet", function() {
@@ -36,13 +36,16 @@ $.on("ready", function() {
 	$("#sample").on("click", function() {
 		$("#stage").on("afterGet", function() {
 			this.un("afterGet", "display");
-			$("#code").get("/script/dashboard.js");
-		}, "display").get("/view/sample");
+			$("#code").get("assets/dashboard.js");
+		}, "display").get("views/sample.htm");
 	});
 
 	$("#stage").on("beforeGet", function() { this.loading(); }, "loading")
 	           .on("afterGet",  function() { this.opacity(0).fade(1000); }, "fade")
 	           .on("afterFade", function() { if (typeof $("#twitter") !== "undefined") twitter(); }, "twitter");
+
+	// Getting the intro
+	$("#stage").get("views/intro.htm");
 
 	// Setting up Wordpress retrieval & display
 	$.store(blog);
@@ -274,8 +277,8 @@ var api = {
 var twitter = function() {
 	if (typeof twitter.tweet === "undefined") {
 		$("#twitter").loading()
-		             .jsonp("http://search.twitter.com/search.json?callback=?&from=abaaso", "results[0].text")
-		             .on("afterUpdate", function(){ twitter.tweet = this.innerText; });
+		             .on("afterUpdate", function(){ twitter.tweet = this.innerText; })
+		             .jsonp("http://search.twitter.com/search.json?callback=?&from=abaaso", "results[0].text");
 	}
 	else $("#twitter").loading().text(twitter.tweet);
 }
