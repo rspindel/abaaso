@@ -1,0 +1,226 @@
+@font-face {
+    font-family : 'Apertura-Condensed';
+    font-style  : normal;
+    font-weight : normal;
+    src         : url('../font/Apertura-Condensed.otf');
+}
+
+html, body {
+    min-height  : 100%;
+    min-width   : 960px;
+    margin      : 0 0 0 0;
+    padding     : 0 0 0 0;
+}
+
+body {
+    background  : #fff;
+    color       : #7f7f7f;
+    font-family : 'Apertura-Condensed', arial, sans-serif, monospace;
+    font-size   : 12pt;
+    text-align  : center;
+    line-height : 16pt;
+}
+
+a {
+    color              : #666;
+    font-weight        : bold;
+    text-decoration    : none;
+    -webkit-transition : color 0.2s ease-in;  
+    -moz-transition    : color 0.2s ease-in;  
+    -o-transition      : color 0.2s ease-in;  
+    transition         : color 0.2s ease-in;
+}
+
+a:hover {
+    color  : #039993;
+    cursor : pointer;
+}
+
+code {
+    -moz-border-radius : 10px;
+    border-radius      : 10px;
+    background: #fff;
+    color     : #000;
+    border    : 1px solid #e7e7e7;
+    margin    : 0 0 0 0;
+    padding   : 10px 10px 10px 10px;
+    display   : block;
+    font-size : 8pt;
+    line-height : normal !important;
+    overflow  : auto;
+    -moz-box-shadow    : 0px 3px 3px #e4e4e4;
+    -webkit-box-shadow : 0px 3px 3px #e4e4e4;
+    box-shadow         : 0px 3px 3px #e4e4e4;
+}
+
+pre {
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+}
+
+h1 {
+    font-style  : normal;
+    margin      : 0 0 0 0;
+    padding     : 0 0 0 0;
+    font-size   : 22pt;
+    font-weight : bold;
+}
+
+h2 {
+    font-size   : 22pt;
+    font-weight : bold;
+    margin      : 0 0 20px 0 !important;
+}
+
+h3 {
+    font-size   : 14pt;
+    font-weight : bold;
+}
+
+h2, h3, h4, h5, h6 {
+    /*text-shadow : black 0px 0px 5px;*/
+}
+
+h2, h3, h4, h5, h6, ul, li {
+    font-style : normal;
+    margin     : 0 0 10px 0;
+    padding    : 0 0 0 0;
+}
+
+h4 {
+    margin : 25px 0 10px 0;
+}
+
+h1 div {
+    float     : right;
+    margin    : 48px 25px 0 0;
+    font-size : 14pt;
+}
+
+p {
+    margin : 0 0 25px 0;
+}
+
+ul {
+    margin : 0 0 0 0;
+}
+
+ul li {
+    list-style-type : none;
+}
+
+#column {
+    clear : both;
+    float : left;
+    width : 200px;
+}
+
+#container {
+    text-align : left;
+    width      : 960px;
+    position   : absolute;
+    top        : 150px;
+    left       : 50%; 
+    width      :960px;
+    margin-left:-480px;
+}
+
+#footer {
+    float : left;
+    clear : both;
+}
+
+#nav ul {
+    margin : 0 0 20px 0;
+}
+
+#nav ul ul {
+    margin : 0 0 10px 0;
+}
+
+#nav ul li {
+    margin : 0 0 10px 0;
+    list-style-type : none;
+}
+
+#nav ul li ul li {
+    margin: 5px 0 10px 10px;
+}
+
+#nav, #download {
+    line-height : normal !important;
+    margin : 0 0 20px 0;
+}
+
+#klout {
+    padding : 0 0 0 5px;
+}
+
+#logo {
+    top    : 0px;
+    left   : 0px;
+    position : absolute;
+    width  : 100%;
+    background : #e1e1e1;
+    -moz-box-shadow    : 0px 3px 6px #666;
+    -webkit-box-shadow : 0px 3px 6px #666;
+    box-shadow         : 0px 3px 6px #666;
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0.02, #BDBDBD),
+        color-stop(0.5, #DEDEDE)
+    );
+    background-image: -moz-linear-gradient(
+        center bottom,
+        #BDBDBD 2%,
+        #DEDEDE 50%
+    );
+}
+
+#logo h1 {
+    width  : 960px;
+    margin : 10px auto 10px auto;
+    text-align : left;
+}
+
+#stage {
+    float  : right;
+    margin : 0 0 20px 0;
+    width  : 740px;
+}
+
+#twitter a {
+    font-weight : normal;
+}
+
+.col {
+    float      : left;
+    display    : inline;
+    margin     : 0 20px 20px 0;
+    width      : 209px;
+    text-align : left;
+}
+
+.full {
+    clear  : both;
+    margin : 0 0 20px 0;
+    width  : 715px;
+}
+
+.last {
+    margin : 0 0 0 0;
+}
+
+.panel {
+    color      : #7f7f7f;
+    padding    : 10px 10px 10px 10px;
+    text-align : left;
+    background : #fff;
+}
+
+.sub {
+    margin          : 0 0 5px 0;
+    list-style-type : none;
+}
