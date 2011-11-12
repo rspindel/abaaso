@@ -44,8 +44,6 @@ $.on("ready", function() {
 	           .on("afterGet",  function() { this.opacity(0).fade(1000); }, "fade")
 	           .on("afterFade", function() { if (typeof $("#twitter") !== "undefined") twitter(); }, "twitter");
 
-	$("#stage").get("views/intro.htm");
-
 	// Setting up Wordpress retrieval & display
 	$.store(blog);
 	blog.data.key      = "id";

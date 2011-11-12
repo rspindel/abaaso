@@ -41,7 +41,59 @@
       <ul id="nav-items"></ul>
     </nav>
   </div>
-  <div id="stage"></div>
+  <div id="stage">
+    <!-- dynamic content here -->
+    <h3>abaaso</h3>
+    <p>abaaso is a RESTful JavaScript framework. Don't know REST? No problem! abaaso extends the prototypes of Array, Element, Number, and String with methods (functions) to make magic possible. Semantic classes &amp; methods (Object Oriented Programming) strive to make anything as easy as saying it!</p>
+    <p>abaaso is event oriented: on(), fire() and un() is how you register, trigger &amp; unregister listeners. You can see what listeners are registered on something with listeners(), which accepts an optional event parameter.</p>
+    <p>Application states can be triggered by setting abaaso.state.current.</p>
+
+    <h3>Representational State Transfer</h3>
+    <p>Hypermedia As The Engine Of Application State (HATEOAS) can be enabled by setting abaaso.state.header to a custom HTTP header, which triggers stateful binding. Listeners for all states must be set before the initial URI is retrieved (on "init" is ideal). URIs are treated as Objects via String representations, so the HTTP verbs are available as methods, including jsonp()!</p>
+    <p>REST related methods: allows(), permissions() and headers()</p>
+
+    <h3>Example</h3>
+    <p>abaaso namespace is aliased to $, to allow for a nice short syntax:</p>
+    <p><em>$.get(uri, successHandler, failureHandler);</em> or <em>uri.get(successHandler, failureHandler)</em></p>
+    <p>The lifecycle of the request will be encased with the implied security of a RESTful architecture (using HTTP headers).</p>
+
+    <div class="col">
+      <h3>Features</h3>
+      <ul>
+        <li>Automatic <a href="http://en.wikipedia.org/wiki/Representational_State_Transfer">RESTful</a> XHR / AJAX!</li>
+        <li><a href="http://en.wikipedia.org/wiki/HATEOAS">Hypermedia As The Engine Of Application State (HATEOAS)</a> with a user defined HTTP header</li>
+        <li>Object Oriented Programming with classes, methods and chaining</li>
+        <li>Semantic classes &amp; methods, easy to read and easy to say out loud</li>
+        <li>Helper function $() with DOM selectors</li>
+        <li>Advanced event handling with multiple Application States</li>
+        <li>Deep Setting with <em>define()</em></li>
+        <li>Namespace is available on $</li>
+      </ul>
+    </div>
+
+    <div class="col">
+      <h3>What is Supported?</h3>
+      <p>All standards compliant browsers and platforms such as Desktops, Tablets, Smartphones, Google TV, and more!
+      <ul>
+        <li>Microsoft Internet Explorer 8+ (Standards Mode)</li>
+        <li>Google Chrome 6+</li>
+        <li>Mozilla FireFox 3.6+</li>
+        <li>Apple Safari 5+</li>
+        <li>Opera 9+</li>
+        <li>Apple iPhone / iPod Touch / iPad</li>
+        <li>Google Android</li>
+        <li>Adobe Air</li>
+      </ul>
+    </div>
+
+    <div class="col last">
+      <h3>Twitter</h3>
+      <ul>
+        <li id="twitter"></li>
+      </ul>
+    </div>
+    <!-- /dynamic content here -->
+  </div>
   <footer id="footer">
     Copyright &copy <year></year> <a href="http://avoidwork.com">Jason Mulligan</a>
     <p>Klout: <klout></klout></p>
