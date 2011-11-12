@@ -221,19 +221,22 @@ var api = {
 		 * @param o {object} The object to iterate
 		 * @returns {object}
 		 */
-		getChildren = function(o) {
-			var i, c = {};
+		getChildren = function(o, x) {
+			x = x || 1;
+			var i, m = 3, c = {};
+
+			if (x >= m) return;
 
 			if (o instanceof Array) {
 				o.each(function(i) {
-					c[i] = typeof o[i] === "object" ? getChildren(o[i]) : {};
+					c[i] = typeof o[i] === "object" ? getChildren(o[i], (x + 1)) : {};
 				});
 			}
 			else {
 				for (i in o) {
+					console.log(o + "." + i);
 					if (!o.hasOwnProperty(i)) continue;
-					//c[i] = o[i] instanceof Object ? getChildren(o[i]) : {};
-					c[i] = api.structure(o[i]);
+					c[i] = o[i] instanceof Object ? getChildren(o[i], (x + 1)) : {};
 				}
 			}
 
