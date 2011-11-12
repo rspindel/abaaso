@@ -219,21 +219,27 @@ var api = {
 		 * @returns {object}
 		 */
 		getChildren = function(o){
-			var i, c = {};
+			try {
+				var i, c = {};
 
-			if (o instanceof Array) {
-				o.each(function(i) {
-					c[i] = typeof o[i] === "object" ? getChildren(o[i]) : {};
-				});
-			}
-			else {
-				for (i in o) {
-					if (!o.hasOwnProperty(i)) continue;
-					c[i] = typeof o[i] === "object" ? getChildren(o[i]) : {};
+				if (o instanceof Array) {
+					o.each(function(i) {
+						c[i] = typeof o[i] === "object" ? getChildren(o[i]) : {};
+					});
 				}
-			}
+				else {
+					for (i in o) {
+						if (!o.hasOwnProperty(i)) continue;
+						c[i] = typeof o[i] === "object" ? getChildren(o[i]) : {};
+					}
+				}
 
-			return c;
+				return c;
+			}
+			catch (e) {
+				$.error(e, arguements, this);
+				return undefined;
+			}
 		};
 
 		structure = getChildren(s);
