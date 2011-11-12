@@ -193,9 +193,12 @@ var api = {
 	/**
 	 * Creates the API widget using abaaso
 	 */
-	render : function(){
-		this.elements({prototypes: this.structure(this.prototypes)});
-		this.elements(this.structure(abaaso));
+	render : function() {
+		try {
+			this.elements({prototypes: this.structure(this.prototypes)});
+			this.elements(this.structure(abaaso));
+		}
+		catch (e) { $.error(e, arguments, this); }
 
 		// Retrieving blog content
 		typeof blog.data.setUri === "function" ? blog.data.setUri("http://attack.io/category/abaaso/?feed=json&jsonp=?")
@@ -209,7 +212,7 @@ var api = {
 	 *
 	 * @returns {object}
 	 */
-	structure : function(s){
+	structure : function(s) {
 		var structure, getChildren;
 
 		/**
@@ -218,28 +221,23 @@ var api = {
 		 * @param o {object} The object to iterate
 		 * @returns {object}
 		 */
-		getChildren = function(o){
-			try {
-				var i, c = {};
+		getChildren = function(o) {
+			var i, c = {};
 
-				if (o instanceof Array) {
-					o.each(function(i) {
-						c[i] = typeof o[i] === "object" ? getChildren(o[i]) : {};
-					});
+			if (o instanceof Array) {
+				o.each(function(i) {
+					c[i] = typeof o[i] === "object" ? getChildren(o[i]) : {};
+				});
+			}
+			else {
+				for (i in o) {
+					if (!o.hasOwnProperty(i)) continue;
+					//c[i] = o[i] instanceof Object ? getChildren(o[i]) : {};
+					c[i] = {};
 				}
-				else {
-					for (i in o) {
-						if (!o.hasOwnProperty(i)) break;
-						c[i] = typeof o[i] === "object" ? getChildren(o[i]) : {};
-					}
-				}
+			}
 
-				return c;
-			}
-			catch (e) {
-				$.error(e, arguements, this);
-				return undefined;
-			}
+			return c;
 		};
 
 		structure = getChildren(s);
