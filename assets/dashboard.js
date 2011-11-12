@@ -14,7 +14,7 @@ $.on("ready", function() {
 	this.state.header = "Application-State";
 
 	// Setting the loading() icon
-	this.loading.url = "image/loading.gif";
+	this.loading.url = "assets/loading.gif";
 
 	// Setting up the GUI
 	$("a")[0].on("click", function() { $("#stage").get("/view/intro"); });
