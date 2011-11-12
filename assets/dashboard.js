@@ -42,8 +42,7 @@ $.on("ready", function() {
 
 	$("#stage").on("beforeGet", function() { this.loading(); }, "loading")
 	           .on("afterGet",  function() { this.opacity(0).fade(1000); }, "fade")
-	           .on("afterFade", function() { if (typeof $("#twitter") !== "undefined") twitter(); }, "twitter")
-	           .get("views/intro.htm");
+	           .on("afterFade", function() { if (typeof $("#twitter") !== "undefined") twitter(); }, "twitter");
 
 	// Setting up Wordpress retrieval & display
 	$.store(blog);
