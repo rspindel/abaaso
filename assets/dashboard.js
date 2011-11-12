@@ -233,7 +233,7 @@ var api = {
 				for (i in o) {
 					if (!o.hasOwnProperty(i)) continue;
 					//c[i] = o[i] instanceof Object ? getChildren(o[i]) : {};
-					c[i] = structure(o[i]);
+					c[i] = api.structure(o[i]);
 				}
 			}
 
