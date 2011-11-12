@@ -44,6 +44,8 @@ $.on("ready", function() {
 	           .on("afterGet",  function() { this.opacity(0).fade(1000); }, "fade")
 	           .on("afterFade", function() { if (typeof $("#twitter") !== "undefined") twitter(); }, "twitter");
 
+	$("#stage").get("views/intro.htm");
+
 	// Setting up Wordpress retrieval & display
 	$.store(blog);
 	blog.data.key      = "id";
@@ -78,10 +80,6 @@ $.on("ready", function() {
 	api.on("afterDataSync", function(){ this.render(); });
 	typeof api.data.setUri === "function" ? api.data.setUri("http://abaaso.com/api") : api.data.uri = "http://abaaso.com/api";
 });
-
-$.on("render", function() {
-	$("#stage").get("views/intro.htm");
-})
 
 // Wordpress
 var blog = {id: "blog"};
