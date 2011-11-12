@@ -44,9 +44,6 @@ $.on("ready", function() {
 	           .on("afterGet",  function() { this.opacity(0).fade(1000); }, "fade")
 	           .on("afterFade", function() { if (typeof $("#twitter") !== "undefined") twitter(); }, "twitter");
 
-	// Getting the intro
-	$("#stage").get("views/intro.htm");
-
 	// Setting up Wordpress retrieval & display
 	$.store(blog);
 	blog.data.key      = "id";
@@ -81,6 +78,11 @@ $.on("ready", function() {
 	api.on("afterDataSync", function(){ this.render(); });
 	typeof api.data.setUri === "function" ? api.data.setUri("http://abaaso.com/api") : api.data.uri = "http://abaaso.com/api";
 });
+
+// Getting the intro copy
+$.on("render", function() {
+	$("#stage").get("views/intro.htm");
+})
 
 // Wordpress
 var blog = {id: "blog"};
@@ -277,8 +279,8 @@ var api = {
 var twitter = function() {
 	if (typeof twitter.tweet === "undefined") {
 		$("#twitter").loading()
-		             .on("afterUpdate", function(){ twitter.tweet = this.innerText; })
-		             .jsonp("http://search.twitter.com/search.json?callback=?&from=abaaso", "results[0].text");
+		             .jsonp("http://search.twitter.com/search.json?callback=?&from=abaaso", "results[0].text")
+		             .on("afterUpdate", function(){ twitter.tweet = this.innerText; });
 	}
 	else $("#twitter").loading().text(twitter.tweet);
 }
