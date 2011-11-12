@@ -698,7 +698,7 @@
 							case typeof items["Pragma"] !== "undefined" && /no/.test(items["Pragma"]):
 								break;
 							case typeof items["Cache-Control"] !== "undefined" && /\d/.test(items["Cache-Control"]):
-								expires = expires.setSeconds(expires.getSeconds() + parseInt(/\d/.match(uri["Cache-Control"])[0]));
+								expires = expires.setSeconds(expires.getSeconds() + parseInt(/\d{1,}/.exec(items["Cache-Control"])[0]));
 								break;
 							case typeof items["Expires"] !== "undefined":
 								expires = new Date(items["Expires"]);
