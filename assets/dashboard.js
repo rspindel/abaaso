@@ -229,7 +229,7 @@ var api = {
 				}
 				else {
 					for (i in o) {
-						if (!o.hasOwnProperty(i)) continue;
+						if (!o.hasOwnProperty(i)) break;
 						c[i] = typeof o[i] === "object" ? getChildren(o[i]) : {};
 					}
 				}
@@ -246,11 +246,11 @@ var api = {
 
 		// Cleaning up the object
 		if (s === abaaso) {
-			structure.id       = {};
-			structure.hidden   = {};
-			structure.ready    = {};
-			structure.version  = {};
-			structure.data.uri = {};
+			structure.id              = {};
+			structure.hidden          = {};
+			structure.ready           = {};
+			structure.version         = {};
+			structure.data.uri        = {};
 			structure.data.callback   = {};
 			structure.data.key        = {};
 			structure.data.keys       = {};
