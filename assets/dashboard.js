@@ -77,7 +77,7 @@ $.on("ready", function() {
 	$.store(api);
 	api.data.key = "name";
 	api.on("afterDataSync", function(){ this.render(); });
-	typeof api.data.setUri === "function" ? api.data.setUri("http://abaaso.com/api") : api.data.uri = "http://abaaso.com/api";
+	typeof api.data.setUri === "function" ? api.data.setUri("http://api.abaaso.com") : api.data.uri = "http://api.abaaso.com";
 });
 
 // Wordpress
