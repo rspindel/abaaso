@@ -4,7 +4,7 @@
  * Creates a RESTful GUI with 1 application state
  *
  * @author Jason Mulligan <jason.mulligan@avoidwork.com>
- * @version 1.4
+ * @version 1.5
  */
 
 // Setting listener to construct the View
@@ -280,11 +280,11 @@ var api = {
  */
 var twitter = function() {
 	if (typeof twitter.tweet === "undefined") {
-		$("#twitter").loading()
-		             .jsonp("http://search.twitter.com/search.json?callback=?&from=abaaso", "results[0].text")
-		             .on("afterUpdate", function(){
-			            twitter.tweet = this.innerText;
-			         });
+		$("#twitter").loading();
+		"http://search.twitter.com/search.json?callback=?&from=abaaso".jsonp(function(arg) {
+			twitter.tweet = arg.results[0].test || $.label.error.serverError;
+			$("#twitter").text(twitter.tweet);
+		});
 	}
-	else $("#twitter").loading().text(twitter.tweet);
+	else $("#twitter").text(twitter.tweet);
 }
