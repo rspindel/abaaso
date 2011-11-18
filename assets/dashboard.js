@@ -282,7 +282,7 @@ var twitter = function() {
 	if (typeof twitter.tweet === "undefined") {
 		$("#twitter").loading();
 		"http://search.twitter.com/search.json?callback=?&from=abaaso".jsonp(function(arg) {
-			twitter.tweet = arg.results[0].test || $.label.error.serverError;
+			twitter.tweet = arg.results[0].text || $.label.error.serverError;
 			$("#twitter").text(twitter.tweet);
 		});
 	}
