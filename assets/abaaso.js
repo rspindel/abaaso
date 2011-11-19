@@ -42,7 +42,7 @@
  * @author Jason Mulligan <jason.mulligan@avoidwork.com>
  * @link http://abaaso.com/
  * @module abaaso
- * @version 1.7.52
+ * @version 1.7.56
  */
  var $ = $ || null, abaaso = (function() {
 	"use strict";
@@ -777,6 +777,7 @@
 								throw Error(label.error.serverInvalidMethod);
 								break
 							case 0:
+								uri.fire("failed" + typed);
 								break;
 							default:
 								throw Error(label.error.serverError);
@@ -2573,8 +2574,8 @@
 
 			// Getting Elements(s)
 			var obj;
-			switch (arg.charAt(0)) {
-				case "#":
+			switch (true) {
+				case arg.indexOf(" ") === -1:
 					obj = document.querySelector(arg);
 					break;
 				default:
@@ -3038,7 +3039,8 @@
 						   text     : function(arg) {
 								var args = {};
 								this.genId();
-								typeof this.value !== "undefined" ? args.value = arg : args.innerHTML = arg;
+								if (typeof this.value !== "undefined") args.value = arg;
+								args.innerHTML = arg;
 								return this.update(args);
 						   },
 						   update   : function(args) {
@@ -3234,7 +3236,7 @@
 				var i, p, v, c, o, x, t = {}, nth, result, invalid = [], tracked = {};
 
 				if (args.id.isEmpty()) args.genId();
-				c = $("#"+args.id+":has(input,select)");
+				c = $("#" + args.id + " > input").concat($("#" + args.id + " > select"));
 				c.each(function(i) {
 					v = null;
 					p = validate.pattern[i.nodeName.toLowerCase()] ? validate.pattern[i.nodeName.toLowerCase()]
@@ -3489,31 +3491,31 @@
 					}
 
 					return result;
-				}
+				};
 			}
 
 			if (typeof Array.prototype.forEach === "undefined") {
-				Array.prototype.forEach = function(fn) {
-					"use strict";
-					if (this === void 0 || this === null || typeof fn !== "function")
-						throw Error(label.error.invalidArguments);
+				Array.prototype.forEach = function(callback, thisArg) {
+					"use string";
 
-					var i      = null,
-						t      = Object(this),
-						nth    = t.length >>> 0,
-						result = [],
-						prop   = arguments[1]
-						val    = null;
+					if (this === null || typeof callback !== "function") throw Error(label.error.invalidArguments);
 
-					for (i = 0; i < nth; i++) {
-						if (i in t) {
-							val = t[i];
-							fn.call(prop, val, i, t);
+					var T,
+					    k   = 0,
+					    O   = Object(this),
+					    len = O.length >>> 0;
+
+					if (thisArg) T = thisArg;
+
+					while (k < len) {
+						var kValue;
+						if (k in O) {
+							kValue = O[k];
+							callback.call(T, kValue, k, O);
 						}
+						k++;
 					}
-
-					return this;
-				}
+				};
 			}
 
 			if (typeof Function.prototype.bind === "undefined") {
@@ -3699,7 +3701,7 @@
 			return observer.remove.call(observer, obj, event, id);
 		},
 		update          : el.update,
-		version         : "1.7.52"
+		version         : "1.7.56"
 	};
 })();
 if (typeof abaaso.bootstrap === "function") abaaso.bootstrap();
