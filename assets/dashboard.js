@@ -9,7 +9,6 @@
 
 // Setting listener to construct the View
 $.on("ready", function() {
-	try {
 	// Setting the application state
 	typeof this.state.change === "function" ? this.state.change("read") : this.state.current = "read";
 	this.state.header = "Application-State";
@@ -79,10 +78,6 @@ $.on("ready", function() {
 	api.data.key = "name";
 	api.on("afterDataSync", function(){ this.render(); });
 	typeof api.data.setUri === "function" ? api.data.setUri("http://api.abaaso.com?callback=") : api.data.uri = "http://api.abaaso.com";
-}
-catch (e) {
-	debugger;
-}
 });
 
 // Wordpress
