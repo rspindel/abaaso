@@ -212,7 +212,7 @@ var dashboard = (function(){
 	var routes = {
 		api : function() {
 			$("#api").removeClass("hide");
-			$("#stage").addClass("share").get("view/api.htm");
+			$("#stage").addClass("share").get("views/api.htm");
 		},
 		blog     : function() {
 			$("#api").addClass("hide");
@@ -238,15 +238,15 @@ var dashboard = (function(){
 		},
 		download : function() {
 			$("#api").addClass("hide");
-			$("#stage").removeClass("share").get("view/download.htm");
+			$("#stage").removeClass("share").get("views/download.htm");
 		},
 		error : function() {
 			$("#api").addClass("hide");
-			$("#stage").removeClass("share").get("view/error.htm");
+			$("#stage").removeClass("share").get("views/error.htm");
 		},
 		main : function() {
 			$("#api").addClass("hide");
-			$("#stage").removeClass("share").get("view/intro.htm");
+			$("#stage").removeClass("share").get("views/intro.htm");
 		}
 	};
 
