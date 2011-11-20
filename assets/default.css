@@ -8,10 +8,10 @@
 * {
 	margin      : 0 0 0 0;
 	padding     : 0 0 0 0;
-	-webkit-transition : all 0.2s ease-in;
-	-moz-transition    : all 0.2s ease-in;
-	-o-transition      : all 0.2s ease-in;
-	transition         : all 0.2s ease-in;
+	-webkit-transition : all 0.3s ease-in;
+	-moz-transition    : all 0.3s ease-in;
+	-o-transition      : all 0.3s ease-in;
+	transition         : all 0.3s ease-in;
 }
 
 html, body {
@@ -75,12 +75,22 @@ header nav ul li {
 }
 
 section ul li {
-	margin  : 0 0 5pt 0;
+	margin   : 0 0 5pt 0;
 	list-style-type : none;
 }
 
-section #api ul li {
-	list-style-type : circle;
+#api h3 {
+	margin : 0 auto;
+}
+
+#apis {
+	width    : 200px;
+	height   : 500px;
+	overflow : auto;
+}
+
+#api ul li {
+	margin : auto auto auto 18px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -95,12 +105,18 @@ section h3 {
 	margin : 10pt auto 10pt auto;
 }
 
+code {
+	font-size : 10pt;
+}
+
 footer {
-	margin : 50pt auto 10pt auto;
+	margin    : 50pt auto 10pt auto;
+	font-size : 10pt;
 }
 
 #api {
 	width : 250px;
+	float : left;
 }
 
 #gradient {
@@ -121,10 +137,21 @@ footer {
 }
 
 .col {
-	width : 30%;
-	float : left;
-	clear : none;
+	width   : 30%;
+	float   : left;
+	clear   : none;
+	padding : 6px;
 	margin-right : 5%;
+	-webkit-box-shadow : 0px 3px 3px 3px #ccc;
+	-moz-box-shadow    : 0px 3px 3px 3px #ccc;
+	box-shadow         : 0px 3px 3px 3px #ccc;
+	-webkit-border-radius : 5px;
+	-moz-border-radius    : 5px;
+	border-radius         : 5px;
+}
+
+.share .col {
+	width : 20%;
 }
 
 .col:last-child {

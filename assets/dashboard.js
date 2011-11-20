@@ -38,7 +38,7 @@ var dashboard = (function(){
 
 				for (i in s) {
 					if (!s.hasOwnProperty(i)) continue;
-					this.generate(i, i, "nav-items");
+					this.generate(i, i, "apis");
 					for (x in s[i]) {
 						if (/bind|prototype/.test(x) || i === "$") continue;
 
@@ -86,7 +86,7 @@ var dashboard = (function(){
 			             .create("a", {id: id+"-anchor", innerHTML: item, "class": "nav"})
 						 .on("click", function(){
 							var list   = $("#"+this.parentNode.id+"-sub"),
-								record = api.data.get(key),
+								record = dashboard.api.data.get(key),
 								panel;
 
 							if (typeof list !== "undefined") {
@@ -101,8 +101,8 @@ var dashboard = (function(){
 										break;
 								}
 							}
-							$("#stage").clear().opacity(0);
-							panel = $("#stage").create("div", {"class": "panel"});
+							$("#stage").clear();
+							panel = $("#stage").create("article");
 							if (typeof record !== "undefined") {
 								panel.create("h2").text(record.key);
 								panel.create("h3").text(record.data.type);
@@ -183,7 +183,7 @@ var dashboard = (function(){
 				delete structure.data._uri;
 				delete structure.state._current;
 				delete structure.dashboard;
-				delete structure.error.events;
+				delete structure.error.log;
 				delete structure.fx;
 				delete structure.timer;
 			}
@@ -210,6 +210,10 @@ var dashboard = (function(){
 	 * @type {Object}
 	 */
 	var routes = {
+		api : function() {
+			$("#api").removeClass("hide");
+			$("#stage").addClass("share").get("view/api.htm");
+		},
 		blog     : function() {
 			$("#api").addClass("hide");
 
@@ -232,23 +236,17 @@ var dashboard = (function(){
 
 			stage.create("p").create("a", {innerHTML: "Read more on attack.io", href: "http://attack.io"});
 		},
-		documentation : function() {
-			$("#api").removeClass("hide");
-		},
 		download : function() {
 			$("#api").addClass("hide");
-			$("#stage").get("/view/download.htm");
+			$("#stage").removeClass("share").get("view/download.htm");
 		},
-		error    : function() {
+		error : function() {
 			$("#api").addClass("hide");
-			$("#stage").get("/view/error.htm");
+			$("#stage").removeClass("share").get("view/error.htm");
 		},
-		main     : function() {
+		main : function() {
 			$("#api").addClass("hide");
-			$("#stage").get("/view/intro.htm");
-		},
-		tutorials: function() {
-			return;
+			$("#stage").removeClass("share").get("view/intro.htm");
 		}
 	};
 
@@ -297,12 +295,10 @@ $.on("ready", function() {
 	$.store(dashboard.blog);
 	dashboard.blog.data.key      = "id";
 	dashboard.blog.data.callback = "jsonp";
-	typeof dashboard.blog.data.setUri === "function" ? dashboard.blog.data.setUri("http://attack.io/category/abaaso/?feed=json&jsonp=?")
-	                                                 : dashboard.blog.data.uri = "http://attack.io/category/abaaso/?feed=json&jsonp=?";
+	typeof dashboard.blog.data.setUri === "function" ? dashboard.blog.data.setUri("http://attack.io/category/abaaso/?feed=json&jsonp=?") : dashboard.blog.data.uri = "http://attack.io/category/abaaso/?feed=json&jsonp=?";
 
 	$.store(dashboard.api);
 	dashboard.api.data.key = "name";
 	dashboard.api.on("afterDataSync", function(){ this.render(); });
-	typeof dashboard.api.data.setUri === "function" ? dashboard.api.data.setUri("http://api.abaaso.com?callback=")
-	                                                : dashboard.api.data.uri = "http://api.abaaso.com";
+	typeof dashboard.api.data.setUri === "function" ? dashboard.api.data.setUri("http://api.abaaso.com?callback=") : dashboard.api.data.uri = "http://api.abaaso.com";
 });
