@@ -237,8 +237,16 @@ var dashboard = (function(){
 			stage.create("p").create("a", {innerHTML: "Read more on attack.io", href: "http://attack.io"});
 		},
 		download : function() {
+			var guid = $.guid();
+
 			$("#api").addClass("hide");
-			$("#stage").removeClass("share").get("views/download.htm");
+			$("#stage").removeClass("share")
+			           .on("afterGet", function() {
+			           		this.un("afterGet", guid);
+			           		$("#download-debugging").on("click", function(){ window.location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/abaaso.js"; });
+			           		$("#download-production").on("click", function(){ window.location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/abaaso-min.js"; });
+			            }, guid)
+			           .get("views/download.htm");
 		},
 		error : function() {
 			$("#api").addClass("hide");
