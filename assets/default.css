@@ -8,10 +8,6 @@
 * {
 	margin      : 0 0 0 0;
 	padding     : 0 0 0 0;
-	-webkit-transition : all 0.3s ease-in;
-	-moz-transition    : all 0.3s ease-in;
-	-o-transition      : all 0.3s ease-in;
-	transition         : all 0.3s ease-in;
 }
 
 html, body {
@@ -32,6 +28,10 @@ a {
 	color              : #666;
 	font-weight        : bold;
 	text-decoration    : none;
+	-webkit-transition : all 0.3s ease-in;
+	-moz-transition    : all 0.3s ease-in;
+	-o-transition      : all 0.3s ease-in;
+	transition         : all 0.3s ease-in;
 }
 
 a:hover {
