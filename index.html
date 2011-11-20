@@ -6,9 +6,9 @@
 <meta name="keywords" content="abaaso,REST,RESTful,javascript,framework,javascript framework,HATEOAS,hypermedia,richardson maturity model,rmm3,rmm,level 3,level three" />
 <meta name="description" content="abaaso is a lightweight, RESTful JavaScript framework" />
 <link rel="shortcut icon" type="image/ico" href="assets/favicon.png" />
-<link rel="stylesheet" type="text/css" href="assets/new.css" media="print,screen" />
+<link rel="stylesheet" type="text/css" href="assets/default.css" media="print,screen" />
 <script type="text/javascript" src="assets/abaaso-min.js"></script>
-<script type="text/javascript" src="assets/new.js"></script>
+<script type="text/javascript" src="assets/dashboard.js"></script>
 <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-332770-11']);
@@ -24,20 +24,22 @@
 
 <body>
 <header>
-  <h1><a href="#!/main"><img src="assets/abaaso-logo.png" alt="abaaso" /></a></h1>
-  <nav>
-    <ul>
-      <li><a href="#!/download">// Download <version></version></a></li>
-      <li><a href="#!/blog">/ Blog</a></li>
-      <li><a href="#!/documentation">/ Documentation</a></li>
-      <li><a href="//github.com/avoidwork/abaaso">/ Github</a></li>
-      <li><a href="#!/tutorials">/ Tutorials</a></li>
-    </ul>
-  </nav>
+	<h1><a href="#!/main"><img src="assets/abaaso-logo.png" alt="abaaso" /></a></h1>
+	<nav>
+		<ul>
+			<li><a href="#!/download">// Download <version></version></a></li>
+			<li><a href="#!/blog">/ Blog</a></li>
+			<li><a href="#!/documentation">/ Documentation</a></li>
+			<li><a href="//github.com/avoidwork/abaaso">/ Github</a></li>
+			<!-- <li><a href="#!/tutorials">/ Tutorials</a></li> -->
+		</ul>
+	</nav>
 </header>
 <section>
-  <div id="api" class="hide"></div>
-  <div id="stage"></div>
+	<div id="api" class="hide">
+		<ul id="nav-items"></ul>
+	</div>
+	<div id="stage"></div>
 </section>
 <footer>Copyright &copy <year></year> <a href="http://avoidwork.com">Jason Mulligan</a></footer>
 <a href="https://github.com/avoidwork/abaaso"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
