@@ -132,7 +132,7 @@ footer {
 }
 
 .hide {
-	visibility : hidden;
+	display : none;
 }
 
 .loading {
