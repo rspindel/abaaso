@@ -56,7 +56,9 @@ $.on("ready", function() {
 						    items = this.get(),
 						    c, d, o;
 
-						stage.opacity(0).clear();
+						stage.removeClass("fade")
+						     .css("opacity", 0)
+						     .clear();
 
 						items.each(function(item) {
 							c = item.data.content.split(/\r/);
@@ -68,8 +70,11 @@ $.on("ready", function() {
 
 							c.each(function(p) { if (!p.isEmpty()) o.create("p").text(p.replace("&#8217;", "'")); });
 						});
+
 						stage.create("p").create("a", {innerHTML: "Read more on attack.io", href: "http://attack.io"});
-						stage.fade(1000);
+
+						stage.addClass("fade")
+						     .css("opacity", 1);
 					}, "display", blog.data);
 	});
 

@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>abaaso - RESTful JavaScript Framework</title>
+<title>abaaso - RESTful JavaScript</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="abaaso,REST,RESTful,javascript,framework,javascript framework,HATEOAS,hypermedia,richardson maturity model,rmm3,rmm,level 3,level three" />
 <meta name="description" content="abaaso is a lightweight, RESTful JavaScript framework" />
 <link rel="shortcut icon" type="image/ico" href="assets/favicon.png" />
-<link rel="stylesheet" type="text/css" href="assets/default.css" media="print,screen" />
+<link rel="stylesheet" type="text/css" href="assets/new.css" media="print,screen" />
 <script type="text/javascript" src="assets/abaaso-min.js"></script>
-<script type="text/javascript" src="assets/abaaso.fx-min.js"></script>
-<script type="text/javascript" src="assets/dashboard.js"></script>
+<script type="text/javascript" src="assets/new.js"></script>
 <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-332770-11']);
@@ -22,83 +21,26 @@
   })();
 </script>
 </head>
+
 <body>
-<header id="logo">
-  <h1>
-    <a><img src="assets/abaaso-logo.png" alt="abaaso" /></a>
-    <div>RESTful JavaScript made easy!</div>
-  </h1>
+<header>
+  <h1><a href="#!/main"><img src="assets/abaaso-logo.png" alt="abaaso" /></a></h1>
+  <nav>
+    <ul>
+      <li><a href="#!/download">// Download <version></version></a></li>
+      <li><a href="#!/blog">/ Blog</a></li>
+      <li><a href="#!/documentation">/ Documentation</a></li>
+      <li><a href="//github.com/avoidwork/abaaso">/ Github</a></li>
+      <li><a href="#!/tutorials">/ Tutorials</a></li>
+    </ul>
+  </nav>
 </header>
-<section id="container">
-  <div id="column">
-    <nav id="nav" class="panel">
-      <ul id="nav-menu">
-        <li><a id="download" class="nav">Download <version></version></a></li>
-        <li><a id="api" class="nav">API Documentation</a></li>
-        <li><a id="blog" class="nav">Blog</a></li>
-        <li><a id="sample" class="nav">Sample</a></li>
-      </ul>
-      <ul id="nav-items"></ul>
-    </nav>
-  </div>
-  <div id="stage">
-    <!-- dynamic content here -->
-    <h3>abaaso</h3>
-    <p>abaaso is a RESTful JavaScript framework. Don't know REST? No problem! abaaso extends the prototypes of Array, Element, Number, and String with methods (functions) to make magic possible. Semantic classes &amp; methods (Object Oriented Programming) strive to make anything as easy as saying it!</p>
-    <p>abaaso is event oriented: on(), fire() and un() is how you register, trigger &amp; unregister listeners. You can see what listeners are registered on something with listeners(), which accepts an optional event parameter.</p>
-    <p>Application states can be triggered by setting abaaso.state.current.</p>
-
-    <h3>Representational State Transfer</h3>
-    <p>Hypermedia As The Engine Of Application State (HATEOAS) can be enabled by setting abaaso.state.header to a custom HTTP header, which triggers stateful binding. Listeners for all states must be set before the initial URI is retrieved (on "init" is ideal). URIs are treated as Objects via String representations, so the HTTP verbs are available as methods, including jsonp()!</p>
-    <p>REST related methods: allows(), permissions() and headers()</p>
-
-    <h3>Example</h3>
-    <p>abaaso namespace is aliased to $, to allow for a nice short syntax:</p>
-    <p><em>$.get(uri, successHandler, failureHandler);</em> or <em>uri.get(successHandler, failureHandler)</em></p>
-    <p>The lifecycle of the request will be encased with the implied security of a RESTful architecture (using HTTP headers).</p>
-
-    <div class="col">
-      <h3>Features</h3>
-      <ul>
-        <li>Automatic <a href="http://en.wikipedia.org/wiki/Representational_State_Transfer">RESTful</a> XHR / AJAX!</li>
-        <li><a href="http://en.wikipedia.org/wiki/HATEOAS">Hypermedia As The Engine Of Application State (HATEOAS)</a> with a user defined HTTP header</li>
-        <li>Object Oriented Programming with classes, methods and chaining</li>
-        <li>Semantic classes &amp; methods, easy to read and easy to say out loud</li>
-        <li>Helper function $() with DOM selectors</li>
-        <li>Advanced event handling with multiple Application States</li>
-        <li>Deep Setting with <em>define()</em></li>
-        <li>Namespace is available on $</li>
-      </ul>
-    </div>
-
-    <div class="col">
-      <h3>What is Supported?</h3>
-      <p>All standards compliant browsers and platforms such as Desktops, Tablets, Smartphones, Google TV, and more!
-      <ul>
-        <li>Microsoft Internet Explorer 8+ (Standards Mode)</li>
-        <li>Google Chrome 6+</li>
-        <li>Mozilla FireFox 3.6+</li>
-        <li>Apple Safari 5+</li>
-        <li>Opera 9+</li>
-        <li>Apple iPhone / iPod Touch / iPad</li>
-        <li>Google Android</li>
-        <li>Adobe Air</li>
-      </ul>
-    </div>
-
-    <div class="col last">
-      <h3>Twitter</h3>
-      <ul>
-        <li id="twitter"></li>
-      </ul>
-    </div>
-    <!-- /dynamic content here -->
-  </div>
-  <footer id="footer">
-    Copyright &copy <year></year> <a href="http://avoidwork.com">Jason Mulligan</a>
-    <p>Klout: <klout></klout></p>
-  </footer>
+<section>
+  <div id="api" class="hide"></div>
+  <div id="stage"></div>
 </section>
+<footer>Copyright &copy <year></year> <a href="http://avoidwork.com">Jason Mulligan</a></footer>
 <a href="https://github.com/avoidwork/abaaso"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+<div id="gradient"></div>
 </body>
 </html>
