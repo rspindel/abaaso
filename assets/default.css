@@ -28,6 +28,10 @@ a {
 	color              : #666;
 	font-weight        : bold;
 	text-decoration    : none;
+	-webkit-transition : all 0.2s ease-in;
+	-moz-transition    : all 0.2s ease-in;
+	-o-transition      : all 0.2s ease-in;
+	transition         : all 0.2s ease-in;
 }
 
 a:hover {
@@ -35,13 +39,6 @@ a:hover {
 	cursor : pointer;
 	filter : dropshadow(color=#fceba1, offx=0, offy=0);
 	text-shadow : 0px 0px 3px #fceba1;
-}
-
-a, #stage {
-	-webkit-transition : all 0.2s ease-in;
-	-moz-transition    : all 0.2s ease-in;
-	-o-transition      : all 0.2s ease-in;
-	transition         : all 0.2s ease-in;
 }
 
 header, section, footer {

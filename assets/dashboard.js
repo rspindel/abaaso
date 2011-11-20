@@ -297,8 +297,7 @@ $.on("ready", function() {
 	$("version")[0].text($.version);
 	$("year")[0].text(new Date().getFullYear());
 
-	$("#stage").on("beforeGet", function() { this.css("opacity", 0); }, "fadeOut")
-	           .on("afterGet", function() { this.css("opacity", 1); }, "fadeIn")
+	$("#stage").on("beforeGet", function() { this.loading(); }, "loading")
 	           .on("afterGet", function() { if (typeof $("#twitter") !== "undefined") dashboard.twitter(); }, "twitter");
 
 	$.store(dashboard.blog);
