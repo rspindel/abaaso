@@ -79,10 +79,6 @@ section ul li {
 	list-style-type : none;
 }
 
-#api h3 {
-	margin : 0 auto;
-}
-
 #apis {
 	width    : 200px;
 	height   : 500px;
