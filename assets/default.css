@@ -79,16 +79,6 @@ section ul li {
 	list-style-type : none;
 }
 
-#apis {
-	width    : 200px;
-	height   : 500px;
-	overflow : auto;
-}
-
-#api ul li {
-	margin : auto auto auto 18px;
-}
-
 h1, h2, h3, h4, h5, h6 {
 	font-weight : bold;
 }
@@ -115,6 +105,16 @@ footer {
 	float : left;
 }
 
+#api ul li {
+	margin : auto auto auto 18px;
+}
+
+#apis {
+	width    : 200px;
+	height   : 500px;
+	overflow : auto;
+}
+
 #gradient {
 	opacity    : .2;
 	height     : 500px;
@@ -139,10 +139,6 @@ footer {
 	margin  : auto 5% auto auto;
 }
 
-.share .col {
-	width : 20%;
-}
-
 .col:last-child {
 	margin-right : auto 0 auto auto;
 }
@@ -153,4 +149,12 @@ footer {
 
 .loading {
 	text-align : center;
+}
+
+.share {
+	width: 710px !important;
+}
+
+.share .col {
+	width : 20%;
 }
