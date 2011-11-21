@@ -24,14 +24,17 @@ body {
 	opacity     : 0;
 }
 
-a {
-	color              : #666;
-	font-weight        : bold;
-	text-decoration    : none;
+body, a {
 	-webkit-transition : all 0.2s ease-in;
 	-moz-transition    : all 0.2s ease-in;
 	-o-transition      : all 0.2s ease-in;
 	transition         : all 0.2s ease-in;
+}
+
+a {
+	color              : #666;
+	font-weight        : bold;
+	text-decoration    : none;
 }
 
 a:hover {
