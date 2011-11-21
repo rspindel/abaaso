@@ -219,19 +219,16 @@ var dashboard = (function(){
 
 			var stage = $("#stage"),
 			    items = blog.data.get(),
-			    c, d, o;
+			    d, o;
 
 			stage.clear();
 
 			items.each(function(item) {
-				c = item.data.content.split(/\r/);
 				d = new Date(item.data.date);
 				o = stage.create("article");
-
-				o.create("h3").text(item.data.title.replace("&#8217;", "'"));
+				o.create("h3").create("a", {href: item.data.url, innerHTML: item.data.title});
 				o.create("p").text($.label.months[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear());
-
-				c.each(function(p) { if (!p.isEmpty()) o.create("p").text(p.replace("&#8217;", "'")); });
+				o.create("section").text(item.data.body);
 			});
 
 			stage.create("p").create("a", {innerHTML: "Read more on attack.io", href: "http://attack.io"});
