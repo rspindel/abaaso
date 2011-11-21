@@ -302,8 +302,10 @@ $.on("ready", function() {
 
 	$.store(dashboard.blog);
 	dashboard.blog.data.key      = "id";
-	dashboard.blog.data.callback = "jsonp";
-	typeof dashboard.blog.data.setUri === "function" ? dashboard.blog.data.setUri("http://attack.io/category/abaaso/?feed=json&jsonp=?") : dashboard.blog.data.uri = "http://attack.io/category/abaaso/?feed=json&jsonp=?";
+	dashboard.blog.data.callback = "callback";
+	dashboard.blog.data.source   = "response";
+	typeof dashboard.blog.data.setUri === "function" ? dashboard.blog.data.setUri("http://api.tumblr.com/v2/blog/attackio.tumblr.com/posts?api_key=cm7cZbxWpFDtv8XFD5XFuWsn5MnzupVpUtaCjYIJAurfPj5B1V&tag=abaaso&callback=?")
+	                                                 : dashboard.blog.data.uri = "http://api.tumblr.com/v2/blog/attackio.tumblr.com/posts?api_key=cm7cZbxWpFDtv8XFD5XFuWsn5MnzupVpUtaCjYIJAurfPj5B1V&tag=abaaso&callback=?";
 
 	$.store(dashboard.api);
 	dashboard.api.data.key = "name";
