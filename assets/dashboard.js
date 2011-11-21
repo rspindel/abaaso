@@ -218,7 +218,7 @@ var dashboard = (function(){
 			$("#api").addClass("hide");
 
 			var stage = $("#stage"),
-			    items = blog.data.get((blog.data.total - 10), blog.data.total),
+			    items = blog.data.get([(blog.data.total - 10), blog.data.total]),
 			    d, o;
 
 			stage.clear();
