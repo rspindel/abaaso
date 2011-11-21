@@ -218,11 +218,12 @@ var dashboard = (function(){
 			$("#api").addClass("hide");
 
 			var stage = $("#stage"),
-			    items = blog.data.get(),
+			    items = blog.data.get((blog.data.total - 10), blog.data.total),
 			    d, o;
 
 			stage.clear();
 
+			items.reverse();
 			items.each(function(item) {
 				d = new Date(item.data.date);
 				o = stage.create("article");
@@ -287,6 +288,8 @@ $.on("render", function() {
 });
 
 $.on("ready", function() {
+	var tumblr = "http://api.tumblr.com/v2/blog/attackio.tumblr.com/posts?api_key=cm7cZbxWpFDtv8XFD5XFuWsn5MnzupVpUtaCjYIJAurfPj5B1V&tag=abaaso&limit=1000000&jsonp=?";
+
 	$.on("hash", function(arg) { dashboard.load(arg); });
 
 	this.loading.url = "assets/loading.gif";
@@ -301,8 +304,7 @@ $.on("ready", function() {
 	dashboard.blog.data.key      = "id";
 	dashboard.blog.data.callback = "jsonp";
 	dashboard.blog.data.source   = "response";
-	typeof dashboard.blog.data.setUri === "function" ? dashboard.blog.data.setUri("http://api.tumblr.com/v2/blog/attackio.tumblr.com/posts?api_key=cm7cZbxWpFDtv8XFD5XFuWsn5MnzupVpUtaCjYIJAurfPj5B1V&tag=abaaso&jsonp=?")
-	                                                 : dashboard.blog.data.uri = "http://api.tumblr.com/v2/blog/attackio.tumblr.com/posts?api_key=cm7cZbxWpFDtv8XFD5XFuWsn5MnzupVpUtaCjYIJAurfPj5B1V&tag=abaaso&jsonp=?";
+	typeof dashboard.blog.data.setUri === "function" ? dashboard.blog.data.setUri(tumblr) : dashboard.blog.data.uri = tumblr;
 
 	$.store(dashboard.api);
 	dashboard.api.data.key = "name";
