@@ -227,8 +227,8 @@ var dashboard = (function(){
 				d = new Date(item.data.date);
 				o = stage.create("article");
 				o.create("h3").create("a", {href: item.data.url, innerHTML: item.data.title});
-				o.create("p").text($.label.months[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear());
-				o.create("section").text(item.data.body);
+				o.create("date").text($.label.months[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear());
+				o.create("entry").text(item.data.body);
 			});
 
 			stage.create("p").create("a", {innerHTML: "Read more on attack.io", href: "http://attack.io"});
