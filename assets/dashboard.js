@@ -218,12 +218,11 @@ var dashboard = (function(){
 			$("#api").addClass("hide");
 
 			var stage = $("#stage"),
-			    items = blog.data.get([(blog.data.total - 10), blog.data.total]),
+			    items = blog.data.get([0, 10]),
 			    d, o;
 
 			stage.clear();
 
-			items.reverse();
 			items.each(function(item) {
 				d = new Date(item.data.date);
 				o = stage.create("article");
