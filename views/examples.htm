@@ -1,6 +1,7 @@
 <h3>Examples</h3>
 <p>Working with abaaso is different than most JavaScript frameworks, it does away with the MVC paradigm in favor of an Object Oriented Programming (OOP) approach, consuming data from APIs (SOA or Service Oriented Architecture), with a focus on REST (Representation State Transfer).</p>
 <o>Sounds complicated right? I'm glad to say it's not. The majority of the work is done automatically for you, including full CORS support with an automatic fallback to JSONP.</p>
+<p>You'll notice the steps to consume any API are same. Sometimes an API will need one or two optional parameters set, but that's as complicated as it gets.</p>
 
 <h4>Klout: Score in a DIV</h4>
 <pre>
@@ -21,7 +22,7 @@ var twitter = {id: "collabs"},
 $.store(twitter);
 twitter.data.key = "id";
 
-// Set the display listener
+// Set the sync listener
 twitter.on("afterDataSync", function() {
 	this.get().each(function(r) {
 		// Do something with r
@@ -34,6 +35,7 @@ typeof twitter.data.setUri === "function" ? twitter.data.setUri(uri) : twitter.d
 
 <h4>Tumblr: Data store</h4>
 <pre>
+// Creating the store
 var tumblr = {id: "collabs"},
     uri = "http://api.tumblr.com/v2/blog/:blog/posts?api_key=:key&&limit=1000000&jsonp=?";
 
@@ -41,6 +43,15 @@ $.store(tumblr);
 tumblr.data.key      = "id";
 tumblr.data.callback = "jsonp";
 tumblr.data.source   = "response";
+
+// Set the sync listener
+collabs.on("afterDataSync", function() {
+	this.get().each(function(r) {
+		// Do something with r
+	});
+}, "display", collabs.data);
+
+// Making the store RESTful
 typeof tumblr.data.setUri === "function" ? tumblr.data.setUri(uri) : tumblr.data.uri = uri;
 </pre>
 
@@ -54,7 +65,7 @@ $.store(collabs);
 collabs.data.source = "data";
 collabs.data.key    = "id";
 
-// Set the display listener
+// Set the sync listener
 collabs.on("afterDataSync", function() {
 	this.get().each(function(r) {
 		// Do something with r
