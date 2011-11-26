@@ -13,7 +13,7 @@ collabs.data.key    = "id";
 
 // Set the display listener
 collabs.on("afterDataSync", function() {
-	this.get().forEach(function(r) {
+	this.get().each(function(r) {
 		$.create("p").text(r.data.login);
 	});
 }, "display", collabs.data);
