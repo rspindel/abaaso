@@ -4,18 +4,18 @@
 
 <h4>Klout: Score in a DIV</h4>
 <pre>
-$.create("div").jsonp("http://api.klout.com/1/klout.json?users=:user&key=:key&callback=?", "users[0].kscore");;
+$.create("div").jsonp("http://api.klout.com/1/klout.json?users=:user&key=:key&callback=?", "users[0].kscore");
 </pre>
 
 <h4>Twitter: Latest tweet in a DIV</h4>
 <pre>
-$.create("div").jsonp("http://search.twitter.com/search.json?callback=?&from=:user", "results[0].text")
+$.create("div").jsonp("http://search.twitter.com/search.json?callback=?&from=:user", "results[0].text");
 </pre>
 
 <h4>Twitter: Data store</h4>
 <pre>
 var twitter = {id: "collabs"},
-    uri = "https://api.github.com/repos/:user/:repo/collaborators?callback=?";
+    uri = "http://search.twitter.com/:api?callback=?:queries";
 
 // Creating the store
 $.store(twitter);
@@ -34,9 +34,15 @@ typeof twitter.data.setUri === "function" ? twitter.data.setUri(uri) : twitter.d
 
 <h4>Tumblr: Data store</h4>
 <pre>
-$.create("div").jsonp("http://api.klout.com/1/klout.json?users=:user&key=:key&callback=?", "users[0].kscore");;
-</pre>
+var tumblr = {id: "collabs"},
+    uri = "http://api.tumblr.com/v2/blog/:blog/posts?api_key=:key&&limit=1000000&jsonp=?";
 
+$.store(tumblr);
+tumblr.data.key      = "id";
+tumblr.data.callback = "jsonp";
+tumblr.data.source   = "response";
+typeof tumblr.data.setUri === "function" ? tumblr.data.setUri(uri) : tumblr.data.uri = uri;
+</pre>
 
 <h4>Github: Collaborators data store</h4>
 <pre>
