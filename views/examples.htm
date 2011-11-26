@@ -15,7 +15,7 @@ $.create("div").jsonp("http://search.twitter.com/search.json?callback=?&from=:us
 
 <h4>Twitter: Data store</h4>
 <pre>
-var twitter = {id: "collabs"},
+var twitter = {id: "twitter"},
     uri = "http://search.twitter.com/:api?callback=?:queries";
 
 // Creating the store
@@ -36,7 +36,7 @@ typeof twitter.data.setUri === "function" ? twitter.data.setUri(uri) : twitter.d
 <h4>Tumblr: Data store</h4>
 <pre>
 // Creating the store
-var tumblr = {id: "collabs"},
+var tumblr = {id: "tumblr"},
     uri = "http://api.tumblr.com/v2/blog/:blog/posts?api_key=:key&limit=1000000&jsonp=?";
 
 $.store(tumblr);
