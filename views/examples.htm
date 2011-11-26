@@ -1,9 +1,8 @@
 <h3>Examples</h3>
 <p>Working with abaaso is different than most JavaScript frameworks, it does away with the MVC paradigm in favor of an Object Oriented Programming (OOP) approach, consuming data from APIs (SOA or Service Oriented Architecture), with a focus on REST (Representation State Transfer).</p>
 <o>Sounds complicated right? I'm glad to say it's not. The majority of the work is done automatically for you, including full CORS support with an automatic fallback to JSONP.</p>
-<h4>Github Collaborators</h4>
-<p>This is an example of creating a data store which consumes a Github API.</p>
-<code>
+<h5>Github Collaborators</h5>
+<pre>
 var collabs = {id: "collabs"},
     uri = "https://api.github.com/repos/:user/:repo/collaborators?callback=?";
 
@@ -21,4 +20,4 @@ collabs.on("afterDataSync", function() {
 
 // Making the store RESTful
 typeof collabs.data.setUri === "function" ? dashboard.api.data.setUri(uri) : collabs.data.uri = uri;
-</code>
+</pre>
