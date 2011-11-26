@@ -27,7 +27,7 @@ twitter.on("afterDataSync", function() {
 	this.get().each(function(r) {
 		// Do something with r
 	});
-}, "tweets", twitter.data);
+}, "sync", twitter.data);
 
 // Making the store RESTful
 typeof twitter.data.setUri === "function" ? twitter.data.setUri(uri) : twitter.data.uri = uri;
@@ -37,7 +37,7 @@ typeof twitter.data.setUri === "function" ? twitter.data.setUri(uri) : twitter.d
 <pre>
 // Creating the store
 var tumblr = {id: "collabs"},
-    uri = "http://api.tumblr.com/v2/blog/:blog/posts?api_key=:key&&limit=1000000&jsonp=?";
+    uri = "http://api.tumblr.com/v2/blog/:blog/posts?api_key=:key&limit=1000000&jsonp=?";
 
 $.store(tumblr);
 tumblr.data.key      = "id";
@@ -45,11 +45,11 @@ tumblr.data.callback = "jsonp";
 tumblr.data.source   = "response";
 
 // Set the sync listener
-collabs.on("afterDataSync", function() {
+tumblr.on("afterDataSync", function() {
 	this.get().each(function(r) {
 		// Do something with r
 	});
-}, "display", collabs.data);
+}, "sync", tumblr.data);
 
 // Making the store RESTful
 typeof tumblr.data.setUri === "function" ? tumblr.data.setUri(uri) : tumblr.data.uri = uri;
@@ -70,7 +70,7 @@ collabs.on("afterDataSync", function() {
 	this.get().each(function(r) {
 		// Do something with r
 	});
-}, "display", collabs.data);
+}, "sync", collabs.data);
 
 // Making the store RESTful
 typeof collabs.data.setUri === "function" ? collabs.data.setUri(uri) : collabs.data.uri = uri;
