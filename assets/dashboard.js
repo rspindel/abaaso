@@ -252,6 +252,10 @@ var dashboard = (function(){
 			$("#api").addClass("hide");
 			$("#stage").removeClass("share").get("views/error.htm");
 		},
+		examples : function() {
+			$("#api").addClass("hide");
+			$("#stage").removeClass("share").get("views/examples.htm");
+		},
 		main : function() {
 			$("#api").addClass("hide");
 			$("#stage").removeClass("share").get("views/intro.htm");
@@ -312,7 +316,7 @@ $.on("ready", function() {
 
 	$.store(dashboard.collabs);
 	dashboard.collabs.data.source = "data";
-	dashboard.collabs.data.key = "id";
+	dashboard.collabs.data.key    = "id";
 	typeof dashboard.collabs.data.setUri === "function" ? dashboard.api.data.setUri(uri.collabs) : dashboard.collabs.data.uri = uri.collabs;
 });
 
