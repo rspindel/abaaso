@@ -2,7 +2,43 @@
 <p>Working with abaaso is different than most JavaScript frameworks, it does away with the MVC paradigm in favor of an Object Oriented Programming (OOP) approach, consuming data from APIs (SOA or Service Oriented Architecture), with a focus on REST (Representation State Transfer).</p>
 <o>Sounds complicated right? I'm glad to say it's not. The majority of the work is done automatically for you, including full CORS support with an automatic fallback to JSONP.</p>
 
-<h4>Github Collaborators</h4>
+<h4>Klout: Score in a DIV</h4>
+<pre>
+$.create("div").jsonp("http://api.klout.com/1/klout.json?users=:user&key=:key&callback=?", "users[0].kscore");;
+</pre>
+
+<h4>Twitter: Latest tweet in a DIV</h4>
+<pre>
+$.create("div").jsonp("http://search.twitter.com/search.json?callback=?&from=:user", "results[0].text")
+</pre>
+
+<h4>Twitter: Data store</h4>
+<pre>
+var twitter = {id: "collabs"},
+    uri = "https://api.github.com/repos/:user/:repo/collaborators?callback=?";
+
+// Creating the store
+$.store(twitter);
+twitter.data.key = "id";
+
+// Set the display listener
+twitter.on("afterDataSync", function() {
+	this.get().each(function(r) {
+		// Do something with r
+	});
+}, "tweets", twitter.data);
+
+// Making the store RESTful
+typeof twitter.data.setUri === "function" ? twitter.data.setUri(uri) : twitter.data.uri = uri;
+</pre>
+
+<h4>Tumblr: Data store</h4>
+<pre>
+$.create("div").jsonp("http://api.klout.com/1/klout.json?users=:user&key=:key&callback=?", "users[0].kscore");;
+</pre>
+
+
+<h4>Github: Collaborators data store</h4>
 <pre>
 var collabs = {id: "collabs"},
     uri = "https://api.github.com/repos/:user/:repo/collaborators?callback=?";
@@ -15,15 +51,10 @@ collabs.data.key    = "id";
 // Set the display listener
 collabs.on("afterDataSync", function() {
 	this.get().each(function(r) {
-		$.create("p").text(r.data.login);
+		// Do something with r
 	});
 }, "display", collabs.data);
 
 // Making the store RESTful
-typeof collabs.data.setUri === "function" ? dashboard.api.data.setUri(uri) : collabs.data.uri = uri;
-</pre>
-
-<h4>Display Klout score</h4>
-<pre>
-$.create("div").jsonp("http://api.klout.com/1/klout.json?users=:user&key=:key&callback=?", "users[0].kscore");;
+typeof collabs.data.setUri === "function" ? collabs.data.setUri(uri) : collabs.data.uri = uri;
 </pre>
