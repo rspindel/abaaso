@@ -10,6 +10,9 @@ var dashboard = (function(){
 	// Wordpress
 	var blog = {id: "blog"};
 
+	// Project collaborators
+	var collabs = {id: "collabs"};
+
 	// API widget
 	var api = {
 		id: "api",
@@ -278,16 +281,12 @@ var dashboard = (function(){
 })();
 
 // abaaso listeners
-$.on("render", function() {
-	$("body").css("opacity", 1);
-	$("year").text(new Date().getFullYear());
-
-	if (!/\w/.test(document.location.hash)) document.location.hash = "#!/main";
-	else dashboard.load(document.location.hash);
-});
-
 $.on("ready", function() {
-	var tumblr = "http://api.tumblr.com/v2/blog/attackio.tumblr.com/posts?api_key=cm7cZbxWpFDtv8XFD5XFuWsn5MnzupVpUtaCjYIJAurfPj5B1V&tag=abaaso&limit=1000000&jsonp=?";
+	var uri = {
+		api     : "http://api.abaaso.com?callback=?",
+		collabs : "https://api.github.com/repos/avoidwork/abaaso/collaborators?callback=?",
+		tumblr  : "http://api.tumblr.com/v2/blog/attackio.tumblr.com/posts?api_key=cm7cZbxWpFDtv8XFD5XFuWsn5MnzupVpUtaCjYIJAurfPj5B1V&tag=abaaso&limit=1000000&jsonp=?";
+	};
 
 	$.on("hash", function(arg) { dashboard.load(arg); });
 
@@ -299,14 +298,27 @@ $.on("ready", function() {
 	$("#stage").on("beforeGet", function() { this.loading(); }, "loading")
 	           .on("afterGet", function() { if (typeof $("#twitter") !== "undefined") dashboard.twitter(); }, "twitter");
 
+	$.store(dashboard.api);
+	dashboard.api.data.key = "name";
+	dashboard.api.on("afterDataSync", function(){ this.render(); });
+	typeof dashboard.api.data.setUri === "function" ? dashboard.api.data.setUri(uri.api) : dashboard.api.data.uri = uri.api;
+
 	$.store(dashboard.blog);
 	dashboard.blog.data.key      = "id";
 	dashboard.blog.data.callback = "jsonp";
 	dashboard.blog.data.source   = "response";
-	typeof dashboard.blog.data.setUri === "function" ? dashboard.blog.data.setUri(tumblr) : dashboard.blog.data.uri = tumblr;
+	typeof dashboard.blog.data.setUri === "function" ? dashboard.blog.data.setUri(uri.tumblr) : dashboard.blog.data.uri = uri.tumblr;
 
-	$.store(dashboard.api);
-	dashboard.api.data.key = "name";
-	dashboard.api.on("afterDataSync", function(){ this.render(); });
-	typeof dashboard.api.data.setUri === "function" ? dashboard.api.data.setUri("http://api.abaaso.com?callback=") : dashboard.api.data.uri = "http://api.abaaso.com";
+	$.store(dashboard.collabs);
+	dashboard.collabs.data.source = "data";
+	dashboard.collabs.data.key = "id";
+	typeof dashboard.collabs.data.setUri === "function" ? dashboard.api.data.setUri(uri.collabs) : dashboard.collabs.data.uri = uri.collabs;
+});
+
+$.on("render", function() {
+	$("body").css("opacity", 1);
+	$("year").text(new Date().getFullYear());
+
+	if (!/\w/.test(document.location.hash)) document.location.hash = "#!/main";
+	else dashboard.load(document.location.hash);
 });
