@@ -227,7 +227,7 @@ var dashboard = (function(){
 			stage.clear();
 
 			items.each(function(item) {
-				d = new Date(item.data.date);
+				d = new Date(item.data.date.replace(/\s.*/, ""));
 				o = stage.create("article");
 				o.create("h3").create("a", {href: item.data.url, innerHTML: item.data.title});
 				o.create("date").text($.label.months[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear());
