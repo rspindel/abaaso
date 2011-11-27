@@ -220,7 +220,7 @@ var dashboard = (function(){
 		blog     : function() {
 			$("#api").addClass("hide");
 
-			var fn = function(){
+			/*var fn = function(){
 				var fn = this;
 				if (blog.data.total === 0) {
 					var guid = $.guid();
@@ -229,7 +229,7 @@ var dashboard = (function(){
 					$.timer[$.guid()] = setTimeout(fn, 10);
 				}
 			};
-			fn.call(fn);
+			fn.call(fn);*/
 
 			var stage = $("#stage"),
 			    items = blog.data.get([0, 10]),
