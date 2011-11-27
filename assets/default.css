@@ -86,12 +86,12 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight : bold;
 }
 
-p, h1, h2, h3, h5, h6, pre {
+p, h1, h2, h5, h6, pre {
 	margin : 0 0 20pt 0;
 }
 
-h4 {
-	margin : 0 0 2pt 0;	
+h3, h4 {
+	margin : 0 0 5px 0;	
 }
 
 section h3 {
