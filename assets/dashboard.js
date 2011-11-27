@@ -222,26 +222,24 @@ var dashboard = (function(){
 			$("#stage").removeClass("share").loading();
 
 			var fn = function() {
-				if (blog.data.total === 0) return;
+				if (blog.data.total > 0) {
+					var stage = $("#stage"),
+					    items = blog.data.get([0, 10]),
+					    d, o;
 
-				clearTimeout($.repeating.blog);
-				delete $.repeating.blog;
+					stage.clear();
 
-				var stage = $("#stage"),
-				    items = blog.data.get([0, 10]),
-				    d, o;
+					items.each(function(item) {
+						d = new Date(item.data.date.replace(/\s.*/, ""));
+						o = stage.create("article");
+						o.create("h3").create("a", {href: item.data.url, innerHTML: item.data.title});
+						o.create("date").text($.label.months[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear());
+						o.create("entry").text(item.data.body);
+					});
 
-				stage.clear();
-
-				items.each(function(item) {
-					d = new Date(item.data.date.replace(/\s.*/, ""));
-					o = stage.create("article");
-					o.create("h3").create("a", {href: item.data.url, innerHTML: item.data.title});
-					o.create("date").text($.label.months[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear());
-					o.create("entry").text(item.data.body);
-				});
-
-				stage.create("p").create("a", {innerHTML: "Read more on attack.io", href: "http://attack.io"});
+					stage.create("p").create("a", {innerHTML: "Read more on attack.io", href: "http://attack.io"});
+					return false;
+				}
 			};
 
 			$.repeat(fn, 10, "blog");
