@@ -219,33 +219,32 @@ var dashboard = (function(){
 		},
 		blog     : function() {
 			$("#api").addClass("hide");
+			$("#stage").removeClass("share").loading();
 
-			/*var fn = function(){
-				var fn = this;
-				if (blog.data.total === 0) {
-					var guid = $.guid();
+			var fn = function() {
+				if (blog.data.total === 0) return;
 
-					// reset timeor
-					$.timer[$.guid()] = setTimeout(fn, 10);
-				}
+				clearTimeout($.repeating.blog);
+				delete $.repeating.blog;
+
+				var stage = $("#stage"),
+				    items = blog.data.get([0, 10]),
+				    d, o;
+
+				stage.clear();
+
+				items.each(function(item) {
+					d = new Date(item.data.date.replace(/\s.*/, ""));
+					o = stage.create("article");
+					o.create("h3").create("a", {href: item.data.url, innerHTML: item.data.title});
+					o.create("date").text($.label.months[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear());
+					o.create("entry").text(item.data.body);
+				});
+
+				stage.create("p").create("a", {innerHTML: "Read more on attack.io", href: "http://attack.io"});
 			};
-			fn.call(fn);*/
 
-			var stage = $("#stage"),
-			    items = blog.data.get([0, 10]),
-			    d, o;
-
-			stage.clear();
-
-			items.each(function(item) {
-				d = new Date(item.data.date.replace(/\s.*/, ""));
-				o = stage.create("article");
-				o.create("h3").create("a", {href: item.data.url, innerHTML: item.data.title});
-				o.create("date").text($.label.months[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear());
-				o.create("entry").text(item.data.body);
-			});
-
-			stage.create("p").create("a", {innerHTML: "Read more on attack.io", href: "http://attack.io"});
+			$.repeat(fn, 10, "blog");
 		},
 		download : function() {
 			var guid = $.guid();
