@@ -99,12 +99,13 @@ var dashboard = (function(){
 	 */
 	var routes = {
 		error : function() {
-			$("#api").addClass("hide");
-			$("#stage").removeClass("share").get("views/error.htm");
+			$("#stage").get("views/error");
 		},
 		main : function() {
-			$("#id1").addClass("hide");
-			$("#id2").removeClass("hide").get("views/page");
+			$("#stage").get("views/main");
+		},
+		somepage : function() {
+			$("#stage").get("views/somepage");
 		}
 	};
 
