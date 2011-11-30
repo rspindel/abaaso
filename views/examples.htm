@@ -35,10 +35,10 @@ typeof twitter.data.setUri === "function" ? twitter.data.setUri(uri) : twitter.d
 
 <h4>Tumblr: Data store</h4>
 <pre>
-// Creating the store
 var tumblr = {id: "tumblr"},
     uri = "http://api.tumblr.com/v2/blog/:blog/posts?api_key=:key&limit=1000000&jsonp=?";
 
+// Creating the store
 $.store(tumblr);
 tumblr.data.key      = "id";
 tumblr.data.callback = "jsonp";
@@ -74,4 +74,45 @@ collabs.on("afterDataSync", function() {
 
 // Making the store RESTful
 typeof collabs.data.setUri === "function" ? collabs.data.setUri(uri) : collabs.data.uri = uri;
+</pre>
+
+<h4>Client-side routing</h4>
+<pre>
+// Dashboard namespace
+var dashboard = (function(){
+	/**
+	 * Loads the hash into the view
+	 * 
+	 * @param  {String} arg Route to load
+	 * @return {Undefined} undefined
+	 */
+	var load = function(arg) {
+		arg = arg.replace(/\#\!\//, "");
+		if (!routes.hasOwnProperty(arg)) arg = "error";
+		routes[arg]();
+	};
+
+	/**
+	 * Routes
+	 * 
+	 * @type {Object}
+	 */
+	var routes = {
+		error : function() {
+			$("#api").addClass("hide");
+			$("#stage").removeClass("share").get("views/error.htm");
+		},
+		main : function() {
+			$("#id1").addClass("hide");
+			$("#id2").removeClass("hide").get("views/page");
+		}
+	};
+
+	return {
+		load : load
+	}
+})();
+
+// Setting hash listener
+$.on("hash", function(arg) { dashboard.load(arg); });
 </pre>
