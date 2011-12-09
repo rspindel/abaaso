@@ -251,8 +251,8 @@ var dashboard = (function(){
 			$("#stage").removeClass("share")
 			           .on("afterGet", function() {
 			           		this.un("afterGet", guid);
-			           		$("#download-debugging").on("click", function(){ window.location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/abaaso.js"; });
-			           		$("#download-production").on("click", function(){ window.location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/abaaso-min.js"; });
+			           		$("#download-debugging").on("click", function(){ window.location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/abaaso.js"; }, "click");
+			           		$("#download-production").on("click", function(){ window.location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/abaaso-min.js"; }, "click");
 			            }, guid)
 			           .get("views/download.htm");
 		},
@@ -274,14 +274,17 @@ var dashboard = (function(){
 	 * Retrieves the latest tweet from @abaaso
 	 */
 	var twitter = function() {
+		var obj = $("#twitter"),
+		    uri = "http://search.twitter.com/search.json?callback=?&from=abaaso";
+
 		if (typeof dashboard.twitter.tweet === "undefined") {
-			$("#twitter").loading();
-			"http://search.twitter.com/search.json?callback=?&from=abaaso".jsonp(function(arg) {
-				dashboard.twitter.tweet = arg.results[0].text || $.label.error.serverError;
-				$("#twitter").text(dashboard.twitter.tweet);
+			obj.loading();
+			uri.jsonp(function(arg) {
+				dashboard.twitter.tweet = typeof arg.results[0] === "obj" ? arg.results[0].text : $.label.error.serverError;
+				obj.text(dashboard.twitter.tweet);
 			});
 		}
-		else $("#twitter").text(dashboard.twitter.tweet);
+		else obj.text(dashboard.twitter.tweet);
 	};
 
 	return {
