@@ -280,7 +280,7 @@ var dashboard = (function(){
 		if (typeof dashboard.twitter.tweet === "undefined") {
 			obj.loading();
 			uri.jsonp(function(arg) {
-				dashboard.twitter.tweet = typeof arg.results[0] === "obj" ? arg.results[0].text : $.label.error.serverError;
+				dashboard.twitter.tweet = typeof arg.results[0] === "object" ? arg.results[0].text : $.label.error.serverError;
 				obj.text(dashboard.twitter.tweet);
 			});
 		}
