@@ -226,12 +226,10 @@ var dashboard = (function(){
 					stage.clear();
 
 					items.each(function(item) {
-						//d = new Date(item.data.date.replace(/\s.*/, "")); // disabled because the string is not parsable in all browsers
-						d = item.data.date.replace(/\s.*/, "").explode("-");
-						$.log(d);
+						d = item.data.date.replace(/\s.*/, "").explode("-"); // Parsing String because some browsers will not cast to Date
 						o = stage.create("article");
 						o.create("h3").create("a", {href: item.data.url, innerHTML: item.data.title});
-						o.create("date").text($.label.months[d[1]]+" "+d[2]+", "+d[0]);
+						o.create("date").text($.label.months[parseInt(d[1] -1 ).toString()]+" "+d[2]+", "+d[0]);
 						o.create("entry").text(item.data.body);
 					});
 
