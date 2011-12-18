@@ -11,6 +11,7 @@ var dashboard = (function(){
 	    twitter = {
 		    id      : "twitter",
 		    display : function(index) {
+		    	debugger;
 		    	index   = index || 0;
 		    	var obj = $("#twitter"),
 		    	    r   = this.data.get(index);
