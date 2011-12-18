@@ -1,17 +1,13 @@
 /**
- * abaaso API dashboard
- *
- * Creates a RESTful GUI with 1 application state
+ * abaaso dashboard
  *
  * @author Jason Mulligan <jason.mulligan@avoidwork.com>
- * @version 2.0
+ * @version 2.1
  */
 var dashboard = (function(){
-	// Wordpress
-	var blog = {id: "blog"};
-
-	// Project collaborators
-	var collabs = {id: "collabs"};
+	// Data stores
+	var blog    = {id: "blog"},
+	    collabs = {id: "collabs"};
 
 	// API widget
 	var api = {
@@ -230,10 +226,11 @@ var dashboard = (function(){
 					stage.clear();
 
 					items.each(function(item) {
-						d = new Date(item.data.date.replace(/\s.*/, ""));
+						//d = new Date(item.data.date.replace(/\s.*/, "")); // disabled because the string is not parsable in all browsers
+						d = item.data.date.replace(/\s.*/, "").explode("-");
 						o = stage.create("article");
 						o.create("h3").create("a", {href: item.data.url, innerHTML: item.data.title});
-						o.create("date").text($.label.months[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear());
+						o.create("date").text($.label.months[d[1]]+" "+d[2]+", "+d[0]);
 						o.create("entry").text(item.data.body);
 					});
 
