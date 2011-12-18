@@ -323,7 +323,7 @@ $.on("ready", function() {
 	$.store(dashboard.twitter);
 	dashboard.twitter.data.key      = "id";
 	dashboard.twitter.data.callback = "callback";
-	dashboard.twitter.on("afterDataSync", this.display);
+	dashboard.twitter.on("afterDataSync", function() { this.display(): }, "sync");
 	typeof dashboard.twitter.data.setUri === "function" ? dashboard.twitter.data.setUri(uri.twitter) : dashboard.twitter.data.uri = uri.twitter;
 });
 
