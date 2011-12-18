@@ -7,7 +7,17 @@
 var dashboard = (function(){
 	// Data stores
 	var blog    = {id: "blog"},
-	    collabs = {id: "collabs"};
+	    collabs = {id: "collabs"},
+	    twitter = {
+		    id      : "twitter",
+		    display : function(index) {
+		    	index   = index || 0;
+		    	var obj = $("#twitter"),
+		    	    r   = this.data.get(index);
+
+		    	obj.text(typeof obj !== "undefined" && typeof r !== "undefined" ? r.text : $.label.error.serverError);
+		    }
+		};
 
 	// API widget
 	var api = {
@@ -266,23 +276,6 @@ var dashboard = (function(){
 		}
 	};
 
-	/**
-	 * Retrieves the latest tweet from @abaaso
-	 */
-	var twitter = function() {
-		var obj = $("#twitter"),
-		    uri = "http://search.twitter.com/search.json?callback=?&from=abaaso";
-
-		if (typeof dashboard.twitter.tweet === "undefined") {
-			obj.loading();
-			uri.jsonp(function(arg) {
-				dashboard.twitter.tweet = typeof arg.results[0] === "object" ? arg.results[0].text : $.label.error.serverError;
-				obj.text(dashboard.twitter.tweet);
-			});
-		}
-		else obj.text(dashboard.twitter.tweet);
-	};
-
 	return {
 		api     : api,
 		blog    : blog,
@@ -297,7 +290,8 @@ $.on("ready", function() {
 	var uri = {
 		api     : "http://api.abaaso.com?callback=?",
 		collabs : "https://api.github.com/repos/avoidwork/abaaso/collaborators?callback=?",
-		tumblr  : "http://api.tumblr.com/v2/blog/attackio.tumblr.com/posts?api_key=cm7cZbxWpFDtv8XFD5XFuWsn5MnzupVpUtaCjYIJAurfPj5B1V&tag=abaaso&limit=1000000&jsonp=?"
+		tumblr  : "http://api.tumblr.com/v2/blog/attackio.tumblr.com/posts?api_key=cm7cZbxWpFDtv8XFD5XFuWsn5MnzupVpUtaCjYIJAurfPj5B1V&tag=abaaso&limit=1000000&jsonp=?",
+		twitter : "http://search.twitter.com/search.json?callback=?&from=abaaso"
 	};
 
 	$.on("hash", function(arg) { dashboard.load(arg); });
@@ -308,7 +302,7 @@ $.on("ready", function() {
 	$("year")[0].text(new Date().getFullYear());
 
 	$("#stage").on("beforeGet", function() { this.loading(); }, "loading")
-	           .on("afterGet", function() { if (typeof $("#twitter") !== "undefined") dashboard.twitter(); }, "twitter");
+	           .on("afterGet", function() { if (typeof $("#twitter") !== "undefined") dashboard.twitter.display(); }, "twitter");
 
 	$.store(dashboard.api);
 	dashboard.api.data.key = "name";
@@ -325,6 +319,9 @@ $.on("ready", function() {
 	dashboard.collabs.data.source = "data";
 	dashboard.collabs.data.key    = "id";
 	typeof dashboard.collabs.data.setUri === "function" ? dashboard.api.data.setUri(uri.collabs) : dashboard.collabs.data.uri = uri.collabs;
+
+	$.store(dashboard.twitter);
+	typeof dashboard.twitter.data.setUri === "function" ? dashboard.twitter.data.setUri(uri.twitter) : dashboard.twitter.data.uri = uri.twitter;
 });
 
 $.on("render", function() {
