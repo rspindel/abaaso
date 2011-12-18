@@ -228,6 +228,7 @@ var dashboard = (function(){
 					items.each(function(item) {
 						//d = new Date(item.data.date.replace(/\s.*/, "")); // disabled because the string is not parsable in all browsers
 						d = item.data.date.replace(/\s.*/, "").explode("-");
+						$.log(d);
 						o = stage.create("article");
 						o.create("h3").create("a", {href: item.data.url, innerHTML: item.data.title});
 						o.create("date").text($.label.months[d[1]]+" "+d[2]+", "+d[0]);
