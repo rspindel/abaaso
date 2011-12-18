@@ -15,7 +15,7 @@ var dashboard = (function(){
 		    	var obj = $("#twitter"),
 		    	    r   = this.data.get(index);
 
-		    	obj.text(typeof obj !== "undefined" && typeof r !== "undefined" ? r.text : $.label.error.serverError);
+		    	if (typeof obj !== "undefined") obj.text(typeof r !== "undefined" ? r.data.text : $.label.error.serverError);
 		    }
 		};
 
