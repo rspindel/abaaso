@@ -11,7 +11,6 @@ var dashboard = (function(){
 	    twitter = {
 		    id      : "twitter",
 		    display : function(index) {
-		    	debugger;
 		    	index   = index || 0;
 		    	var obj = $("#twitter"),
 		    	    r   = this.data.get(index);
@@ -322,6 +321,9 @@ $.on("ready", function() {
 	typeof dashboard.collabs.data.setUri === "function" ? dashboard.api.data.setUri(uri.collabs) : dashboard.collabs.data.uri = uri.collabs;
 
 	$.store(dashboard.twitter);
+	dashboard.twitter.data.key      = "id";
+	dashboard.twitter.data.callback = "callback";
+	dashboard.twitter.on("afterDataSync", this.display);
 	typeof dashboard.twitter.data.setUri === "function" ? dashboard.twitter.data.setUri(uri.twitter) : dashboard.twitter.data.uri = uri.twitter;
 });
 
