@@ -16,8 +16,6 @@ var dashboard = (function(){
 		    	    r   = this.data.get(index);
 
 		    	if (typeof obj !== "undefined") obj.text(typeof r !== "undefined" ? r.data.text : $.label.error.serverError);
-
-		    	return true;
 		    }
 		};
 
@@ -274,12 +272,7 @@ var dashboard = (function(){
 		},
 		main : function() {
 			$("#api").addClass("hide");
-			$("#stage").removeClass("share")
-			           .on("afterGet", function() {
-			           		dashboard.twitter.display();
-			           		this.un("afterGet", "main");
-			           }, "main")
-			           .get("views/intro.htm");
+			$("#stage").removeClass("share").get("views/intro.htm");
 		}
 	};
 
@@ -308,6 +301,9 @@ $.on("ready", function() {
 	$("version")[0].text($.version);
 	$("year")[0].text(new Date().getFullYear());
 
+	$("#stage").on("beforeGet", function() { this.loading(); }, "loading")
+	           .on("afterGet", function() { if (typeof $("#twitter") !== "undefined") dashboard.twitter.display(); }, "twitter");
+
 	$.store(dashboard.api);
 	dashboard.api.data.key = "name";
 	dashboard.api.on("afterDataSync", function(){ this.render(); });
@@ -334,9 +330,6 @@ $.on("ready", function() {
 $.on("render", function() {
 	$("body").css("opacity", 1);
 	$("year").text(new Date().getFullYear());
-
-	$("#stage").on("beforeGet", function() { this.loading(); }, "loading");
-	$("#twitter").loading();
 
 	if (!/\w/.test(document.location.hash)) document.location.hash = "#!/main";
 	else dashboard.load(document.location.hash);
