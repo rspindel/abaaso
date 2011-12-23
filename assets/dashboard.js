@@ -272,7 +272,12 @@ var dashboard = (function(){
 		},
 		main : function() {
 			$("#api").addClass("hide");
-			$("#stage").removeClass("share").get("views/intro.htm");
+			$("#stage").removeClass("share")
+			           .on("afterGet", function() {
+			           		dashboard.twitter.display();
+			           		$("#stage").un("afterGet", "main");
+			           }, "main")
+			           .get("views/intro.htm");
 		}
 	};
 
@@ -298,11 +303,10 @@ $.on("ready", function() {
 
 	this.loading.url = "assets/loading.gif";
 
+	$("#stage").on("beforeGet", function() { this.loading(); }, "loading");
+	$("#twitter").loading();
 	$("version")[0].text($.version);
 	$("year")[0].text(new Date().getFullYear());
-
-	$("#stage").on("beforeGet", function() { this.loading(); }, "loading")
-	           .on("afterGet", function() { if (typeof $("#twitter") !== "undefined") dashboard.twitter.display(); }, "twitter");
 
 	$.store(dashboard.api);
 	dashboard.api.data.key = "name";
