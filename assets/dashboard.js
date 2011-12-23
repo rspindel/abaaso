@@ -276,9 +276,7 @@ var dashboard = (function(){
 			$("#api").addClass("hide");
 			$("#stage").removeClass("share")
 			           .on("afterGet", function() {
-			           		$.repeat(function() {
-				           		if (typeof $("#twitter") !== "undefined") return !dashboard.twitter.display();
-				           	}, 10);
+			           		dashboard.twitter.display();
 			           		this.un("afterGet", "main");
 			           }, "main")
 			           .get("views/intro.htm");
@@ -307,8 +305,6 @@ $.on("ready", function() {
 
 	this.loading.url = "assets/loading.gif";
 
-	$("#stage").on("beforeGet", function() { this.loading(); }, "loading");
-	$("#twitter").loading();
 	$("version")[0].text($.version);
 	$("year")[0].text(new Date().getFullYear());
 
@@ -338,6 +334,9 @@ $.on("ready", function() {
 $.on("render", function() {
 	$("body").css("opacity", 1);
 	$("year").text(new Date().getFullYear());
+
+	$("#stage").on("beforeGet", function() { this.loading(); }, "loading");
+	$("#twitter").loading();
 
 	if (!/\w/.test(document.location.hash)) document.location.hash = "#!/main";
 	else dashboard.load(document.location.hash);
