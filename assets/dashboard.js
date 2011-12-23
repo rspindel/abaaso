@@ -16,6 +16,8 @@ var dashboard = (function(){
 		    	    r   = this.data.get(index);
 
 		    	if (typeof obj !== "undefined") obj.text(typeof r !== "undefined" ? r.data.text : $.label.error.serverError);
+
+		    	return true;
 		    }
 		};
 
@@ -274,8 +276,10 @@ var dashboard = (function(){
 			$("#api").addClass("hide");
 			$("#stage").removeClass("share")
 			           .on("afterGet", function() {
-			           		dashboard.twitter.display();
-			           		$("#stage").un("afterGet", "main");
+			           		$.repeat(function() {
+				           		if (typeof $("#twitter") !== "undefined") return !dashboard.twitter.display();
+				           	}, 10);
+			           		this.un("afterGet", "main");
 			           }, "main")
 			           .get("views/intro.htm");
 		}
