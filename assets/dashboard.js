@@ -2,7 +2,7 @@
  * abaaso dashboard
  *
  * @author Jason Mulligan <jason.mulligan@avoidwork.com>
- * @version 2.1
+ * @version 2.2
  */
 var dashboard = (function(){
 	// Data stores
@@ -239,7 +239,7 @@ var dashboard = (function(){
 						d = item.data.date.replace(/\s.*/, "").explode("-"); // Parsing String because some browsers will not cast to Date
 						o = stage.create("article");
 						o.create("h3").create("a", {href: item.data.post_url, innerHTML: item.data.title});
-						o.create("date").text($.label.months[parseInt(d[1] -1 ).toString()]+" "+d[2]+", "+d[0]);
+						o.create("date").text($.label.month[parseInt(d[1] -1 ).toString()]+" "+d[2]+", "+d[0]);
 						o.create("entry").text(item.data.body);
 					});
 
