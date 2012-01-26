@@ -187,6 +187,7 @@ var dashboard = (function(){
 				structure.data.total      = {};
 				structure.data.views      = {};
 				structure.state.current   = {};
+				delete structure.constructor;
 				delete structure.callback;
 				delete structure.data.methods;
 				delete structure.data._uri;
