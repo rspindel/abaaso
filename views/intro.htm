@@ -6,7 +6,7 @@
 <p>Application states can be triggered by setting abaaso.state.current.</p>
 
 <h3>Automatic "no conflict" mode</h3>
-<p>abaaso will not collide with jQuery, or any other libraries or frameworks which make use of $, by falling back to a$ for syntactic sugar. The namespace alias is set on abaaso.aliased, enabling it's use within anonymous functions. This is demonstrated by loading jQuery and abaaso at the same time on this website!</p>
+<p>abaaso will not conflict with jQuery, or any other libraries or frameworks which make use of "$", by falling back to "a$" for syntactic sugar. The namespace alias is set on abaaso.aliased, enabling it's use within anonymous functions. This is demonstrated by loading jQuery and abaaso at the same time on this website!</p>
 
 <div class="col">
   <h3>Features</h3>
@@ -15,7 +15,7 @@
     <li><a href="http://en.wikipedia.org/wiki/HATEOAS">Hypermedia As The Engine Of Application State (HATEOAS)</a> with a user defined HTTP header</li>
     <li>Object Oriented Programming with classes, methods and chaining</li>
     <li>Semantic classes &amp; methods, easy to read and easy to say out loud</li>
-    <li>Helper function $ with DOM selectors (a$ in "no conflict" mode</li>
+    <li>$() for DOM selectors (a$ in "no conflict" mode)</li>
     <li>Advanced event handling with multiple Application States</li>
     <li>Deep Setting with <em>define()</em></li>
     <li>Namespace is available on $</li>
