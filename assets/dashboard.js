@@ -5,6 +5,8 @@
  * @version 2.2
  */
 var dashboard = (function(){
+	var $ = window[abaaso.aliased];
+
 	// Data stores
 	var blog    = {id: "blog"},
 	    collabs = {id: "collabs"},
