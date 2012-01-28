@@ -321,7 +321,6 @@ var dashboard = (function(){
 		api     : api,
 		blog    : blog,
 		collabs : collabs,
-		load    : load,
 		twitter : twitter
 	}
 })();
