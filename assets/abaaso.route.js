@@ -57,7 +57,7 @@ abaaso.on("init", function () {
 		 */
 		del = function (name) {
 			try {
-				if (name !== "error" && route.hasOwnProperty(name)) delete routes[name];
+				if (name !== "error" && routes.hasOwnProperty(name)) delete routes[name];
 				else throw Error($.label.error.invalidArguments);
 			}
 			catch (e) {
