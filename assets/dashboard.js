@@ -204,29 +204,22 @@ var dashboard = (function(){
 		}
 	};
 
-	/**
-	 * Loads the hash into the view
-	 * 
-	 * @param  {String} arg Route to load
-	 * @return {Undefined} undefined
-	 */
-	var load = function(arg) {
-		arg = arg.replace(/\#\!\//, "");
-		if (!routes.hasOwnProperty(arg)) arg = "error";
-		routes[arg]();
-	};
+	// abaaso listeners
+	$.on("ready", function() {
+		var uri = {
+			api     : "http://api.abaaso.com?callback=?",
+			collabs : "https://api.github.com/repos/avoidwork/abaaso/collaborators?callback=?",
+			tumblr  : "http://api.tumblr.com/v2/blog/attackio.tumblr.com/posts?api_key=cm7cZbxWpFDtv8XFD5XFuWsn5MnzupVpUtaCjYIJAurfPj5B1V&tag=abaaso&limit=1000000&jsonp=?",
+			twitter : "http://search.twitter.com/search.json?callback=?&from=abaaso"
+		};
 
-	/**
-	 * Routes
-	 * 
-	 * @type {Object}
-	 */
-	var routes = {
-		api : function() {
+		// Setting routing
+		$.route.set("api", function () {
 			$("#api").removeClass("hide");
 			$("#stage").addClass("share").get("views/api.htm");
-		},
-		blog     : function() {
+		});
+
+		$.route.set("blog", function () {
 			$("#api").addClass("hide");
 			$("#stage").removeClass("share").loading();
 
@@ -252,8 +245,9 @@ var dashboard = (function(){
 			};
 
 			$.repeat(fn, 10, "blog");
-		},
-		download : function() {
+		});
+
+		$.route.set("download", function () {
 			var guid = $.guid();
 
 			$("#api").addClass("hide");
@@ -264,32 +258,24 @@ var dashboard = (function(){
 			           		$("#download-production").on("click", function(){ window.location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/abaaso-min.js"; }, "click");
 			            }, guid)
 			           .get("views/download.htm");
-		},
-		error : function() {
+		});
+
+		$.route.set("error", function () {
 			$("#api").addClass("hide");
 			$("#stage").removeClass("share").get("views/error.htm");
-		},
-		examples : function() {
+		});
+
+		$.route.set("examples", function () {
 			$("#api").addClass("hide");
 			$("#stage").removeClass("share").get("views/examples.htm");
-		},
-		main : function() {
+		});
+
+		$.route.set("main", function () {
 			$("#api").addClass("hide");
 			$("#stage").removeClass("share").get("views/intro.htm");
-		}
-	};
+		});
 
-	// abaaso listeners
-	$.on("ready", function() {
-		var uri = {
-			api     : "http://api.abaaso.com?callback=?",
-			collabs : "https://api.github.com/repos/avoidwork/abaaso/collaborators?callback=?",
-			tumblr  : "http://api.tumblr.com/v2/blog/attackio.tumblr.com/posts?api_key=cm7cZbxWpFDtv8XFD5XFuWsn5MnzupVpUtaCjYIJAurfPj5B1V&tag=abaaso&limit=1000000&jsonp=?",
-			twitter : "http://search.twitter.com/search.json?callback=?&from=abaaso"
-		};
-
-		$.on("hash", function(arg) { dashboard.load(arg); });
-
+		// Prepping the UI
 		this.loading.url = "assets/loading.gif";
 
 		$("version")[0].text($.version);
@@ -298,6 +284,7 @@ var dashboard = (function(){
 		$("#stage").on("beforeGet", function() { this.loading(); }, "loading")
 		           .on("afterGet", function() { if (typeof $("#twitter") !== "undefined") dashboard.twitter.display(); }, "twitter");
 
+		// Consuming APIs
 		$.store(dashboard.api);
 		dashboard.api.data.key = "name";
 		dashboard.api.on("afterDataSync", function(){ this.render(); });
@@ -326,7 +313,7 @@ var dashboard = (function(){
 		$("year").text(new Date().getFullYear());
 
 		if (!/\w/.test(document.location.hash)) document.location.hash = "#!/main";
-		else dashboard.load(document.location.hash);
+		else $.route.load(document.location.hash);
 	});
 
 	// @constructor
