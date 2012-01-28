@@ -33,6 +33,6 @@
  * @author Jason Mulligan <jason.mulligan@avoidwork.com>
  * @link http://avoidwork.com
  * @requires abaaso 1.8
- * @version 1.0
+ * @version 1.1
  */
-abaaso.on("init",function(){var a=window[abaaso.aliased],b;b=function(){var b,c,d,e;return d={error:function(){a.error(a.label.error.invalidArguments)}},b=function(a){delete d[a]},c=function(a){a=a.replace(/\#\!\//,""),d.hasOwnProperty(a)||(a="error"),d[a]()},e=function(a,b){d[a]=b},a.on("hash",function(a){c(a)},"route"),{del:b,load:c,set:e}}(),a.module("route",b)},"abaaso.route")
+abaaso.on("init",function(){var a=window[abaaso.aliased],b;b=function(){var c,d,e,f;return e={error:function(){a.error(a.label.error.invalidArguments)}},c=function(c){try{if(c!=="error"&&b.hasOwnProperty(c))delete e[c];else throw Error(a.label.error.invalidArguments)}catch(d){error(d,arguments,this)}},d=function(a){a=a.replace(/\#|\!\//,""),e.hasOwnProperty(a)||(a="error"),e[a]()},f=function(b,c){try{if(b.isEmpty()||typeof c!="function")throw Error(a.label.error.invalidArguments);e[b]=c}catch(d){error(d,arguments,this)}},a.on("hash",function(a){d(a)},"route"),{del:c,load:d,set:f}}(),a.module("route",b)},"abaaso.route")
