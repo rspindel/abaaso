@@ -206,7 +206,9 @@ var dashboard = (function(){
 
 	// abaaso listeners
 	$.on("ready", function() {
-		var uri = {
+		var stage = $("#stage"),
+		    api   = $("#api"),
+		    uri   = {
 			api     : "http://api.abaaso.com?callback=?",
 			collabs : "https://api.github.com/repos/avoidwork/abaaso/collaborators?callback=?",
 			tumblr  : "http://api.tumblr.com/v2/blog/attackio.tumblr.com/posts?api_key=cm7cZbxWpFDtv8XFD5XFuWsn5MnzupVpUtaCjYIJAurfPj5B1V&tag=abaaso&limit=1000000&jsonp=?",
@@ -215,18 +217,17 @@ var dashboard = (function(){
 
 		// Setting routing
 		$.route.set("api", function () {
-			$("#api").removeClass("hide");
-			$("#stage").addClass("share").get("views/api.htm");
+			api.removeClass("hide");
+			stage.addClass("share").get("views/api.htm");
 		});
 
 		$.route.set("blog", function () {
-			$("#api").addClass("hide");
-			$("#stage").removeClass("share").loading();
+			api.addClass("hide");
+			stage.removeClass("share").loading();
 
 			var fn = function() {
 				if (blog.data.total > 0) {
-					var stage = $("#stage"),
-					    items = blog.data.get([0, 10]),
+					var items = blog.data.get([0, 10]),
 					    d, o;
 
 					stage.clear();
@@ -250,39 +251,39 @@ var dashboard = (function(){
 		$.route.set("download", function () {
 			var guid = $.guid();
 
-			$("#api").addClass("hide");
-			$("#stage").removeClass("share")
-			           .on("afterGet", function() {
-			           		this.un("afterGet", guid);
-			           		$("#download-debugging").on("click", function(){ window.location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/abaaso.js"; }, "click");
-			           		$("#download-production").on("click", function(){ window.location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/abaaso-min.js"; }, "click");
-			            }, guid)
-			           .get("views/download.htm");
+			api.addClass("hide");
+			stage.removeClass("share")
+			     .on("afterGet", function() {
+			     	this.un("afterGet", guid);
+			     	$("#download-debugging").on("click", function () { location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/abaaso.js"; }, "click");
+			     	$("#download-production").on("click", function () { location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/abaaso-min.js"; }, "click");
+			     }, guid)
+			     .get("views/download.htm");
 		});
 
 		$.route.set("error", function () {
-			$("#api").addClass("hide");
-			$("#stage").removeClass("share").get("views/error.htm");
+			api.addClass("hide");
+			stage.removeClass("share").get("views/error.htm");
 		});
 
 		$.route.set("examples", function () {
-			$("#api").addClass("hide");
-			$("#stage").removeClass("share").get("views/examples.htm");
+			api.addClass("hide");
+			stage.removeClass("share").get("views/examples.htm");
 		});
 
 		$.route.set("main", function () {
-			$("#api").addClass("hide");
-			$("#stage").removeClass("share").get("views/intro.htm");
+			api.addClass("hide");
+			stage.removeClass("share").get("views/intro.htm");
 		});
 
 		// Prepping the UI
 		this.loading.url = "assets/loading.gif";
 
-		$("version")[0].text($.version);
-		$("year")[0].text(new Date().getFullYear());
+		$("version").text($.version);
+		$("year").text(new Date().getFullYear());
 
-		$("#stage").on("beforeGet", function() { this.loading(); }, "loading")
-		           .on("afterGet", function() { if (typeof $("#twitter") !== "undefined") dashboard.twitter.display(); }, "twitter");
+		stage.on("beforeGet", function () { this.loading(); }, "loading")
+		     .on("afterGet", function () { if (typeof $("#twitter") !== "undefined") dashboard.twitter.display(); }, "twitter");
 
 		// Consuming APIs
 		$.store(dashboard.api);
@@ -310,7 +311,6 @@ var dashboard = (function(){
 
 	$.on("render", function() {
 		$("body").css("opacity", 1);
-		$("year").text(new Date().getFullYear());
 
 		if (!/\w/.test(document.location.hash)) document.location.hash = "#!/main";
 		else $.route.load(document.location.hash);
