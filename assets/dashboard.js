@@ -282,7 +282,7 @@ var dashboard = (function(){
 		$("version").text($.version);
 		$("year").text(new Date().getFullYear());
 
-		stage.on("beforeGet", function () { debugger; this.loading(); }, "loading")
+		stage.on("beforeGet", function () { this.loading(); }, "loading")
 		     .on("afterGet", function () { if (typeof $("#twitter") !== "undefined") { dashboard.twitter.display();} }, "twitter");
 
 		// Consuming APIs
