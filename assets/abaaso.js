@@ -4122,7 +4122,7 @@
 		expires         : 120000,
 		extend          : utility.extend,
 		fire            : function (obj, event, arg) {
-			var all = typeof event !== "undefined",
+			var all = typeof arg !== "undefined",
 			    o, e, a;
 
 			o = all ? obj   : this;
