@@ -2,6 +2,7 @@
 <p>Working with abaaso is different than most JavaScript frameworks, it does away with the MVC paradigm in favor of an Object Oriented Programming (OOP) approach, consuming data from APIs (SOA or Service Oriented Architecture), with a focus on REST (Representational State Transfer).</p>
 <o>Sounds complicated right? I'm glad to say it's not. The majority of the work is done automatically for you, including full CORS support with an automatic fallback to JSONP.</p>
 <p>You'll notice the steps to consume any API are the same. Sometimes a data store will need one or more optional properties set, but that's as complicated as it gets.</p>
+<p>All examples require valid API keys to function. Variables start with ":", e.g. ":user".</p>
 
 <h4>Klout: Score in a DIV</h4>
 <pre>
@@ -74,46 +75,4 @@ collabs.on("afterDataSync", function() {
 
 // Making the store RESTful
 typeof collabs.data.setUri === "function" ? collabs.data.setUri(uri) : collabs.data.uri = uri;
-</pre>
-
-<h4>Client-side routing</h4>
-<pre>
-// Dashboard namespace
-var dashboard = (function(){
-	/**
-	 * Loads the hash into the view
-	 * 
-	 * @param  {String} arg Route to load
-	 * @return {Undefined} undefined
-	 */
-	var load = function(arg) {
-		arg = arg.replace(/\#\!\//, "");
-		if (!routes.hasOwnProperty(arg)) arg = "error";
-		routes[arg]();
-	};
-
-	/**
-	 * Routes
-	 * 
-	 * @type {Object}
-	 */
-	var routes = {
-		error : function() {
-			$("#stage").get("views/error");
-		},
-		main : function() {
-			$("#stage").get("views/main");
-		},
-		somepage : function() {
-			$("#stage").get("views/somepage");
-		}
-	};
-
-	return {
-		load : load
-	}
-})();
-
-// Setting hash listener
-$.on("hash", function(arg) { dashboard.load(arg); });
 </pre>
