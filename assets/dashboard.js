@@ -252,7 +252,7 @@ var dashboard = (function(){
 			stage.removeClass("share").loading();
 
 			var fn = function() {
-				if (blog.data.total > 0) {
+				if (dashboard.blog.data.total > 0) {
 					var items = blog.data.get([0, 10]),
 					    d, o;
 
