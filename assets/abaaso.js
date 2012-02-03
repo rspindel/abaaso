@@ -2788,7 +2788,7 @@
 
 				if ($.observer.log || abaaso.observer.log) utility.log("[" + new Date().toLocaleTimeString() + " - " + o + "] " + event);
 				l = this.list(obj, event).active;
-				for (i in l) { l[i].fn.call(l[i].scope, arg); }
+				for (i in l) { if (l.hasOwnProperty(i)) l[i].fn.call(l[i].scope, arg); }
 				$.observer.fired++;
 				return obj;
 			}
@@ -4122,7 +4122,7 @@
 		expires         : 120000,
 		extend          : utility.extend,
 		fire            : function (obj, event, arg) {
-			var all = typeof event !== "undefined",
+			var all = typeof arg !== "undefined",
 			    o, e, a;
 
 			o = all ? obj   : this;
