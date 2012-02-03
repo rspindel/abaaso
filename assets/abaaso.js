@@ -4122,7 +4122,7 @@
 		expires         : 120000,
 		extend          : utility.extend,
 		fire            : function (obj, event, arg) {
-			var all = typeof arg !== "undefined",
+			var all = typeof event !== "undefined",
 			    o, e, a;
 
 			o = all ? obj   : this;
@@ -4271,7 +4271,7 @@
 		timer           : {},
 		tpl             : utility.tpl,
 		un              : function (obj, event, id, state) {
-			var all = typeof id !== "undefined",
+			var all = typeof event !== "undefined",
 			    o, e, i, s;
 
 			o = all ? obj   : this;
