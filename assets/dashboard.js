@@ -283,7 +283,12 @@ var dashboard = (function(){
 		$("year").text(new Date().getFullYear());
 
 		stage.on("beforeGet", function () { this.loading(); }, "loading")
-		     .on("afterGet", function () { if (typeof $("#twitter") !== "undefined") dashboard.twitter.display(); }, "twitter");
+		     .on("afterGet", function () {
+		     	debugger;
+		     	if (typeof $("#twitter") !== "undefined") {
+		     		dashboard.twitter.display();
+		     	}
+		     }, "twitter");
 
 		// Consuming APIs
 		$.store(dashboard.api);
