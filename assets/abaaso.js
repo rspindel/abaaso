@@ -2949,7 +2949,12 @@
 					obj = document[sel.indexOf("#") > -1 && sel.indexOf(":") === -1 ? "querySelector" : "querySelectorAll"](arg);
 					break;
 				case arg.indexOf("#") === 0 && arg.indexOf(":") === -1:
-					obj = isNaN(arg.charAt(1)) ? document.querySelector(arg) : document.getElementById(arg.substring(1));
+					try {
+						obj = isNaN(arg.charAt(1)) ? document.querySelector(arg) : document.getElementById(arg.substring(1));
+					}
+					catch (e) {
+						debugger;
+					}
 					break;
 				case arg.indexOf("#") > -1 && arg.indexOf(":") === -1:
 					obj = document.querySelector(arg);
