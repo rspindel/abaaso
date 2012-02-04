@@ -298,8 +298,10 @@ var dashboard = (function(){
 		});
 
 		$.route.set("main", function () {
+			$.observer.log = true;
 			api.addClass("hide");
 			stage.removeClass("share").get("views/intro.htm");
+			$.observer.log = false;
 		});
 
 		// Prepping the UI
