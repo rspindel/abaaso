@@ -2788,7 +2788,7 @@
 
 				if ($.observer.log || abaaso.observer.log) utility.log("[" + new Date().toLocaleTimeString() + " - " + o + "] " + event);
 				l = this.list(obj, event).active;
-				if (client.firefox && obj = "view/intro.htm") debugger;
+				if (client.firefox && obj === "view/intro.htm") debugger;
 				for (i in l) if (l.hasOwnProperty(i)) l[i].fn.call(l[i].scope, arg);
 				$.observer.fired++;
 				return obj;
