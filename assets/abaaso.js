@@ -2865,7 +2865,7 @@
 						instance = obj;
 						break;
 					default:
-						instance = !(/\//g.test(o)) && o !== "abaaso" ? $("#"+o) : null;
+						instance = o.indexOf("/") === -1 && o !== "abaaso" ? $("#" + o) : null;
 				}
 
 				efn = function (e) {
