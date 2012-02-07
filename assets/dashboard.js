@@ -303,7 +303,7 @@ var dashboard = (function(){
 		});
 
 		// Prepping the UI
-		this.loading.url = "assets/loading.gif";
+		$.loading.url = "assets/loading.gif";
 
 		$("version").text($.version);
 		$("year").text(new Date().getFullYear());
