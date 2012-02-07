@@ -42,7 +42,7 @@
  * @author Jason Mulligan <jason.mulligan@avoidwork.com>
  * @link http://abaaso.com/
  * @module abaaso
- * @version 1.8.1
+ * @version 1.8.6
  */
  if (typeof $ === "undefined") var $ = null;
  if (typeof abaaso === "undefined") var abaaso = (function () {
@@ -495,6 +495,16 @@
 		},
 
 		/**
+		 * Determines if a URI is a CORS end point
+		 * 
+		 * @param  {String} uri  URI to parse
+		 * @return {Boolean} True if CORS
+		 */
+		cors : function (uri) {
+			return (uri.indexOf("//") > -1 && uri.indexOf("//" + location.host) === -1);
+		},
+
+		/**
 		 * Caches the headers from the XHR response
 		 * 
 		 * @method headers
@@ -671,7 +681,7 @@
 
 				type = type.toLowerCase();
 				var l       = document.location,
-				    cors    = (uri.indexOf(l.protocol + "//" + l.host) !== 0),
+				    cors    = client.cors(uri),
 				    xhr     = (client.ie && client.version < 10 && cors && type === "get") ? new XDomainRequest() : new XMLHttpRequest(),
 				    payload = /post|put/i.test(type) ? args : null,
 				    headers = type === "get" && args instanceof Object ? args : null,
@@ -875,7 +885,7 @@
 								throw Error(label.error.serverError);
 						}
 						break;
-					case client.ie && uri.indexOf(l.protocol + "//" + l.host) !== 0 && typed === "Get": // IE XDomainRequest
+					case client.ie && client.cors(uri) && typed === "Get": // IE XDomainRequest
 						var r, x;
 
 						switch (true) {
@@ -914,8 +924,8 @@
 			    y = 0;
 
 			if (!client.server) {
-				x = document.compatMode === "CSS1Compat" && !client.opera ? document.documentElement.clientWidth  : document.body.clientWidth;
-			    y = document.compatMode === "CSS1Compat" && !client.opera ? document.documentElement.clientHeight : document.body.clientHeight;
+				x = typeof document.documentElement !== "undefined" ? document.documentElement.clientWidth  : document.body.clientWidth;
+			    y = typeof document.documentElement !== "undefined" ? document.documentElement.clientHeight : document.body.clientHeight;
 			}
 
 			return {x: x, y: y};
@@ -1178,9 +1188,12 @@
 				}
 
 				args   = {key: key, record: record, reindex: reindex};
-				uri    = this.uri + "/" + key;
-				p.uri  = uri.allows("delete");
-				p.data = this.uri.allows("delete");
+
+				if (this.uri !== null) {
+					uri    = this.uri + "/" + key;
+					p.uri  = uri.allows("delete");
+					p.data = this.uri.allows("delete");
+				}
 
 				obj.fire("beforeDataDelete", args);
 				switch (true) {
@@ -1397,13 +1410,14 @@
 
 				switch (true) {
 					case typeof record === "undefined" || String(record).length === 0:
-						r = this.records;
+						r = [];
+						this.records.each(function (i) { r.push(utility.clone(i)); });
 						break;
 					case typeof record === "string" && typeof this.keys[record] !== "undefined":
-						r = this.records[this.keys[record].index];
+						r = utility.clone(this.records[this.keys[record].index]);
 						break;
 					case typeof record === "number":
-						r = this.records[record];
+						r = utility.clone(this.records[record]);
 						break;
 					case record instanceof Array:
 						if (!!isNaN(record[0]) || !!isNaN(record[1]))
@@ -1411,7 +1425,7 @@
 
 						start = record[0] - 1;
 						end   = record[1] - 1;
-						for (i = start; i < end; i++) { if (typeof this.records[i] !== "undefined") r.push(this.records[i]); }
+						for (i = start; i < end; i++) { if (typeof this.records[i] !== "undefined") r.push(utility.clone(this.records[i])); }
 						break;
 					default:
 						r = undefined;
@@ -1483,13 +1497,17 @@
 				var record = typeof this.keys[key] === "undefined" && typeof this.records[key] === "undefined" ? undefined : this.get(key),
 				    obj    = this.parentNode,
 				    method = typeof key === "undefined" ? "post" : "put",
-				    args   = {data: data, key: key, record: record},
-				    uri    = this.uri + "/" + key,
+				    args   = {data: data, key: key, record: undefined},
+				    uri    = this.uri === null ? null : this.uri + "/" + key,
 				    p      = {},
 				    r      = new RegExp("true|undefined");
 
-				p.uri  = uri.allows(method);
-				p.data = this.uri.allows(method);
+				if (typeof record !== "undefined") args.record = this.records[this.keys[record.key].index];
+
+				if (uri !== null) {
+					p.uri  = uri.allows(method);
+					p.data = this.uri.allows(method);
+				}
 
 				obj.fire("beforeDataSet");
 				switch (true) {
@@ -1737,29 +1755,30 @@
 
 			obj.on("syncDataSet", function (data) {
 				var record;
-				if (typeof data.record === "undefined") {
-					var index = this.total;
-					this.total++;
-					if (typeof data.key === "undefined") {
-						if (typeof data.result === "undefined") {
-							this.fire("failedDataSet");
-							throw Error(label.error.expectedObject);
+				switch (true) {
+					case typeof data.record === "undefined":
+						var index = this.total;
+						this.total++;
+						if (typeof data.key === "undefined") {
+							if (typeof data.result === "undefined") {
+								this.fire("failedDataSet");
+								throw Error(label.error.expectedObject);
+							}
+							data.key = this.key === null ? array.cast(data.result).first() : data.result[this.key];
+							data.key = data.key.toString();
 						}
-						data.key = this.key === null ? array.cast(data.result).first() : data.result[this.key];
-						data.key = data.key.toString();
-					}
-					if (typeof data.data[data.key] !== "undefined") data.key = data.data[data.key];
-					this.keys[data.key] = {};
-					this.keys[data.key].index = index;
-					this.records[index] = {};
-					record = this.records[index];
-					record.data = utility.clone(data.data);
-					record.key  = data.key;
-					if (this.key !== null && this.records[index].data.hasOwnProperty(this.key)) delete this.records[index].data[this.key];
-				}
-				else {
-					data.record.data = utility.clone(data.data);
-					record = data.record;
+						if (typeof data.data[data.key] !== "undefined") data.key = data.data[data.key];
+						this.keys[data.key] = {};
+						this.keys[data.key].index = index;
+						this.records[index] = {};
+						record = this.records[index];
+						record.data = utility.clone(data.data);
+						record.key  = data.key;
+						if (this.key !== null && this.records[index].data.hasOwnProperty(this.key)) delete this.records[index].data[this.key];
+						break;
+					default:
+						data.record.data = utility.clone(data.data);
+						record = data.record;
 				}
 				this.views = {};
 				this.parentNode.fire("afterDataSet", record);
@@ -2310,7 +2329,7 @@
 
 				if (obj instanceof Array) return obj.each(function (i) { el.update(i, args); });
 
-				if (!obj instanceof Element)
+				if (!(obj instanceof Element))
 					throw Error(label.error.invalidArguments);
 
 				obj.fire("beforeUpdate");
@@ -3046,8 +3065,11 @@
 					clone = obj;
 			}
 
-			if (obj.hasOwnProperty("constructor")) clone.constructor = obj.constructor;
-			if (obj.hasOwnProperty("prototype"))   clone.prototype   = obj.prototype;
+			if (typeof obj !== "undefined") {
+				if (obj.hasOwnProperty("constructor")) clone.constructor = obj.constructor;
+				if (obj.hasOwnProperty("prototype"))   clone.prototype   = obj.prototype;
+			}
+
 			return clone;
 		},
 
@@ -4279,7 +4301,7 @@
 			return observer.remove.call(observer, o, e, i, s);
 		},
 		update          : el.update,
-		version         : "1.8.1"
+		version         : "1.8.6"
 	};
 })();
 if (typeof abaaso.bootstrap === "function") abaaso.bootstrap();
