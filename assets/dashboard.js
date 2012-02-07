@@ -310,7 +310,7 @@ var dashboard = (function(){
 
 		stage.on("beforeGet", function () {
 			this.loading();
-		}, "loading").on("afterUpdate", function () {
+		}, "loading").on("afterGet", function () {
 			if (typeof $("#twitter") !== "undefined") dashboard.twitter.display();
 		}, "twitter");
 
