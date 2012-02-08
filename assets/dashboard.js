@@ -5,7 +5,7 @@
  * @version 2.3
  */
 (function () {
-	var dashboard, ready, render;
+	var dashboard;
 
 	dashboard = (function () {
 		var blog    = {id: "blog"},
@@ -20,7 +20,7 @@
 			    	if (typeof obj !== "undefined") typeof r !== "undefined" ? obj.text(r.data.text) : obj.loading();
 			    }
 			},
-			api;
+			api, ready, render;
 
 		// API widget
 		api = {
@@ -205,137 +205,129 @@
 			}
 		};
 
+		// abaaso listeners
+		ready = function () {
+			var uri   = {
+				api     : "http://api.abaaso.com?callback=?",
+				collabs : "https://api.github.com/repos/avoidwork/abaaso/collaborators?callback=?",
+				tumblr  : "http://api.tumblr.com/v2/blog/attackio.tumblr.com/posts?api_key=cm7cZbxWpFDtv8XFD5XFuWsn5MnzupVpUtaCjYIJAurfPj5B1V&tag=abaaso&limit=1000000&jsonp=?",
+				twitter : "http://search.twitter.com/search.json?callback=?&from=abaaso"
+			};
+
+			// Consuming APIs
+			$.store(dashboard.api);
+			dashboard.api.data.key = "name";
+			dashboard.api.on("afterDataSync", function(){ this.render(); });
+			typeof dashboard.api.data.setUri === "function" ? dashboard.api.data.setUri(uri.api) : dashboard.api.data.uri = uri.api;
+
+			$.store(dashboard.blog);
+			dashboard.blog.data.key         = "id";
+			dashboard.blog.data.callback    = "jsonp";
+			dashboard.blog.data.source      = "response";
+			typeof dashboard.blog.data.setUri === "function" ? dashboard.blog.data.setUri(uri.tumblr) : dashboard.blog.data.uri = uri.tumblr;
+
+			$.store(dashboard.collabs);
+			dashboard.collabs.data.source   = "data";
+			dashboard.collabs.data.key      = "id";
+			typeof dashboard.collabs.data.setUri === "function" ? dashboard.api.data.setUri(uri.collabs) : dashboard.collabs.data.uri = uri.collabs;
+
+			$.store(dashboard.twitter);
+			dashboard.twitter.data.key      = "id";
+			dashboard.twitter.data.callback = "callback";
+			dashboard.twitter.on("afterDataSync", function() { this.display(); }, "sync");
+			typeof dashboard.twitter.data.setUri === "function" ? dashboard.twitter.data.setUri(uri.twitter) : dashboard.twitter.data.uri = uri.twitter;
+		};
+
+		render = function () {
+			var stage = $("#stage"),
+			    api   = $("#api");
+
+			// Setting routing
+			$.route.set("api", function () {
+				api.removeClass("hide");
+				stage.addClass("share").get("views/api.htm");
+			});
+
+			$.route.set("blog", function () {
+				api.addClass("hide");
+				stage.removeClass("share").loading();
+
+				var fn = function() {
+					if (dashboard.blog.data.total > 0) {
+						var items = dashboard.blog.data.get([0, 10]),
+						    d, o;
+
+						stage.clear();
+
+						items.each(function(item) {
+							d = item.data.date.replace(/\s.*/, "").explode("-"); // Parsing String because some browsers will not cast to Date
+							o = stage.create("article");
+							o.create("h3").create("a", {href: item.data.post_url, innerHTML: item.data.title});
+							o.create("date").text($.label.month[parseInt(d[1] -1 ).toString()]+" "+d[2]+", "+d[0]);
+							o.create("entry").text(item.data.body);
+						});
+
+						stage.create("p").create("a", {innerHTML: "Read more on attack.io", href: "http://attack.io"});
+						return false;
+					}
+				};
+
+				$.repeat(fn, 10, "blog");
+			});
+
+			$.route.set("download", function () {
+				var guid = $.guid();
+
+				api.addClass("hide");
+				stage.removeClass("share")
+				     .on("afterGet", function() {
+				     	this.un("afterGet", guid);
+				     	$("#download-debugging").on("click", function () { location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/abaaso.js"; }, "click");
+				     	$("#download-production").on("click", function () { location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/abaaso-min.js"; }, "click");
+				     }, guid)
+				     .get("views/download.htm");
+			});
+
+			$.route.set("error", function () {
+				api.addClass("hide");
+				stage.removeClass("share").get("views/error.htm");
+			});
+
+			$.route.set("examples", function () {
+				api.addClass("hide");
+				stage.removeClass("share").get("views/examples.htm");
+			});
+
+			$.route.set("main", function () {
+				api.addClass("hide");
+				stage.removeClass("share").get("views/intro.htm");
+			});
+
+			// Prepping the UI
+			$.loading.url = "assets/loading.gif";
+
+			$("version").text($.version);
+			$("year").text(new Date().getFullYear());
+
+			stage.on("beforeGet", function () { this.loading(); }, "loading")
+			     .on("afterGet", function () { if (typeof $("#twitter") !== "undefined") dashboard.twitter.display(); }, "twitter");
+
+			$("body").css("opacity", 1);
+
+			if (!/\w/.test(document.location.hash)) document.location.hash = "#!/main";
+			else $.route.load(document.location.hash);
+		};
+
 		// @constructor
 		return {
 			api     : api,
 			blog    : blog,
 			collabs : collabs,
+			ready   : ready,
+			render  : render,
 			twitter : twitter
 		}
 	});
-
-
-	/**
-	 * abaaso ready lsitener
-	 * 
-	 * @return {Undefined} undefined
-	 */
-	ready = function () {
-		var uri   = {
-			api     : "http://api.abaaso.com?callback=?",
-			collabs : "https://api.github.com/repos/avoidwork/abaaso/collaborators?callback=?",
-			tumblr  : "http://api.tumblr.com/v2/blog/attackio.tumblr.com/posts?api_key=cm7cZbxWpFDtv8XFD5XFuWsn5MnzupVpUtaCjYIJAurfPj5B1V&tag=abaaso&limit=1000000&jsonp=?",
-			twitter : "http://search.twitter.com/search.json?callback=?&from=abaaso"
-		};
-
-		// Consuming APIs
-		$.store(dashboard.api);
-		dashboard.api.data.key = "name";
-		dashboard.api.on("afterDataSync", function(){ this.render(); });
-		typeof dashboard.api.data.setUri === "function" ? dashboard.api.data.setUri(uri.api) : dashboard.api.data.uri = uri.api;
-
-		$.store(dashboard.blog);
-		dashboard.blog.data.key         = "id";
-		dashboard.blog.data.callback    = "jsonp";
-		dashboard.blog.data.source      = "response";
-		typeof dashboard.blog.data.setUri === "function" ? dashboard.blog.data.setUri(uri.tumblr) : dashboard.blog.data.uri = uri.tumblr;
-
-		$.store(dashboard.collabs);
-		dashboard.collabs.data.source   = "data";
-		dashboard.collabs.data.key      = "id";
-		typeof dashboard.collabs.data.setUri === "function" ? dashboard.api.data.setUri(uri.collabs) : dashboard.collabs.data.uri = uri.collabs;
-
-		$.store(dashboard.twitter);
-		dashboard.twitter.data.key      = "id";
-		dashboard.twitter.data.callback = "callback";
-		dashboard.twitter.on("afterDataSync", function() { this.display(); }, "sync");
-		typeof dashboard.twitter.data.setUri === "function" ? dashboard.twitter.data.setUri(uri.twitter) : dashboard.twitter.data.uri = uri.twitter;
-	};
-
-	/**
-	 * abaaso render lsitener
-	 * 
-	 * @return {Undefined} undefined
-	 */
-	render = function () {
-		var stage = $("#stage"),
-		    api   = $("#api");
-
-		// Setting routing
-		$.route.set("api", function () {
-			api.removeClass("hide");
-			stage.addClass("share").get("views/api.htm");
-		});
-
-		$.route.set("blog", function () {
-			api.addClass("hide");
-			stage.removeClass("share").loading();
-
-			var fn = function() {
-				if (dashboard.blog.data.total > 0) {
-					var items = dashboard.blog.data.get([0, 10]),
-					    d, o;
-
-					stage.clear();
-
-					items.each(function(item) {
-						d = item.data.date.replace(/\s.*/, "").explode("-"); // Parsing String because some browsers will not cast to Date
-						o = stage.create("article");
-						o.create("h3").create("a", {href: item.data.post_url, innerHTML: item.data.title});
-						o.create("date").text($.label.month[parseInt(d[1] -1 ).toString()]+" "+d[2]+", "+d[0]);
-						o.create("entry").text(item.data.body);
-					});
-
-					stage.create("p").create("a", {innerHTML: "Read more on attack.io", href: "http://attack.io"});
-					return false;
-				}
-			};
-
-			$.repeat(fn, 10, "blog");
-		});
-
-		$.route.set("download", function () {
-			var guid = $.guid();
-
-			api.addClass("hide");
-			stage.removeClass("share")
-			     .on("afterGet", function() {
-			     	this.un("afterGet", guid);
-			     	$("#download-debugging").on("click", function () { location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/abaaso.js"; }, "click");
-			     	$("#download-production").on("click", function () { location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/abaaso-min.js"; }, "click");
-			     }, guid)
-			     .get("views/download.htm");
-		});
-
-		$.route.set("error", function () {
-			api.addClass("hide");
-			stage.removeClass("share").get("views/error.htm");
-		});
-
-		$.route.set("examples", function () {
-			api.addClass("hide");
-			stage.removeClass("share").get("views/examples.htm");
-		});
-
-		$.route.set("main", function () {
-			api.addClass("hide");
-			stage.removeClass("share").get("views/intro.htm");
-		});
-
-		// Prepping the UI
-		$.loading.url = "assets/loading.gif";
-
-		$("version").text($.version);
-		$("year").text(new Date().getFullYear());
-
-		stage.on("beforeGet", function () { this.loading(); }, "loading")
-		     .on("afterGet", function () { if (typeof $("#twitter") !== "undefined") dashboard.twitter.display(); }, "twitter");
-
-		$("body").css("opacity", 1);
-
-		if (!/\w/.test(document.location.hash)) document.location.hash = "#!/main";
-		else $.route.load(document.location.hash);
-	};
 
 	// AMD support
 	switch (true) {
@@ -343,11 +335,12 @@
 			define("dashboard", ["abaaso", "abaaso.route"], function () {
 				var $ = window[abaaso.aliased];
 				window.dashboard = dashboard();
-				ready();
-				render();
+				window.dashboard.ready();
+				window.dashboard.render();
 			});
 			break;
 		default:
-			abaaso.on("ready", ready).on("render", render);
+			window.dashboard = dashboard();
+			abaaso.on("ready", window.dashboard.ready).on("render", window.dashboard.render);
 	}
 })();
