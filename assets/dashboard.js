@@ -213,7 +213,7 @@
 			collabs : collabs,
 			twitter : twitter
 		}
-	})();
+	});
 
 
 	/**
@@ -344,6 +344,7 @@
 	switch (true) {
 		case typeof define === "function":
 			define("dashboard", ["abaaso", "abaaso.route"], function () {
+				dashboard();
 				ready();
 				render();
 				return dashboard;
