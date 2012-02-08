@@ -207,7 +207,8 @@
 
 		// abaaso listeners
 		ready = function () {
-			var uri   = {
+			var dashboard = window.dashboard,
+			    uri = {
 				api     : "http://api.abaaso.com?callback=?",
 				collabs : "https://api.github.com/repos/avoidwork/abaaso/collaborators?callback=?",
 				tumblr  : "http://api.tumblr.com/v2/blog/attackio.tumblr.com/posts?api_key=cm7cZbxWpFDtv8XFD5XFuWsn5MnzupVpUtaCjYIJAurfPj5B1V&tag=abaaso&limit=1000000&jsonp=?",
