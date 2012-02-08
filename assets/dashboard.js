@@ -94,11 +94,13 @@
 				id = id || item.replace(/(\&|,|(\s)|\/)/gi,"").toLowerCase();
 				if (id === "$") id = "helper";
 
+				var dashboard = window.dashboard;
+
 				$("#"+target).create("li", {id: id})
 				             .create("a", {id: id+"-anchor", innerHTML: item, "class": "nav"})
 							 .on("click", function(){
 								var list   = $("#"+this.parentNode.id+"-sub"),
-									record = window.dashboard.api.data.get(key),
+									record = dashboard.api.data.get(key),
 									panel;
 
 								if (typeof list !== "undefined") {
