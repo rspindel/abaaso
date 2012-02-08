@@ -284,8 +284,8 @@
 				stage.removeClass("share")
 				     .on("afterGet", function() {
 				     	this.un("afterGet", guid);
-				     	$("#download-debugging").on("click", function () { location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/abaaso.js"; }, "click");
-				     	$("#download-production").on("click", function () { location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/abaaso-min.js"; }, "click");
+				     	$("#download-debugging").on("click", function () { location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/debug/abaaso.js"; }, "click");
+				     	$("#download-production").on("click", function () { location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/production/abaaso.js"; }, "click");
 				     }, guid)
 				     .get("views/download.htm");
 			});
