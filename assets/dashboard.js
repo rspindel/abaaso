@@ -341,10 +341,10 @@
 	switch (true) {
 		case typeof define === "function":
 			define("dashboard", ["abaaso", "abaaso.route"], function () {
-				var $ = window[abaaso.aliased], amd = dashboard();
+				var $ = window[abaaso.aliased];
+				window.dashboard = dashboard();
 				ready();
 				render();
-				return amd;
 			});
 			break;
 		default:
