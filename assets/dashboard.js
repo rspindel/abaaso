@@ -342,7 +342,7 @@
 	// AMD support
 	switch (true) {
 		case typeof define === "function":
-			define("dashboard", ["abaaso", "abaaso.route"], function () {
+			define("dashboard", ["abaaso", "abaasoroute"], function () {
 				ready();
 				render();
 				return dashboard;
