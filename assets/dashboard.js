@@ -8,8 +8,7 @@
 	var dashboard, ready, render;
 
 	dashboard = (function () {
-		var $       = window[abaaso.aliased],
-		    blog    = {id: "blog"},
+		var blog    = {id: "blog"},
 		    collabs = {id: "collabs"},
 		    twitter = {
 			    id      : "twitter",
@@ -222,8 +221,7 @@
 	 * @return {Undefined} undefined
 	 */
 	ready = function () {
-		var $     = window[abaaso.aliased],
-		    uri   = {
+		var uri   = {
 			api     : "http://api.abaaso.com?callback=?",
 			collabs : "https://api.github.com/repos/avoidwork/abaaso/collaborators?callback=?",
 			tumblr  : "http://api.tumblr.com/v2/blog/attackio.tumblr.com/posts?api_key=cm7cZbxWpFDtv8XFD5XFuWsn5MnzupVpUtaCjYIJAurfPj5B1V&tag=abaaso&limit=1000000&jsonp=?",
@@ -260,8 +258,7 @@
 	 * @return {Undefined} undefined
 	 */
 	render = function () {
-		var $     = window[abaaso.aliased],
-		    stage = $("#stage"),
+		var stage = $("#stage"),
 		    api   = $("#api");
 
 		// Setting routing
@@ -344,10 +341,10 @@
 	switch (true) {
 		case typeof define === "function":
 			define("dashboard", ["abaaso", "abaaso.route"], function () {
-				dashboard();
+				var $ = window[abaaso.aliased], amd = dashboard();
 				ready();
 				render();
-				return dashboard;
+				return amd;
 			});
 			break;
 		default:
