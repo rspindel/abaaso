@@ -241,7 +241,8 @@
 
 		render = function () {
 			var stage = $("#stage"),
-			    api   = $("#api");
+			    api   = $("#api"),
+			    dashboard = window.dashboard;
 
 			// Setting routing
 			$.route.set("api", function () {
