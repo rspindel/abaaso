@@ -12,7 +12,7 @@
 		    collabs = {id: "collabs"},
 		    twitter = {
 			    id      : "twitter",
-			    display : function(index) {
+			    display : function (index) {
 			    	index   = index || 0;
 			    	var obj = $("#twitter"),
 			    	    r   = this.data.get(index);
@@ -44,7 +44,7 @@
 			 *
 			 * @param s {object} The object to iterate
 			 */
-			elements : function(s) {
+			elements : function (s) {
 				try {
 					var i, x, y;
 
@@ -89,7 +89,7 @@
 			 * @param key {string} The record key
 			 * @param target {string} The target element to add the item to
 			 */
-			generate : function(item, key, target, id){
+			generate : function (item, key, target, id){
 				if (typeof $("#"+target) === "undefined") return;
 				id = id || item.replace(/(\&|,|(\s)|\/)/gi,"").toLowerCase();
 				if (id === "$") id = "helper";
@@ -131,7 +131,7 @@
 			/**
 			 * Creates the API widget using abaaso
 			 */
-			render : function() {
+			render : function () {
 				this.elements({prototypes: this.structure(this.prototypes)});
 				this.elements(this.structure(abaaso));
 			},
@@ -141,7 +141,7 @@
 			 *
 			 * @returns {object}
 			 */
-			structure : function(s) {
+			structure : function (s) {
 				var structure, getChildren;
 
 				/**
@@ -150,7 +150,7 @@
 				 * @param o {object} The object to iterate
 				 * @returns {object}
 				 */
-				getChildren = function(o, x) {
+				getChildren = function (o, x) {
 					x = x || 1;
 					var i, m = 3, c = {};
 
@@ -158,7 +158,7 @@
 					if (x >= m) return;
 
 					if (o instanceof Array) {
-						o.each(function(i) {
+						o.each(function (i) {
 							c[i] = typeof o[i] === "object" ? getChildren(o[i], (x + 1)) : {};
 						});
 					}
@@ -199,6 +199,7 @@
 					delete structure.error.log;
 					delete structure.fx;
 					delete structure.timer;
+					delete structure.route;
 				}
 
 				return structure;
@@ -254,14 +255,14 @@
 				api.addClass("hide");
 				stage.removeClass("share").loading();
 
-				var fn = function() {
+				var fn = function () {
 					if (dashboard.blog.data.total > 0) {
 						var items = dashboard.blog.data.get([0, 10]),
 						    d, o;
 
 						stage.clear();
 
-						items.each(function(item) {
+						items.each(function (item) {
 							d = item.data.date.replace(/\s.*/, "").explode("-"); // Parsing String because some browsers will not cast to Date
 							o = stage.create("article");
 							o.create("h3").create("a", {href: item.data.post_url, innerHTML: item.data.title});
@@ -282,7 +283,7 @@
 
 				api.addClass("hide");
 				stage.removeClass("share")
-				     .on("afterGet", function() {
+				     .on("afterGet", function () {
 				     	this.un("afterGet", guid);
 				     	$("#download-debugging").on("click", function () { location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/debug/abaaso.js"; }, "click");
 				     	$("#download-production").on("click", function () { location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/production/abaaso.js"; }, "click");
