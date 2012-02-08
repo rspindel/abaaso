@@ -4,13 +4,12 @@
  * @author Jason Mulligan <jason.mulligan@avoidwork.com>
  * @version 2.3
  */
-(function (window) {
-	var $ = window[abaaso.aliased],
-	    dashboard, ready, render;
+(function () {
+	var dashboard, ready, render;
 
 	dashboard = (function () {
-		// Data stores
-		var blog    = {id: "blog"},
+		var $       = window[abaaso.aliased],
+		    blog    = {id: "blog"},
 		    collabs = {id: "collabs"},
 		    twitter = {
 			    id      : "twitter",
@@ -223,7 +222,8 @@
 	 * @return {Undefined} undefined
 	 */
 	ready = function () {
-		var uri   = {
+		var $     = window[abaaso.aliased],
+		    uri   = {
 			api     : "http://api.abaaso.com?callback=?",
 			collabs : "https://api.github.com/repos/avoidwork/abaaso/collaborators?callback=?",
 			tumblr  : "http://api.tumblr.com/v2/blog/attackio.tumblr.com/posts?api_key=cm7cZbxWpFDtv8XFD5XFuWsn5MnzupVpUtaCjYIJAurfPj5B1V&tag=abaaso&limit=1000000&jsonp=?",
@@ -260,7 +260,8 @@
 	 * @return {Undefined} undefined
 	 */
 	render = function () {
-		var stage = $("#stage"),
+		var $     = window[abaaso.aliased],
+		    stage = $("#stage"),
 		    api   = $("#api");
 
 		// Setting routing
@@ -349,6 +350,6 @@
 			});
 			break;
 		default:
-			$.on("ready", ready).on("render", render);
+			abaaso.on("ready", ready).on("render", render);
 	}
-})(window);
+})();
