@@ -9,10 +9,8 @@
 <link rel="stylesheet" type="text/css" href="assets/default.css" media="print,screen" />
 <script type="text/javascript" src="assets/require.js"></script>
 <script type="text/javascript">
-require.config({
-	baseUrl: "/assets"
-});
-require(["abaaso", "abaaso.route", "dashboard"]);
+require.config({baseUrl: "/assets"});
+require(["/assets/abaaso-min.js", "/assets/abaaso.route-min.js", "dashboard"]);
 </script>
 <script type="text/javascript">
   var _gaq = _gaq || [];
