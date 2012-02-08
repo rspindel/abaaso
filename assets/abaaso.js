@@ -3362,6 +3362,7 @@ if (typeof window.abaaso === "undefined") window.abaaso = (function () {
 		 * @private
 		 */
 		object : function (obj) {
+			if (typeof obj === "undefined") debugger;
 			return typeof obj === "object" ? obj : (obj.toString().charAt(0) === "#" ? $(obj) : obj);
 		},
 
