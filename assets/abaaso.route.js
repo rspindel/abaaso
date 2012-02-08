@@ -115,9 +115,7 @@
 	switch (true) {
 		case typeof define === "function":
 			define("abaaso.route", ["abaaso"], function () {
-				var amd = route();
-				abaaso.module("route", amd);
-				return amd;
+				abaaso.module("route", route());
 			});
 			break;
 		default:
