@@ -10,7 +10,7 @@
 <script type="text/javascript" src="assets/require.js"></script>
 <script type="text/javascript">
 require.config({baseUrl: "/assets"});
-require(["abaaso", "abaaso.route", "dashboard"]);
+require(["abaaso", "abaaso.route", "abaaso.tabs", "dashboard"]);
 </script>
 <script type="text/javascript">
   var _gaq = _gaq || [];
@@ -23,28 +23,17 @@ require(["abaaso", "abaaso.route", "dashboard"]);
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
 </script>
+<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+<![endif]-->
 </head>
 
 <body>
 <header>
 	<h1><a href="#!/main"><img src="assets/abaaso-logo.png" alt="abaaso" /></a></h1>
-	<nav>
-		<ul>
-			<li><a href="#!/download">// Download</a></li>
-			<li><a href="#!/blog">/ Blog</a></li>
-			<li><a href="#!/api">/ API</a></li>
-			<li><a href="#!/examples">/ Examples</a></li>
-			<li><a href="//github.com/avoidwork/abaaso">/ Github</a></li>
-		</ul>
-	</nav>
 </header>
-<section>
-	<div id="api" class="hide">
-		<h3>API</h3>
-		<ul id="apis"></ul>
-	</div>
-	<div id="stage"></div>
-</section>
+<article id="stage"></article>
 <footer>
 	Copyright &copy <year></year> <a href="http://avoidwork.com">Jason Mulligan</a> | <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD 3 Licensed</a> | <version></version>
 </footer>

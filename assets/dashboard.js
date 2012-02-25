@@ -2,9 +2,11 @@
  * abaaso dashboard
  *
  * @author Jason Mulligan <jason.mulligan@avoidwork.com>
- * @version 2.3
+ * @version 2.4
  */
 (function () {
+	"use strict";
+
 	var dashboard;
 
 	dashboard = (function () {
@@ -243,65 +245,65 @@
 			    api   = $("#api"),
 			    dashboard = window.dashboard;
 
+			// Creating tabs
+			stage.tabs(["Download", "Blog", "API", "Examples", "GitHub"]);
+
 			// Setting routing
-			$.route.set("api", function () {
-				api.removeClass("hide");
-				stage.addClass("share").get("views/api.htm");
+			$.route.set("download", function () {
+				var obj = $("section[data-hash='download']");
+
+				if (obj.innerHTML.isEmpty()) {
+					obj.on("afterGet", function () {
+				     	$("#download-debugging").on("click", function () { location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/debug/abaaso.js"; }, "click");
+				     	$("#download-production").on("click", function () { location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/production/abaaso.js"; }, "click");
+				     }).loading().get("views/download.htm");
+				}
 			});
 
 			$.route.set("blog", function () {
-				api.addClass("hide");
-				stage.removeClass("share").loading();
-
-				var fn = function () {
+				var obj = $("section[data-hash='blog']"),
+				    fn  = function () {
 					if (dashboard.blog.data.total > 0) {
 						var items = dashboard.blog.data.get([0, 10]),
 						    d, o;
 
-						stage.clear();
+						obj.clear();
 
 						items.each(function (item) {
 							d = item.data.date.replace(/\s.*/, "").explode("-"); // Parsing String because some browsers will not cast to Date
-							o = stage.create("article");
+							o = obj.create("article");
 							o.create("h3").create("a", {href: item.data.post_url, innerHTML: item.data.title});
 							o.create("date").text($.label.month[parseInt(d[1] -1 ).toString()]+" "+d[2]+", "+d[0]);
 							o.create("entry").text(item.data.body);
 						});
 
-						stage.create("p").create("a", {innerHTML: "Read more on attack.io", href: "http://attack.io"});
+						obj.create("p").create("a", {innerHTML: "Read more on attack.io", href: "http://attack.io"});
 						return false;
 					}
 				};
 
+				obj.loading();
+
 				$.repeat(fn, 10, "blog");
 			});
 
-			$.route.set("download", function () {
-				var guid = $.guid();
-
-				api.addClass("hide");
-				stage.removeClass("share")
-				     .on("afterGet", function () {
-				     	this.un("afterGet", guid);
-				     	$("#download-debugging").on("click", function () { location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/debug/abaaso.js"; }, "click");
-				     	$("#download-production").on("click", function () { location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/production/abaaso.js"; }, "click");
-				     }, guid)
-				     .get("views/download.htm");
+			$.route.set("api", function () {
+				var obj = $("section[data-hash='api']");
+				if (obj.innerHTML.isEmpty()) obj.loading().get("views/api.htm");
 			});
 
 			$.route.set("error", function () {
-				api.addClass("hide");
-				stage.removeClass("share").get("views/error.htm");
+				location.hash = "#!/main"
 			});
 
 			$.route.set("examples", function () {
-				api.addClass("hide");
-				stage.removeClass("share").get("views/examples.htm");
+				var obj = $("section[data-hash='examples']");
+				if (obj.innerHTML.isEmpty()) obj.loading().get("views/examples.htm");
 			});
 
 			$.route.set("main", function () {
-				api.addClass("hide");
-				stage.removeClass("share").get("views/intro.htm");
+				var obj = $("section[data-hash='main']");
+				if (obj.innerHTML.isEmpty()) obj.loading().get("views/intro.htm");
 			});
 
 			// Prepping the UI
@@ -315,8 +317,11 @@
 
 			$("body").css("opacity", 1);
 
-			if (!/\w/.test(document.location.hash)) document.location.hash = "#!/main";
-			else $.route.load(document.location.hash);
+			if (!/\w/.test(location.hash)) location.hash = "#!/main";
+			else {
+				$.tabs.active(location.hash);
+				$.route.load(location.hash);
+			}
 		};
 
 		// @constructor
@@ -333,7 +338,7 @@
 	// AMD support
 	switch (true) {
 		case typeof define === "function":
-			define("dashboard", ["abaaso", "abaaso.route"], function () {
+			define("dashboard", ["abaaso", "abaaso.route", "abaaso.tabs"], function () {
 				var $ = window[abaaso.aliased];
 				window.dashboard = dashboard();
 				window.dashboard.ready();

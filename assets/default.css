@@ -71,7 +71,7 @@ header nav {
 	text-align : right;
 }
 
-header nav ul li {
+ul.tabs li {
 	display   : inline;
 	margin    : 0 5px 0 0;
 }
