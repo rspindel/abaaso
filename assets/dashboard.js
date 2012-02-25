@@ -52,7 +52,7 @@
 						if (!s.hasOwnProperty(i)) continue;
 						this.generate(i, i, "apis");
 						for (x in s[i]) {
-							if (/bind|prototype/.test(x) || i === "$") continue;
+							if (!s[i].hasOwnProperty(x) || /bind|prototype/.test(x) || i === "$") continue;
 
 							var id  = i+"-"+x,
 								key = i+"."+x;
@@ -63,7 +63,7 @@
 							}
 							this.generate(x, key, i+"-sub", id);
 							for (y in s[i][x]) {
-								if (y === "prototype") continue;
+								if (!s[i][x].hasOwnProperty(y) || y === "prototype") continue;
 
 								var id  = i+"-"+x+"-"+y,
 									key = i+"."+x+"."+y;
@@ -164,11 +164,9 @@
 							c[i] = typeof o[i] === "object" ? getChildren(o[i], (x + 1)) : {};
 						});
 					}
-					else {
-						o.each(function (v, k) {
-							c[k] = o[k] instanceof Object ? getChildren(o[k], (x + 1)) : {};
-						});
-					}
+					else o.each(function (v, k) {
+						c[k] = o[k] instanceof Object ? getChildren(o[k], (x + 1)) : {};
+					});
 
 					return c;
 				};
