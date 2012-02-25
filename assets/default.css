@@ -131,6 +131,10 @@ footer {
 	filter     : progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=0 );
 }
 
+.active {
+	color   : #000;
+}
+
 .col {
 	width   : 28%;
 	float   : left;

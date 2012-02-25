@@ -311,8 +311,7 @@
 			$("version").text($.version);
 			$("year").text(new Date().getFullYear());
 
-			obj.on("beforeGet", function () { this.loading(); }, "loading")
-			   .on("afterGet", function () { if (typeof $("#twitter") !== "undefined") dashboard.twitter.display(); }, "twitter");
+			obj.on("beforeGet", function () { this.loading(); }, "loading").on("afterGet", function () { if (typeof $("#twitter") !== "undefined") dashboard.twitter.display(); }, "twitter");
 
 			$("body").css("opacity", 1);
 
