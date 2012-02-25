@@ -246,7 +246,7 @@
 			    obj;
 
 			// Creating tabs
-			stage.tabs(["Main", "Download", "Blog", "API", "Examples", "GitHub"]);
+			stage.tabs(["Main", "Download", "Blog", "API", "Examples"]);
 			obj = $("section.root")[0],
 
 			// Setting routing
