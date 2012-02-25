@@ -50,7 +50,7 @@
 
 					for (i in s) {
 						if (!s.hasOwnProperty(i)) continue;
-						this.generate(i, i, "api");
+						this.generate(i, i, "apis");
 						for (x in s[i]) {
 							if (!s[i].hasOwnProperty(x) || /bind|prototype/.test(x) || i === "$") continue;
 
