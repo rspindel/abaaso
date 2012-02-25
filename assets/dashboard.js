@@ -241,12 +241,13 @@
 		};
 
 		render = function () {
-			var stage = $("#stage"),
-			    obj   = $("section.root")[0],
-			    dashboard = window.dashboard;
+			var stage     = $("#stage"),
+			    dashboard = window.dashboard,
+			    obj;
 
 			// Creating tabs
 			stage.tabs(["Download", "Blog", "API", "Examples", "GitHub"]);
+			obj = $("section.root")[0],
 
 			// Setting routing
 			/*$.route.set("download", function () {
