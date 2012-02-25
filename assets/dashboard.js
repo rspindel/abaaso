@@ -246,20 +246,20 @@
 			    obj;
 
 			// Creating tabs
-			stage.tabs(["Main", "Download", "Blog", "API", "Examples"]);
+			stage.tabs(["Main", "API", "Blog", "Download", "Examples"]);
 			obj = $("section.root")[0],
 
 			// Setting routing
-			/*$.route.set("download", function () {
-				var guid = $.guid(true);
+			$.route.set("download", function () {
+				var guid = $.guid();
 
 				obj.on("afterGet", function () {
-				    	obj.un("afterGet", guid);
+				    	this.un("afterGet", guid);
 				    	$("#download-debugging").on("click", function () { location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/debug/abaaso.js"; }, "click");
 				    	$("#download-production").on("click", function () { location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/production/abaaso.js"; }, "click");
 				   }, guid).get("views/download.htm");
 				}
-			});*/
+			});
 
 			$.route.set("blog", function () {
 				var fn  = function () {
