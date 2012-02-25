@@ -254,11 +254,10 @@
 				var guid = $.guid();
 
 				obj.on("afterGet", function () {
-				    	this.un("afterGet", guid);
-				    	$("#download-debugging").on("click", function () { location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/debug/abaaso.js"; }, "click");
-				    	$("#download-production").on("click", function () { location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/production/abaaso.js"; }, "click");
-				   }, guid).get("views/download.htm");
-				}
+					this.un("afterGet", guid);
+					$("#download-debugging").on("click", function () { location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/debug/abaaso.js"; }, "click");
+					$("#download-production").on("click", function () { location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/production/abaaso.js"; }, "click");
+				}, guid).get("views/download.htm");
 			});
 
 			$.route.set("blog", function () {
