@@ -249,7 +249,7 @@
 			stage.tabs(["Download", "Blog", "API", "Examples", "GitHub"]);
 
 			// Setting routing
-			$.route.set("download", function () {
+			/*$.route.set("download", function () {
 				var guid = $.guid(true);
 
 				obj.on("afterGet", function () {
@@ -258,7 +258,7 @@
 				    	$("#download-production").on("click", function () { location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/production/abaaso.js"; }, "click");
 				   }, guid).get("views/download.htm");
 				}
-			});
+			});*/
 
 			$.route.set("blog", function () {
 				var fn  = function () {
