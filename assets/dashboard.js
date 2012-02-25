@@ -165,10 +165,9 @@
 						});
 					}
 					else {
-						for (i in o) {
-							if (!o.hasOwnProperty(i)) continue;
-							c[i] = o[i] instanceof Object ? getChildren(o[i], (x + 1)) : {};
-						}
+						o.each(function (v, k) {
+							c[k] = o[k] instanceof Object ? getChildren(o[k], (x + 1)) : {};
+						});
 					}
 
 					return c;
@@ -199,7 +198,6 @@
 					delete structure.state._current;
 					delete structure.dashboard;
 					delete structure.error.log;
-					delete structure.fx;
 					delete structure.timer;
 					delete structure.route;
 				}
