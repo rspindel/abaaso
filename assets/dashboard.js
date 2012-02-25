@@ -117,8 +117,7 @@
 											break;
 									}
 								}
-								$("#stage").clear();
-								panel = $("#stage").create("article");
+								panel = $("#copy").clear().create("article");
 								if (typeof record !== "undefined") {
 									panel.create("h2").text(record.key);
 									panel.create("h3").text(record.data.type);
@@ -128,7 +127,7 @@
 										panel.create("code").text(record.data.sample.replace(/\n/g, "<br />"));
 									};
 								}
-								else { panel.create("h2").text("Could not find the requested record"); }
+								else panel.create("h2").text("Could not find the requested record");
 							});
 			},
 
@@ -161,14 +160,8 @@
 					// Max recusion is 3 levels
 					if (x >= m) return;
 
-					if (o instanceof Array) {
-						o.each(function (i) {
-							c[i] = typeof o[i] === "object" ? getChildren(o[i], (x + 1)) : {};
-						});
-					}
-					else o.each(function (v, k) {
-						c[k] = o[k] instanceof Object ? getChildren(o[k], (x + 1)) : {};
-					});
+					if (o instanceof Array) o.each(function (i) { c[i] = typeof o[i] === "object" ? getChildren(o[i], (x + 1)) : {}; });
+					else o.each(function (v, k) { c[k] = o[k] instanceof Object ? getChildren(o[k], (x + 1)) : {}; });
 
 					return c;
 				};
@@ -219,7 +212,6 @@
 			// Consuming APIs
 			$.store(dashboard.api);
 			dashboard.api.data.key = "name";
-			dashboard.api.on("afterDataSync", function(){ this.render(); });
 			typeof dashboard.api.data.setUri === "function" ? dashboard.api.data.setUri(uri.api) : dashboard.api.data.uri = uri.api;
 
 			$.store(dashboard.blog);
@@ -287,7 +279,17 @@
 			});
 
 			$.route.set("api", function () {
-				obj.get("views/api.htm");
+				var guid = $.guid(),
+				    fn   = function () {
+				    	if (dashboard.api.data.total > 0) {
+				    		dashboard.api.render();
+				    		return false;
+				    	}
+				    };
+
+				obj.on("afterGet", function () {
+					$.repeat(fn, 10, "api");
+				}).get("views/api.htm");
 			});
 
 			$.route.set("error", function () {
