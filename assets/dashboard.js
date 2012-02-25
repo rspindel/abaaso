@@ -242,7 +242,7 @@
 
 		render = function () {
 			var stage = $("#stage"),
-			    api   = $("#api"),
+			    obj   = $("section.root")[0],
 			    dashboard = window.dashboard;
 
 			// Creating tabs
@@ -250,19 +250,18 @@
 
 			// Setting routing
 			$.route.set("download", function () {
-				var obj = $("section[data-hash='download']");
+				var guid = $.guid(true);
 
-				if (obj.innerHTML.isEmpty()) {
-					obj.on("afterGet", function () {
-				     	$("#download-debugging").on("click", function () { location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/debug/abaaso.js"; }, "click");
-				     	$("#download-production").on("click", function () { location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/production/abaaso.js"; }, "click");
-				     }).loading().get("views/download.htm");
+				obj.on("afterGet", function () {
+				    	obj.un("afterGet", guid);
+				    	$("#download-debugging").on("click", function () { location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/debug/abaaso.js"; }, "click");
+				    	$("#download-production").on("click", function () { location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/production/abaaso.js"; }, "click");
+				   }, guid).get("views/download.htm");
 				}
 			});
 
 			$.route.set("blog", function () {
-				var obj = $("section[data-hash='blog']"),
-				    fn  = function () {
+				var fn  = function () {
 					if (dashboard.blog.data.total > 0) {
 						var items = dashboard.blog.data.get([0, 10]),
 						    d, o;
@@ -288,22 +287,19 @@
 			});
 
 			$.route.set("api", function () {
-				var obj = $("section[data-hash='api']");
-				if (obj.innerHTML.isEmpty()) obj.loading().get("views/api.htm");
+				obj.get("views/api.htm");
 			});
 
 			$.route.set("error", function () {
-				location.hash = "#!/main"
+				obj.get("views/error.htm");
 			});
 
 			$.route.set("examples", function () {
-				var obj = $("section[data-hash='examples']");
-				if (obj.innerHTML.isEmpty()) obj.loading().get("views/examples.htm");
+				obj.get("views/examples.htm");
 			});
 
 			$.route.set("main", function () {
-				var obj = $("section[data-hash='main']");
-				if (obj.innerHTML.isEmpty()) obj.loading().get("views/intro.htm");
+				obj.get("views/intro.htm");
 			});
 
 			// Prepping the UI
@@ -312,8 +308,8 @@
 			$("version").text($.version);
 			$("year").text(new Date().getFullYear());
 
-			stage.on("beforeGet", function () { this.loading(); }, "loading")
-			     .on("afterGet", function () { if (typeof $("#twitter") !== "undefined") dashboard.twitter.display(); }, "twitter");
+			obj.on("beforeGet", function () { this.loading(); }, "loading")
+			   .on("afterGet", function () { if (typeof $("#twitter") !== "undefined") dashboard.twitter.display(); }, "twitter");
 
 			$("body").css("opacity", 1);
 
