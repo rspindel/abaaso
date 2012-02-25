@@ -7,9 +7,7 @@
 (function () {
 	"use strict";
 
-	var dashboard;
-
-	dashboard = (function () {
+	var dashboard = (function () {
 		var blog    = {id: "blog"},
 		    collabs = {id: "collabs"},
 		    twitter = {
@@ -52,7 +50,7 @@
 
 					for (i in s) {
 						if (!s.hasOwnProperty(i)) continue;
-						this.generate(i, i, "apis");
+						this.generate(i, i, "api");
 						for (x in s[i]) {
 							if (!s[i].hasOwnProperty(x) || /bind|prototype/.test(x) || i === "$") continue;
 
@@ -274,7 +272,6 @@
 				};
 
 				obj.loading();
-
 				$.repeat(fn, 10, "blog");
 			});
 
@@ -307,14 +304,12 @@
 
 			// Prepping the UI
 			$.loading.url = "assets/loading.gif";
-
 			$("version").text($.version);
 			$("year").text(new Date().getFullYear());
-
 			obj.on("beforeGet", function () { this.loading(); }, "loading").on("afterGet", function () { if (typeof $("#twitter") !== "undefined") dashboard.twitter.display(); }, "twitter");
-
 			$("body").css("opacity", 1);
 
+			// Setting the hash
 			if (!/\w/.test(location.hash)) location.hash = "#!/main";
 			else {
 				$.tabs.active(location.hash);
