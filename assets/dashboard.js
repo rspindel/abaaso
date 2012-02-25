@@ -288,8 +288,9 @@
 				    };
 
 				obj.on("afterGet", function () {
+					this.un("afterGet", guid);
 					$.repeat(fn, 10, "api");
-				}).get("views/api.htm");
+				}, guid).get("views/api.htm");
 			});
 
 			$.route.set("error", function () {
