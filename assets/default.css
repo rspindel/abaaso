@@ -44,12 +44,12 @@ a:hover {
 	text-shadow : 0px 0px 3px #fceba1;
 }
 
-header, article, section, footer {
+header, article, footer {
 	width    : 960px;
 	display  : block;
 }
 
-section, footer {
+article, footer {
 	margin   : 50px auto;
 	filter   : dropshadow(color=#000, offx=0, offy=0);
 	text-shadow : 0px 0px 3px #fff;
