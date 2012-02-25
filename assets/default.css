@@ -99,12 +99,18 @@ footer {
 	font-size : 10pt;
 }
 
+#api,
+#copy {
+	display   : inline-block;
+	vertical-align : top;
+}
+
 #api {
 	width     : 250px;
 }
 
 #copy {
-	width      : 710px;
+	width      : 700px;
 	min-height : 500px;
 }
 
