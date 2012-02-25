@@ -47,6 +47,7 @@ a:hover {
 header, article, footer {
 	width    : 960px;
 	display  : block;
+	overflow : hidden;
 }
 
 article, footer {
@@ -61,7 +62,7 @@ header {
 
 ul.tab {
 	width      : 960px;
-	margin     : 0 auto 0 auto;
+	margin     : 0 auto 50px auto;
 	text-align : right;
 }
 
