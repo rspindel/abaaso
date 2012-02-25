@@ -44,7 +44,7 @@ a:hover {
 	text-shadow : 0px 0px 3px #fceba1;
 }
 
-header, section, footer {
+header, article, section, footer {
 	width    : 960px;
 	display  : block;
 }
