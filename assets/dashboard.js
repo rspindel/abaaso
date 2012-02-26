@@ -152,22 +152,25 @@
 				 * @returns {object}
 				 */
 				getChildren = function (o, x) {
-					x = x || 1;
-					var i, m = 3, c = {};
+					var i,
+					    m = 3,
+					    c = {}
+					    r = new RegExp("function|string");
 
 					// Max recusion is 3 levels
+					x = x || 1;
 					if (x >= m) return;
 
 					switch (true) {
 						case o instanceof Array:
 							o.each(function (v, k) {
 								debugger;
-								c[v] = typeof v === "function" ? {} : getChildren(v, x++);
+								c[v] = r.test(typeof v) ? {} : getChildren(v, x++);
 							});
 							break;
 						case o instanceof Object:
-							if (o.hasOwnProperty("each")) $.iterate(o, function (v, k) { c[k] = typeof v === "function" ? {} : getChildren(v, x++); });
-							else o.each(function (v, k) { c[k] = typeof v === "function" ? {} : getChildren(v, x++); });
+							if (o.hasOwnProperty("each")) $.iterate(o, function (v, k) { c[k] = r.test(typeof v) ? {} : getChildren(v, x++); });
+							else o.each(function (v, k) { c[k] = r.test(typeof v) ? {} : getChildren(v, x++); });
 							break;
 					}
 
