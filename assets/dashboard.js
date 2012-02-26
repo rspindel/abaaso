@@ -160,15 +160,14 @@
 
 					switch (true) {
 						case o instanceof Array:
-							o.each(function (v, k) { c[v] = typeof v === "function" ? {} : getChildren(v, x++); });
+							o.each(function (v, k) {
+								debugger;
+								c[v] = typeof v === "function" ? {} : getChildren(v, x++);
+							});
 							break;
 						case o instanceof Object:
-							if (o.hasOwnProperty("each")) $.iterate(o, function (v, k) {
-								c[k] = typeof v === "function" ? {} : getChildren(v, x++);
-							});
-							else o.each(function (v, k) {
-								c[k] = typeof v === "function" ? {} : getChildren(v, x++);
-							});
+							if (o.hasOwnProperty("each")) $.iterate(o, function (v, k) { c[k] = typeof v === "function" ? {} : getChildren(v, x++); });
+							else o.each(function (v, k) { c[k] = typeof v === "function" ? {} : getChildren(v, x++); });
 							break;
 					}
 
