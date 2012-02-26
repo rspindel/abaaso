@@ -170,8 +170,6 @@
 								c[k] = typeof v === "function" ? {} : getChildren(v, x++);
 							});
 							break;
-						default:
-							c
 					}
 
 					return c;
