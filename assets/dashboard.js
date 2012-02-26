@@ -165,6 +165,7 @@
 						case o instanceof Object:
 							o.each(function (v, k) { c[k] = o[k] instanceof Object ? getChildren(o[k], (x + 1)) : {}; });
 							break;
+						default: debugger;
 					}
 
 					return c;
