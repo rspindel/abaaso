@@ -154,7 +154,7 @@
 				getChildren = function (o, x) {
 					var i,
 					    m = 3,
-					    c = {}
+					    c = {},
 					    r = new RegExp("function|string");
 
 					// Max recusion is 3 levels
