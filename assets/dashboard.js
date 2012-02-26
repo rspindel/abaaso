@@ -179,6 +179,7 @@
 					structure.hidden          = {};
 					structure.ready           = {};
 					structure.version         = {};
+					structure.data            = {};
 					structure.data.uri        = {};
 					structure.data.callback   = {};
 					structure.data.key        = {};
