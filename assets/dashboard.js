@@ -143,7 +143,9 @@
 			 * @returns {object}
 			 */
 			structure : function (s) {
-				var structure, getChildren;
+				var m = 3,
+				    r = new RegExp("function|string"),
+				    i, structure, getChildren;
 
 				/**
 				 * Finds the children of o
@@ -152,10 +154,7 @@
 				 * @returns {object}
 				 */
 				getChildren = function (o, x) {
-					var i,
-					    m = 3,
-					    c = {},
-					    r = new RegExp("function|string");
+					var c = {};
 
 					// Max recusion is 3 levels
 					x = x || 1;
