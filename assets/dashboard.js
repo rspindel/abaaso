@@ -165,7 +165,7 @@
 						case o instanceof Object:
 							o.each(function (v, k) {
 								debugger;
-								c[k] = v instanceof Object ? getChildren(v, (x + 1)) : {};
+								c[k] = typeof v === "object" ? getChildren(v, (x + 1)) : {};
 							});
 							break;
 						default: debugger;
