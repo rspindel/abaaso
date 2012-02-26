@@ -160,18 +160,11 @@
 
 					switch (true) {
 						case o instanceof Array:
-							o.each(function (i) { c[i] = typeof o[i] === "object" ? getChildren(o[i], (x + 1)) : {}; });
+							o.each(function (i) { c[i] = typeof o[i] === "function" ? {} : getChildren(o[i], (x + 1)); });
 							break;
 						case o instanceof Object:
 							if (typeof o.each !== "function") debugger;
-							o.each(function (v, k) {
-								try {
-									c[k] = typeof v === "function" ? {} : getChildren(v, x++);
-								}
-								catch (e) {
-									debugger;
-								}
-							});
+							o.each(function (v, k) { c[k] = typeof v === "function" ? {} : getChildren(v, x++); });
 							break;
 					}
 
