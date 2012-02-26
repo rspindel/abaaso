@@ -198,6 +198,7 @@
 					delete structure.error.log;
 					delete structure.timer;
 					delete structure.route;
+					delete structure.tabs;
 				}
 
 				return structure;
