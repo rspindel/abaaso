@@ -193,6 +193,7 @@
 					structure.data.source     = {};
 					structure.data.total      = {};
 					structure.data.views      = {};
+					structure.state           = {};
 					structure.state.current   = {};
 					delete structure.constructor;
 					delete structure.callback;
