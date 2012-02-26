@@ -163,7 +163,10 @@
 							o.each(function (i) { c[i] = typeof o[i] === "object" ? getChildren(o[i], (x + 1)) : {}; });
 							break;
 						case o instanceof Object:
-							o.each(function (v, k) { c[k] = o[k] instanceof Object ? getChildren(o[k], (x + 1)) : {}; });
+							o.each(function (v, k) {
+								debugger;
+								c[k] = o[k] instanceof Object ? getChildren(o[k], (x + 1)) : {};
+							});
 							break;
 						default: debugger;
 					}
