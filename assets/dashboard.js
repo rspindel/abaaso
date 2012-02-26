@@ -163,8 +163,8 @@
 							o.each(function (i) { c[i] = typeof o[i] === "function" ? {} : getChildren(o[i], (x + 1)); });
 							break;
 						case o instanceof Object:
-							if (typeof o.each !== "function") debugger;
-							o.each(function (v, k) { c[k] = typeof v === "function" ? {} : getChildren(v, x++); });
+							if (o.hasOwnProperty(each)) $.iterate(o, function (v, k) { c[k] = typeof v === "function" ? {} : getChildren(v, x++); });
+							else o.each(function (v, k) { c[k] = typeof v === "function" ? {} : getChildren(v, x++); });
 							break;
 					}
 

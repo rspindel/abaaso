@@ -147,7 +147,6 @@ if (typeof window.abaaso === "undefined") window.abaaso = (function () {
 		each : function (obj, fn) {
 			var n = 0;
 
-			if (!(obj instanceof Array)) debugger;
 			obj.forEach(function (i) { fn(i, n++); });
 			return obj;
 		},
