@@ -181,7 +181,6 @@
 					structure.hidden          = {};
 					structure.ready           = {};
 					structure.version         = {};
-					structure.data            = {};
 					structure.data.uri        = {};
 					structure.data.callback   = {};
 					structure.data.key        = {};
@@ -191,7 +190,6 @@
 					structure.data.source     = {};
 					structure.data.total      = {};
 					structure.data.views      = {};
-					structure.state           = {};
 					structure.state.current   = {};
 					delete structure.constructor;
 					delete structure.callback;
