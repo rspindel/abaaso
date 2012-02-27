@@ -242,12 +242,12 @@
 
 			// Creating tabs
 			stage.tabs(["Main", "API", "Blog", "Download", "Examples"]);
-			obj = $("section.root")[0],
 
 			// Setting routing
 			$.route.set("download", function () {
 				var guid = $.guid();
 
+				obj = $("section.active[data-hash='download']")[0];
 				obj.on("afterGet", function () {
 					this.un("afterGet", guid);
 					$("#download-debugging").on("click", function () { location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/debug/abaaso.js"; }, "click");
@@ -256,6 +256,7 @@
 			});
 
 			$.route.set("blog", function () {
+				obj = $("section.active[data-hash='blog']")[0];
 				var fn  = function () {
 					if (dashboard.blog.data.total > 0) {
 						var items = dashboard.blog.data.get([0, 10]),
@@ -281,6 +282,7 @@
 			});
 
 			$.route.set("api", function () {
+				obj = $("section.active[data-hash='api']")[0];
 				var guid = $.guid(),
 				    fn   = function () {
 				    	if (dashboard.api.data.total > 0) {
@@ -296,14 +298,17 @@
 			});
 
 			$.route.set("error", function () {
+				obj = $("section.active[data-hash='main']").addClass("active").removeClass("hidden");
 				obj.get("views/error.htm");
 			});
 
 			$.route.set("examples", function () {
+				obj = $("section.active[data-hash='examples']")[0];
 				obj.get("views/examples.htm");
 			});
 
 			$.route.set("main", function () {
+				obj = $("section.active[data-hash='main']")[0];
 				obj.get("views/intro.htm");
 			});
 
