@@ -180,7 +180,7 @@ footer {
 .button {
 	text-shadow     : none;
 	color           : #fff;
-	font-weight     : bold;
+	font-weight     : normal;
 	line-height     : 40px;
 	background-color: #404040;
 	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(64, 64, 64)), to(rgb(27, 27, 27)));
@@ -193,7 +193,8 @@ footer {
 }
 
 .button:hover {
-	color           : #ccc;
+	text-shadow     : none;
+	color           : #fff;
 	background-color: #3e401b;
 	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(62, 64, 27)), to(rgb(27, 27, 27)));
 	background-image: -webkit-linear-gradient(top, rgb(62, 64, 27), rgb(27, 27, 27));
