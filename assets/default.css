@@ -37,6 +37,10 @@ a {
 	cursor             : pointer;
 }
 
+a:hover {
+	color              : #000;
+}
+
 header, article, footer {
 	width    : 960px;
 	display  : block;
