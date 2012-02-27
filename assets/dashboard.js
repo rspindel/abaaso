@@ -298,15 +298,18 @@
 			});
 
 			$.route.set("error", function () {
-				$("section[data-hash='main']")[0].addClass("active").removeClass("hidden").get("views/error.htm");
+				obj = $("section[data-hash='main']")[0].addClass("active").removeClass("hidden");
+				obj.get("views/error.htm");
 			});
 
 			$.route.set("examples", function () {
-				$("section[data-hash='examples']")[0].get("views/examples.htm");
+				obj = $("section[data-hash='examples']")[0];
+				obj.get("views/examples.htm");
 			});
 
 			$.route.set("main", function () {
-				$("section[data-hash='main']")[0].get("views/intro.htm");
+				obj = $("section[data-hash='main']")[0];
+				obj.get("views/intro.htm");
 			});
 
 			// Prepping the UI
@@ -314,10 +317,6 @@
 			$("version").text($.version);
 			$("year").text(new Date().getFullYear());
 			$("section").on("beforeGet", function () { this.loading(); }, "loading");
-			$("section[data-hash='main']")[0].on("afterGet", function () {
-				debugger;
-				twitter.display(0);
-			});
 			$("ul.tab a").addClass("shadow round button padded");
 			$("body").css("opacity", 1);
 
@@ -335,14 +334,15 @@
 			blog    : blog,
 			collabs : collabs,
 			ready   : ready,
-			render  : render
-		};
+			render  : render,
+			twitter : twitter
+		}
 	});
 
 	// AMD support
 	switch (true) {
 		case typeof define === "function":
-			define("dashboard", ["abaaso.tabs"], function () {
+			define("dashboard", ["abaaso", "abaaso.route", "abaaso.tabs"], function () {
 				var $ = window[abaaso.aliased];
 				window.dashboard = dashboard();
 				window.dashboard.ready();
