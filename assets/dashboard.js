@@ -212,6 +212,8 @@
 				twitter : "http://search.twitter.com/search.json?callback=?&from=abaaso"
 			};
 
+			delete dashboard.ready;
+
 			// Consuming APIs
 			$.store(dashboard.api);
 			dashboard.api.data.key = "name";
@@ -239,6 +241,8 @@
 			var stage     = $("#stage"),
 			    dashboard = window.dashboard,
 			    obj;
+
+			delete dashboard.render;
 
 			// Creating tabs
 			stage.tabs(["Main", "API", "Blog", "Download", "Examples"]);
@@ -335,8 +339,7 @@
 			blog    : blog,
 			collabs : collabs,
 			ready   : ready,
-			render  : render,
-			twitter : twitter
+			render  : render
 		}
 	});
 
