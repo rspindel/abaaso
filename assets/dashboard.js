@@ -242,7 +242,7 @@
 			    dashboard = window.dashboard,
 			    obj;
 
-			delete dashboard.render;
+			delete dashboard.ready;
 
 			// Creating tabs
 			stage.tabs(["Main", "API", "Blog", "Download", "Examples"]);
@@ -339,7 +339,8 @@
 			blog    : blog,
 			collabs : collabs,
 			ready   : ready,
-			render  : render
+			render  : render,
+			twitter : twitter
 		}
 	});
 
