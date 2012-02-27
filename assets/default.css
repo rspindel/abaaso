@@ -8,6 +8,10 @@
 * {
 	margin      : 0 0 0 0;
 	padding     : 0 0 0 0;
+	-webkit-transition : all 0.2s ease-in;
+	-moz-transition    : all 0.2s ease-in;
+	-o-transition      : all 0.2s ease-in;
+	transition         : all 0.2s ease-in;
 }
 
 html, body {
@@ -22,13 +26,6 @@ body {
 	font-size   : 12pt;
 	line-height : 18pt;
 	opacity     : 0;
-}
-
-body, a {
-	-webkit-transition : all 0.2s ease-in;
-	-moz-transition    : all 0.2s ease-in;
-	-o-transition      : all 0.2s ease-in;
-	transition         : all 0.2s ease-in;
 }
 
 a {
