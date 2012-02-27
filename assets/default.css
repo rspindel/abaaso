@@ -137,6 +137,9 @@ footer {
 
 .active {
 	color   : #000;
+	opacity: 1;
+	-moz-opacity: 1;
+	filter:alpha(opacity=1);
 }
 
 .col {
@@ -153,6 +156,9 @@ footer {
 .hide,
 .hidden {
 	display : none;
+	opacity: 0;
+	-moz-opacity: 0;
+	filter:alpha(opacity=0);
 }
 
 .loading {
