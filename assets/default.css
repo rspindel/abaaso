@@ -180,14 +180,27 @@ footer {
 .button {
 	color           : #fff;
 	font-weight     : bold;
-	background-color: #282828;
-	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(40, 40, 40)), to(rgb(0, 0, 0)));
-	background-image: -webkit-linear-gradient(top, rgb(40, 40, 40), rgb(0, 0, 0));
-	background-image: -moz-linear-gradient(top, rgb(40, 40, 40), rgb(0, 0, 0));
-	background-image: -o-linear-gradient(top, rgb(40, 40, 40), rgb(0, 0, 0));
-	background-image: -ms-linear-gradient(top, rgb(40, 40, 40), rgb(0, 0, 0));
-	background-image: linear-gradient(top, rgb(40, 40, 40), rgb(0, 0, 0));
-	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#282828', EndColorStr='#000000');
+	line-height     : 40px;
+	background-color: #404040;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(64, 64, 64)), to(rgb(27, 27, 27)));
+	background-image: -webkit-linear-gradient(top, rgb(64, 64, 64), rgb(27, 27, 27));
+	background-image: -moz-linear-gradient(top, rgb(64, 64, 64), rgb(27, 27, 27));
+	background-image: -o-linear-gradient(top, rgb(64, 64, 64), rgb(27, 27, 27));
+	background-image: -ms-linear-gradient(top, rgb(64, 64, 64), rgb(27, 27, 27));
+	background-image: linear-gradient(top, rgb(64, 64, 64), rgb(27, 27, 27));
+	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#404040', EndColorStr='#1b1b1b');
+}
+
+.button:hover {
+	color           : #ccc;
+	background-color: #3e401b;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(62, 64, 27)), to(rgb(27, 27, 27)));
+	background-image: -webkit-linear-gradient(top, rgb(62, 64, 27), rgb(27, 27, 27));
+	background-image: -moz-linear-gradient(top, rgb(62, 64, 27), rgb(27, 27, 27));
+	background-image: -o-linear-gradient(top, rgb(62, 64, 27), rgb(27, 27, 27));
+	background-image: -ms-linear-gradient(top, rgb(62, 64, 27), rgb(27, 27, 27));
+	background-image: linear-gradient(top, rgb(62, 64, 27), rgb(27, 27, 27));
+	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#3e401b', EndColorStr='#1b1b1b');
 }
 
 .padded {
