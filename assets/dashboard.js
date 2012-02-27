@@ -317,7 +317,6 @@
 			$("version").text($.version);
 			$("year").text(new Date().getFullYear());
 			$("section").on("beforeGet", function () { this.loading(); }, "loading");
-			//$("section[data-hash='main']").on("afterGet", dashboard.twitter.display, "twitter");
 			$("body").css("opacity", 1);
 
 			// Setting the hash
