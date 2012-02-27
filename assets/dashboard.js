@@ -314,7 +314,10 @@
 			$("version").text($.version);
 			$("year").text(new Date().getFullYear());
 			$("section").on("beforeGet", function () { this.loading(); }, "loading");
-			$("section[data-hash='main']")[0].on("afterGet", function () { twitter.display(); });
+			$("section[data-hash='main']")[0].on("afterGet", function () {
+				debugger;
+				twitter.display(0);
+			});
 			$("ul.tab a").addClass("shadow round button padded");
 			$("body").css("opacity", 1);
 
