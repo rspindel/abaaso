@@ -317,6 +317,7 @@
 			$("version").text($.version);
 			$("year").text(new Date().getFullYear());
 			$("section").on("beforeGet", function () { this.loading(); }, "loading");
+			$("ul.tab a").addClass("shadow round button");
 			$("body").css("opacity", 1);
 
 			// Setting the hash
