@@ -47,27 +47,34 @@
 			elements : function (s) {
 				var i, x, y;
 
-				s.each(function (i) {
-					api.generate(i, i, "apis");
-					i.each(function (x) {
-						if (/bind|prototype/.test(x) || i === "$") return;
+				for (i in s) {
+					if (!s.hasOwnProperty(i)) continue;
+					this.generate(i, i, "apis");
+					for (x in s[i]) {
+						if (!s[i].hasOwnProperty(x) || /bind|prototype/.test(x) || i === "$") continue;
 
-						var id  = i + "-" + x,
-							key = i + "." + x;
+						var id  = i+"-"+x,
+							key = i+"."+x;
 
-						if (typeof $("#" + i + "-sub") === "undefined" && typeof $("#" + i) !== "undefined") $("#" + i).css("list-style-type", "square").create("ul", {id: i+"-sub", "class": "sub"}).hide();
-						api.generate(x, key, i + "-sub", id);
-						x.each(function (y) {
-							if (y === "prototype") return;
+						if (typeof $("#"+i+"-sub") === "undefined" && typeof $("#"+i) !== "undefined") {
+							$("#"+i).style.listStyleType = "square";
+							$("#"+i).create("ul", {id: i+"-sub", "class": "sub"}).hide();
+						}
+						this.generate(x, key, i+"-sub", id);
+						for (y in s[i][x]) {
+							if (!s[i][x].hasOwnProperty(y) || y === "prototype") continue;
 
-							var id  = i + "-" + x + "-" + y,
-								key = i + "." + x + "." + y;
+							var id  = i+"-"+x+"-"+y,
+								key = i+"."+x+"."+y;
 
-							if (typeof $("#" + i + "-" + x + "-sub") === "undefined" && typeof $("#" + i + "-" + x) !== "undefined") $("#" + i + "-" + x).css("list-style-type", "square").create("ul", {id: i + "-" + x + "-sub", "class": "sub"}).hide();
-							api.generate(y, key, i + "-" + x + "-sub", id);
-						});
-					});
-				});
+							if (typeof $("#"+i+"-"+x+"-sub") === "undefined" && typeof $("#"+i+"-"+x) !== "undefined") {
+								$("#"+i+"-"+x).style.listStyleType = "square";
+								$("#"+i+"-"+x).create("ul", {id: i+"-"+x+"-sub", "class": "sub"}).hide();
+							}
+							this.generate(y, key, i+"-"+x+"-sub", id);
+						}
+					}
+				}
 			},
 
 			/**
