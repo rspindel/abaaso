@@ -298,7 +298,7 @@
 			});
 
 			$.route.set("error", function () {
-				obj = $("section[data-hash='main']").addClass("active").removeClass("hidden");
+				obj = $("section[data-hash='main']")[0].addClass("active").removeClass("hidden");
 				obj.get("views/error.htm");
 			});
 
@@ -317,7 +317,7 @@
 			$("version").text($.version);
 			$("year").text(new Date().getFullYear());
 			$("section").on("beforeGet", function () { this.loading(); }, "loading");
-			$("section[data-hash='main']").on("afterGet", dashboard.twitter.display, "twitter");
+			//$("section[data-hash='main']").on("afterGet", dashboard.twitter.display, "twitter");
 			$("body").css("opacity", 1);
 
 			// Setting the hash
