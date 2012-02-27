@@ -317,11 +317,8 @@
 			});
 
 			// Generic fade
-			$.on("afterHash", function (hash) {
-				$("section").css("opacity", "0");
-				$("section.root").css("opacity", "1");
-				$("section.active").css("opacity", "1");
-			});
+			$.on("beforeHash", function () { $("section.root").css("opacity", "0"); })
+			  on("afterHash", function () { $("section.root").css("opacity", "1"); });
 
 			// Prepping the UI
 			$.loading.url = "assets/loading.gif";
