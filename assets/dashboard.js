@@ -240,7 +240,7 @@
 		render = function () {
 			var stage     = $("#stage"),
 			    dashboard = window.dashboard,
-			    obj;
+			    obj, root;
 
 			delete dashboard.render;
 
@@ -317,8 +317,8 @@
 			});
 
 			// Generic fade
-			$.on("beforeHash", function () { $("section.root").css("opacity", "0"); })
-			  on("afterHash", function () { $("section.root").css("opacity", "1"); });
+			root = $("section.root");
+			$.on("beforeHash", function () { root.css("opacity", "0"); }).on("afterHash", function () { root.css("opacity", "1"); });
 
 			// Prepping the UI
 			$.loading.url = "assets/loading.gif";
