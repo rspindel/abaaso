@@ -318,7 +318,7 @@
 
 			// Generic fade
 			root = $("section.root");
-			$.on("beforeHash", function () { root.css("opacity", "0"); }).on("afterHash", function () { root.css("opacity", "1"); });
+			$.on("beforeHash", function () { root.css("opacity", "0"); }).on("afterHash", function () { $.defer(function () { root.css("opacity", "1"); }, 250); });
 
 			// Prepping the UI
 			$.loading.url = "assets/loading.gif";
