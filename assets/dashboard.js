@@ -10,16 +10,17 @@
 	var dashboard = (function () {
 		var blog    = {id: "blog"},
 		    collabs = {id: "collabs"},
-		    twitter = {id: "twitter"},
+		    twitter = {
+			    id      : "twitter",
+			    display : function (index) {
+			    	index   = index || 0;
+			    	var obj = $("#twitter"),
+			    	    r   = this.data.get(index);
+
+			    	if (typeof obj !== "undefined") typeof r !== "undefined" ? obj.text(r.data.text) : obj.loading();
+			    }
+			},
 			api, ready, render;
-
-		twitter.display = function (index) {
-			index   = index || 0;
-			var obj = $("#twitter"),
-			    r   = this.data.get(index);
-
-			    if (typeof obj !== "undefined") typeof r !== "undefined" ? obj.text(r.data.text) : obj.loading();
-		};
 
 		// API widget
 		api = {
@@ -320,10 +321,7 @@
 			$("version").text($.version);
 			$("year").text(new Date().getFullYear());
 			$("section").on("beforeGet", function () { this.loading(); }, "loading");
-			$("section[data-hash='main']").on("afterGet", function () {
-				debugger;
-				twitter.display();
-			}, "twitter");
+			$("section[data-hash='main']").on("afterGet", function () { twitter.display(); }, "twitter");
 			$("ul.tab a").addClass("shadow round button padded");
 			$("body").css("opacity", 1);
 
@@ -341,7 +339,8 @@
 			blog    : blog,
 			collabs : collabs,
 			ready   : ready,
-			render  : render
+			render  : render,
+			twitter : twitter
 		}
 	});
 
