@@ -316,7 +316,8 @@
 			$.loading.url = "assets/loading.gif";
 			$("version").text($.version);
 			$("year").text(new Date().getFullYear());
-			obj.on("beforeGet", function () { this.loading(); }, "loading").on("afterGet", function () { if (typeof $("#twitter") !== "undefined") dashboard.twitter.display(); }, "twitter");
+			$("section").on("beforeGet", function () { this.loading(); }, "loading");
+			$("section[data-hash='main']").on("afterGet", dashboard.twitter.display, "twitter");
 			$("body").css("opacity", 1);
 
 			// Setting the hash
