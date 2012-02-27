@@ -316,8 +316,10 @@
 				obj.get("views/intro.htm");
 			});
 
-			$.on("afterHash", function () {
-
+			// Generic fade
+			$.on("afterHash", function (hash) {
+				$("section").css("opacity", "0");
+				$("section.active").css("opacity", "1");
 			});
 
 			// Prepping the UI
