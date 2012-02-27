@@ -48,7 +48,7 @@
 				var i, x, y;
 
 				s.each(function (i) {
-					this.generate(i, i, "apis");
+					api.generate(i, i, "apis");
 					i.each(function (x) {
 						if (/bind|prototype/.test(x) || i === "$") return;
 
@@ -56,7 +56,7 @@
 							key = i + "." + x;
 
 						if (typeof $("#" + i + "-sub") === "undefined" && typeof $("#" + i) !== "undefined") $("#" + i).css("list-style-type", "square").create("ul", {id: i+"-sub", "class": "sub"}).hide();
-						this.generate(x, key, i + "-sub", id);
+						api.generate(x, key, i + "-sub", id);
 						x.each(function (y) {
 							if (y === "prototype") return;
 
@@ -64,7 +64,7 @@
 								key = i + "." + x + "." + y;
 
 							if (typeof $("#" + i + "-" + x + "-sub") === "undefined" && typeof $("#" + i + "-" + x) !== "undefined") $("#" + i + "-" + x).css("list-style-type", "square").create("ul", {id: i + "-" + x + "-sub", "class": "sub"}).hide();
-							this.generate(y, key, i + "-" + x + "-sub", id);
+							api.generate(y, key, i + "-" + x + "-sub", id);
 						});
 					});
 				});
