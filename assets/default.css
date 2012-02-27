@@ -156,7 +156,8 @@ footer {
 	margin-right : auto 0 auto auto;
 }
 
-.hide {
+.hide,
+.hidden {
 	display : none;
 }
 
