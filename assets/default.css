@@ -178,6 +178,7 @@ footer {
 }
 
 .button {
+	text-shadow     : none;
 	color           : #fff;
 	font-weight     : bold;
 	line-height     : 40px;
