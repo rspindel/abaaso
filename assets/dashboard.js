@@ -45,41 +45,29 @@
 			 * @param s {object} The object to iterate
 			 */
 			elements : function (s) {
-				try {
-					var i, x, y;
+				var i, x, y;
 
-					for (i in s) {
-						if (!s.hasOwnProperty(i)) continue;
-						this.generate(i, i, "apis");
-						for (x in s[i]) {
-							if (!s[i].hasOwnProperty(x) || /bind|prototype/.test(x) || i === "$") continue;
+				s.each(function (i) {
+					this.generate(i, i, "apis");
+					i.each(function (x) {
+						if (/bind|prototype/.test(x) || i === "$") return;
 
-							var id  = i+"-"+x,
-								key = i+"."+x;
+						var id  = i + "-" + x,
+							key = i + "." + x;
 
-							if (typeof $("#"+i+"-sub") === "undefined" && typeof $("#"+i) !== "undefined") {
-								$("#"+i).style.listStyleType = "square";
-								$("#"+i).create("ul", {id: i+"-sub", "class": "sub"}).hide();
-							}
-							this.generate(x, key, i+"-sub", id);
-							for (y in s[i][x]) {
-								if (!s[i][x].hasOwnProperty(y) || y === "prototype") continue;
+						if (typeof $("#" + i + "-sub") === "undefined" && typeof $("#" + i) !== "undefined") $("#" + i).css("list-style-type", "square").create("ul", {id: i+"-sub", "class": "sub"}).hide();
+						this.generate(x, key, i + "-sub", id);
+						x.each(function (y) {
+							if (y === "prototype") return;
 
-								var id  = i+"-"+x+"-"+y,
-									key = i+"."+x+"."+y;
+							var id  = i + "-" + x + "-" + y,
+								key = i + "." + x + "." + y;
 
-								if (typeof $("#"+i+"-"+x+"-sub") === "undefined" && typeof $("#"+i+"-"+x) !== "undefined") {
-									$("#"+i+"-"+x).style.listStyleType = "square";
-									$("#"+i+"-"+x).create("ul", {id: i+"-"+x+"-sub", "class": "sub"}).hide();
-								}
-								this.generate(y, key, i+"-"+x+"-sub", id);
-							}
-						}
-					}
-				}
-				catch (e) {
-					$.error(e, arguments, this);
-				}
+							if (typeof $("#" + i + "-" + x + "-sub") === "undefined" && typeof $("#" + i + "-" + x) !== "undefined") $("#" + i + "-" + x).css("list-style-type", "square").create("ul", {id: i + "-" + x + "-sub", "class": "sub"}).hide();
+							this.generate(y, key, i + "-" + x + "-sub", id);
+						});
+					});
+				});
 			},
 
 			/**
