@@ -317,6 +317,7 @@
 			$("version").text($.version);
 			$("year").text(new Date().getFullYear());
 			$("section").on("beforeGet", function () { this.loading(); }, "loading");
+			$("section[data-hash='main']").on("afterGet", function () { twitter.display(); }, "twitter");
 			$("ul.tab a").addClass("shadow round button padded");
 			$("body").css("opacity", 1);
 
