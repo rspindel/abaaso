@@ -316,6 +316,10 @@
 				obj.get("views/intro.htm");
 			});
 
+			$.on("afterHash", function () {
+
+			});
+
 			// Prepping the UI
 			$.loading.url = "assets/loading.gif";
 			$("version").text($.version);
