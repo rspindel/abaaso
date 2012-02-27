@@ -242,7 +242,7 @@
 			    dashboard = window.dashboard,
 			    obj;
 
-			delete dashboard.ready;
+			delete dashboard.render;
 
 			// Creating tabs
 			stage.tabs(["Main", "API", "Blog", "Download", "Examples"]);
