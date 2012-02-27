@@ -298,18 +298,15 @@
 			});
 
 			$.route.set("error", function () {
-				obj = $("section[data-hash='main']")[0].addClass("active").removeClass("hidden");
-				obj.get("views/error.htm");
+				$("section[data-hash='main']")[0].addClass("active").removeClass("hidden").get("views/error.htm");
 			});
 
 			$.route.set("examples", function () {
-				obj = $("section[data-hash='examples']")[0];
-				obj.get("views/examples.htm");
+				$("section[data-hash='examples']")[0].get("views/examples.htm");
 			});
 
 			$.route.set("main", function () {
-				obj = $("section[data-hash='main']")[0];
-				obj.get("views/intro.htm");
+				$("section[data-hash='main']")[0].get("views/intro.htm");
 			});
 
 			// Prepping the UI
@@ -317,6 +314,7 @@
 			$("version").text($.version);
 			$("year").text(new Date().getFullYear());
 			$("section").on("beforeGet", function () { this.loading(); }, "loading");
+			$("section[data-hash='main']")[0].on("afterGet", function () { twitter.display(); });
 			$("ul.tab a").addClass("shadow round button padded");
 			$("body").css("opacity", 1);
 
@@ -334,15 +332,14 @@
 			blog    : blog,
 			collabs : collabs,
 			ready   : ready,
-			render  : render,
-			twitter : twitter
-		}
+			render  : render
+		};
 	});
 
 	// AMD support
 	switch (true) {
 		case typeof define === "function":
-			define("dashboard", ["abaaso", "abaaso.route", "abaaso.tabs"], function () {
+			define("dashboard", ["abaaso.tabs"], function () {
 				var $ = window[abaaso.aliased];
 				window.dashboard = dashboard();
 				window.dashboard.ready();
