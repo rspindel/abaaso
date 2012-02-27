@@ -295,7 +295,7 @@
 				    	}
 				    };
 
-				obj.on("afterGet", function () {
+				if (obj.innerHTML.isEmpty()) obj.on("afterGet", function () {
 					this.un("afterGet", guid);
 					$.repeat(fn, 10, "api");
 				}, guid).get("views/api.htm");
@@ -308,7 +308,7 @@
 
 			$.route.set("examples", function () {
 				obj = $("section[data-hash='examples']")[0];
-				obj.get("views/examples.htm");
+				if (obj.innerHTML.isEmpty()) obj.get("views/examples.htm");
 			});
 
 			$.route.set("main", function () {
