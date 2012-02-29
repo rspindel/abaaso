@@ -41,7 +41,6 @@ a:hover {
 article, footer {
 	width    : 960px;
 	display  : block;
-	overflow : hidden;
 }
 
 article, footer {
@@ -52,12 +51,12 @@ article, footer {
 
 header {
 	display    : inline-block;
-	width      : 530px;
+	width      : 555px;
 }
 
 ul.tab {
 	display    : inline-block;
-	width      : 410px;
+	width      : 400px;
 }
 
 ul.tab:last-child {
@@ -72,6 +71,7 @@ ul.tab li {
 section.root {
 	margin-top : 25px;
 	clear      : both;
+	display    : inline-block;
 }
 
 div ul li {
