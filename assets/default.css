@@ -56,8 +56,12 @@ header {
 }
 
 ul.tab {
-	margin         : 0 auto 50px auto;
-	vertical-align : top;
+	display    : inline-block;
+	width      : 410px;
+}
+
+ul.tab:last-child {
+	margin     : 0 0 0 0;
 }
 
 ul.tab li {
