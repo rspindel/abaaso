@@ -21,7 +21,8 @@ body {
 	opacity     : 0;
 }
 
-a {
+a,
+a:active {
 	color              : #666;
 	text-decoration    : underline;
 	cursor             : pointer;
@@ -29,6 +30,7 @@ a {
 
 a:hover {
 	color              : #ff9900;
+	border             : 1px solid #000;
 }
 
 article, footer {
