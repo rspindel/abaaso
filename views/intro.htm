@@ -1,6 +1,9 @@
 <p>abaaso is a RESTful JavaScript framework. Don't know REST? No problem! abaaso extends the prototypes of Array, Element, Number, and String with methods (functions) to make magic possible. Semantic classes &amp; methods (Object Oriented Programming) strive to make anything as easy as saying it!</p>
 <p>abaaso is event oriented: on(), fire() and un() is how you register, trigger &amp; unregister listeners. You can see what listeners are registered on something with listeners(), which accepts an optional event parameter.</p>
 
+<h3>Applied Systems Thinking</h3>
+<p>Wait, isn't "Systems Thinking" about nature? The short answer: no. abaaso was created around the paradigm of "Systems Thinking", and that's why it's drastically different than most libraries &amp; frameworks. abaaso doesn't try to make animating something on screen easier, it's job is to provide a light weight application framework, which in turn makes API consumption &amp; data display as easy as possible. It's part of the "feedback loop" or "negative loop", relying on the Server for reconcilliation of an action or event.</p>
+
 <h3>Representational State Transfer</h3>
 <p>Hypermedia As The Engine Of Application State (HATEOAS) can be enabled by setting abaaso.state.header to a custom HTTP header, which triggers stateful binding. Listeners for all states must be set before the initial URI is retrieved (on "init" is ideal). URIs are treated as Objects via String representations, so the HTTP verbs are available as methods, including jsonp()!</p>
 <p>Application states can be triggered by setting abaaso.state.current.</p>
