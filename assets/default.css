@@ -21,7 +21,7 @@ html, body {
 
 body {
 	background  : #f6f7fa;
-	color       : #7f7f7f;
+	color       : #000;
 	font-family : 'Apertura-Condensed', arial, sans-serif, monospace;
 	font-size   : 12pt;
 	line-height : 18pt;
@@ -71,8 +71,12 @@ div ul li {
 }
 
 h1 {
-	margin     : 0 0 0 0;
+	line-height : 80px;
+	font-size   : 50px;
+	padding     : 0 0 0 100px;
+	background  : url(assets/abaaso.png) no-repeat right top;
 }
+
 h1, h2, h3, h4, h5, h6 {
 	font-weight : bold;
 }
