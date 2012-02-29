@@ -38,20 +38,20 @@ a:hover {
 	color              : #ff9900;
 }
 
-header, article, footer {
+article, footer {
 	width    : 960px;
 	display  : block;
 	overflow : hidden;
 }
 
 article, footer {
-	margin   : 0 auto 50px auto;
+	margin   : 25px auto 25px auto;
 	filter   : dropshadow(color=#000, offx=0, offy=0);
 	text-shadow : 0px 0px 3px #fff;
 }
 
 header {
-	margin     : 25px auto 0 auto;
+	float      : left;
 }
 
 ul.tab {
