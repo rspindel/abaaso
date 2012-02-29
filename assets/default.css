@@ -51,7 +51,8 @@ article, footer {
 }
 
 header {
-	float      : left;
+	display    : inline-block;
+	width      : 530px;
 }
 
 ul.tab {
@@ -63,6 +64,11 @@ ul.tab {
 ul.tab li {
 	display    : inline;
 	margin     : 0 20px 0 0;
+}
+
+section.root {
+	margin-top : 25px;
+	clear      : both;
 }
 
 div ul li {
