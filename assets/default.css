@@ -1,3 +1,10 @@
+@font-face {
+	font-family : 'Apertura-Condensed';
+	font-style  : normal;
+	font-weight : normal;
+	src         : url('Apertura-Condensed.otf');
+}
+
 * {
 	margin      : 0 0 0 0;
 	padding     : 0 0 0 0;
@@ -15,7 +22,7 @@ html, body {
 body {
 	background  : #f6f7fa;
 	color       : #000;
-	font-family : arial, sans-serif, monospace;
+	font-family : 'Apertura-Condensed', arial, sans-serif, monospace;
 	font-size   : 12pt;
 	line-height : 18pt;
 	opacity     : 0;
@@ -66,7 +73,7 @@ div ul li {
 h1 {
 	line-height : 80px;
 	font-size   : 50px;
-	padding     : 0 0 0 100px;
+	padding     : 0 0 0 90px;
 	background  : url(abaaso.png) no-repeat;
 }
 
