@@ -218,6 +218,7 @@ a.active {
 	background-image: -ms-linear-gradient(top, rgb(252, 253, 57), rgb(255, 145, 35));
 	background-image: linear-gradient(top, rgb(252, 253, 57), rgb(255, 145, 35));
 	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#fcfd39', EndColorStr='#ff9123');
+	border          : 1px solid #fcfd39;
 }
 
 .padded {
