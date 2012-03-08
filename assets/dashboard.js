@@ -337,7 +337,7 @@
 		};
 	});
 
-	define("dashboard", ["abaaso", "abaasoRoute", "abaasoTabs"], function (abaaso) {
+	define("dashboard", ["abaaso", "abaaso.tabs"], function (abaaso, tabs) {
 		var $ = global[abaaso.aliased],
 		    d = dashboard($);
 
