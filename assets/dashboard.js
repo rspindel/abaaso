@@ -95,7 +95,7 @@
 				             .create("a", {id: id+"-anchor", innerHTML: item, "class": "nav"})
 							 .on("click", function(){
 								var list   = $("#"+this.parentNode.id+"-sub"),
-									record = dashboard.api.data.get(key),
+									record = api.data.get(key),
 									panel;
 
 								if (typeof list !== "undefined") {
