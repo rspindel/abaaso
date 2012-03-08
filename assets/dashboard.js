@@ -341,8 +341,8 @@
 		var $ = global[abaaso.aliased],
 		    d = dashboard($);
 
-		d.ready($);
-		d.render($);
+		d.ready($, d);
+		d.render($, d);
 
 		delete d.ready;
 		delete d.render;
