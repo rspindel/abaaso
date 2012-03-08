@@ -343,5 +343,10 @@
 
 		d.ready($);
 		d.render($);
+
+		delete d.ready;
+		delete d.render;
+
+		return d;
 	});
 })(this);
