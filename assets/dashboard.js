@@ -4,10 +4,10 @@
  * @author Jason Mulligan <jason.mulligan@avoidwork.com>
  * @version 2.4
  */
-(function () {
+(function (global) {
 	"use strict";
 
-	var dashboard = (function () {
+	var dashboard = (function ($) {
 		var blog    = {id: "blog"},
 		    collabs = {id: "collabs"},
 		    twitter = {
@@ -202,16 +202,13 @@
 		};
 
 		// abaaso listeners
-		ready = function () {
-			var dashboard = window.dashboard,
-			    uri = {
+		ready = function ($, dashboard) {
+			var uri = {
 				api     : "http://api.abaaso.com?callback=?",
 				collabs : "https://api.github.com/repos/avoidwork/abaaso/collaborators?callback=?",
 				tumblr  : "http://api.tumblr.com/v2/blog/attackio.tumblr.com/posts?api_key=cm7cZbxWpFDtv8XFD5XFuWsn5MnzupVpUtaCjYIJAurfPj5B1V&tag=abaaso&limit=1000000&jsonp=?",
 				twitter : "http://search.twitter.com/search.json?callback=?&from=abaaso"
 			};
-
-			delete dashboard.ready;
 
 			// Consuming APIs
 			$.store(dashboard.api);
@@ -236,12 +233,9 @@
 			typeof dashboard.twitter.data.setUri === "function" ? dashboard.twitter.data.setUri(uri.twitter) : dashboard.twitter.data.uri = uri.twitter;
 		};
 
-		render = function () {
-			var stage     = $("#stage"),
-			    dashboard = window.dashboard,
+		render = function ($, dashboard) {
+			var stage  = $("#stage"),
 			    obj, root;
-
-			delete dashboard.render;
 
 			// Creating tabs
 			stage.tabs(["Main", "API", "Blog", "Download", "Examples"]);
@@ -340,21 +334,14 @@
 			ready   : ready,
 			render  : render,
 			twitter : twitter
-		}
+		};
 	});
 
-	// AMD support
-	switch (true) {
-		case typeof define === "function":
-			define("dashboard", ["abaaso", "abaaso.route", "abaaso.tabs"], function () {
-				var $ = window[abaaso.aliased];
-				window.dashboard = dashboard();
-				window.dashboard.ready();
-				window.dashboard.render();
-			});
-			break;
-		default:
-			window.dashboard = dashboard();
-			abaaso.on("ready", window.dashboard.ready).on("render", window.dashboard.render);
-	}
-})();
+	define("dashboard", ["abaaso", "abaasoRoute", "abaasoTabs"], function (abaaso) {
+		var $ = global[abaaso.aliased],
+		    d = dashboard($);
+
+		d.ready($);
+		d.render($);
+	});
+})(this);
