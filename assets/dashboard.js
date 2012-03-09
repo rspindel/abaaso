@@ -213,7 +213,6 @@
 			// Consuming APIs
 			$.store(dashboard.api);
 			dashboard.api.data.key = "name";
-			dashboard.api.data.credentials = true;
 			typeof dashboard.api.data.setUri === "function" ? dashboard.api.data.setUri(uri.api) : dashboard.api.data.uri = uri.api;
 
 			$.store(dashboard.blog);
