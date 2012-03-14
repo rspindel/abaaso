@@ -2,7 +2,7 @@
  * abaaso dashboard
  *
  * @author Jason Mulligan <jason.mulligan@avoidwork.com>
- * @version 2.4
+ * @version 2.4.1
  */
 (function (global) {
 	"use strict";
