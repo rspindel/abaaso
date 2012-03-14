@@ -256,8 +256,7 @@
 				obj = $("section[data-hash='blog']")[0];
 				var fn  = function () {
 					if (dashboard.blog.data.total > 0) {
-						var items = dashboard.blog.data.get([0, 10]),
-						    d, o;
+						var items = dashboard.blog.data.get(0, 9), d, o;
 
 						obj.clear();
 
