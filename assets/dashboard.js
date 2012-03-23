@@ -9,7 +9,6 @@
 
 	var dashboard = (function ($) {
 		var blog    = {id: "blog"},
-		    collabs = {id: "collabs"},
 		    twitter = {
 			    id      : "twitter",
 			    display : function (index) {
@@ -224,6 +223,7 @@
 			$.store(dashboard.collabs);
 			dashboard.collabs.data.source   = "data";
 			dashboard.collabs.data.key      = "id";
+			dashboard.blog.data.callback    = "callback";
 			typeof dashboard.collabs.data.setUri === "function" ? dashboard.api.data.setUri(uri.collabs) : dashboard.collabs.data.uri = uri.collabs;
 
 			$.store(dashboard.twitter);
