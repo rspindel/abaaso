@@ -224,7 +224,7 @@
 			$.store(dashboard.collabs);
 			dashboard.collabs.data.source   = "data";
 			dashboard.collabs.data.key      = "id";
-			dashboard.blog.data.callback    = "callback";
+			dashboard.collabs.data.callback = "callback";
 			typeof dashboard.collabs.data.setUri === "function" ? dashboard.api.data.setUri(uri.collabs) : dashboard.collabs.data.uri = uri.collabs;
 
 			$.store(dashboard.twitter);
@@ -337,7 +337,7 @@
 		};
 	});
 
-	define("dashboard", ["abaaso", "abaaso.tabs"], function (abaaso, tabs) {
+	define("dashboard", ["http://cdn.abaaso.com/abaaso.js", "abaaso.tabs"], function (abaaso, tabs) {
 		var $ = global[abaaso.aliased],
 		    d = dashboard($);
 
