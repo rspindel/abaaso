@@ -337,7 +337,7 @@
 		};
 	});
 
-	define("dashboard", ["http://cdn.abaaso.com/abaaso.js", "abaaso.tabs"], function (abaaso, tabs) {
+	define("dashboard", ["abaaso", "abaaso.tabs"], function (abaaso, tabs) {
 		var $ = global[abaaso.aliased],
 		    d = dashboard($);
 
