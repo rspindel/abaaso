@@ -10,18 +10,20 @@
 <link rel="stylesheet" type="text/css" href="assets/default.css" media="print,screen" />
 <script type="text/javascript" src="assets/require.js"></script>
 <script type="text/javascript">
-require.config({baseUrl: "/assets"});
-require(["abaaso", "dashboard"]);
+require.config({baseUrl: "assets/modules"});
+require(["dashboard"]);
 </script>
 <script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-332770-11']);
-  _gaq.push(['_trackPageview']);
-
+  var _gauges = _gauges || [];
   (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    var t   = document.createElement('script');
+    t.type  = 'text/javascript';
+    t.async = true;
+    t.id    = 'gauges-tracker';
+    t.setAttribute('data-site-id', '4f6ca332f5a1f5583e0000d9');
+    t.src = '//secure.gaug.es/track.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(t, s);
   })();
 </script>
 <!--[if lt IE 9]>

@@ -9,6 +9,7 @@
 
 	var dashboard = (function ($) {
 		var blog    = {id: "blog"},
+		    collabs = {id: "collabs"},
 		    twitter = {
 			    id      : "twitter",
 			    display : function (index) {
