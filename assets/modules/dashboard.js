@@ -335,11 +335,15 @@
 		var $ = global[abaaso.aliased],
 		    d = dashboard($);
 
-		d.ready($, d);
-		d.render($, d);
-
-		delete d.ready;
-		delete d.render;
+		$.repeat(function () {
+			if (/loaded|complete/.test(document.readyState) && typeof $("body")[0] !== "undefined") {
+				d.ready($, d);
+				d.render($, d);
+				delete d.ready;
+				delete d.render;
+				return false;
+			}
+		}, 10);
 
 		return d;
 	});
