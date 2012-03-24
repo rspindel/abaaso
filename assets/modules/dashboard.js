@@ -243,14 +243,8 @@
 
 			// Setting routing
 			$.route.set("download", function () {
-				var guid = $.guid();
-
 				obj = $("section[data-hash='download']")[0];
-				obj.on("afterGet", function () {
-					this.un("afterGet", guid);
-					$("#download-debugging").on("click", function () { location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/debug/abaaso.js"; }, "click");
-					$("#download-production").on("click", function () { location = "https://raw.github.com/avoidwork/abaaso/v" + parseFloat($.version) + "/production/abaaso.js"; }, "click");
-				}, guid).get("views/download.htm");
+				if (obj.innerHTML.isEmpty()) obj.get("views/download.htm");
 			});
 
 			$.route.set("blog", function () {
@@ -306,7 +300,7 @@
 
 			$.route.set("main", function () {
 				obj = $("section[data-hash='main']")[0];
-				obj.get("views/intro.htm");
+				if (obj.innerHTML.isEmpty()) obj.get("views/intro.htm");
 			});
 
 			// Prepping the UI
