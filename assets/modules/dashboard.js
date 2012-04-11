@@ -204,7 +204,7 @@
 		// abaaso listeners
 		ready = function ($, dashboard) {
 			var uri = {
-				api     : "http://api.abaaso.com?callback=?",
+				api     : "http://api.abaaso.com", //?callback=?",
 				collabs : "https://api.github.com/repos/avoidwork/abaaso/collaborators?callback=?",
 				tumblr  : "http://api.tumblr.com/v2/blog/attackio.tumblr.com/posts?api_key=cm7cZbxWpFDtv8XFD5XFuWsn5MnzupVpUtaCjYIJAurfPj5B1V&tag=abaaso&limit=1000000&jsonp=?",
 				twitter : "http://search.twitter.com/search.json?callback=?&from=abaaso"
@@ -213,7 +213,7 @@
 			// Consuming APIs
 			$.store(dashboard.api);
 			dashboard.api.data.key = "name";
-			//typeof dashboard.api.data.setUri === "function" ? dashboard.api.data.setUri(uri.api) : dashboard.api.data.uri = uri.api;
+			typeof dashboard.api.data.setUri === "function" ? dashboard.api.data.setUri(uri.api) : dashboard.api.data.uri = uri.api;
 
 			$.store(dashboard.blog);
 			dashboard.blog.data.key         = "id";
