@@ -10,7 +10,9 @@
 <script type="text/javascript" src="assets/require.js"></script>
 <script type="text/javascript">
 require.config({baseUrl: "assets/modules"});
-require(["dashboard"]);
+require(["dashboard"], function (dashboard) {
+  window.dashboard = dashboard;
+});
 </script>
 <script type="text/javascript">
   var _gauges = _gauges || [];
