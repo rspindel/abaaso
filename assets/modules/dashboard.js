@@ -2,7 +2,7 @@
  * abaaso dashboard
  *
  * @author Jason Mulligan <jason.mulligan@avoidwork.com>
- * @version 2.4.1
+ * @version 2.4.2
  */
 (function (global) {
 	"use strict";
@@ -20,201 +20,17 @@
 			    	if (typeof obj !== "undefined") typeof r !== "undefined" ? obj.text(r.data.text) : obj.loading();
 			    }
 			},
-			api, ready, render;
-
-		// API widget
-		api = {
-			id: "api",
-
-			/**
-			 * Collection of methods to add to prototypes
-			 * Managed manually because these are hidden in closure
-			 */
-			prototypes : {
-				array   : ["contains", "diff", "first", "index", "indexed", "keys", "last", "on", "remove", "total"],
-				element : ["create", "disable", "enable", "get", "hide", "isAlphaNum", "isBoolean", "isDate", "isDomain", "isEmail", "isEmpty", "isIP", "isInt", "isNumber", "isPhone", "isString", "loading", "on", "position", "show", "text", "update", "validate"],
-				number  : ["isEven", "isOdd", "on"],
-				shared  : ["clear", "destroy", "fire", "genId", "listeners", "un"],
-				string  : ["capitalize", "isAlphaNum", "isBoolean", "isDate", "isDomain", "isEmail", "isEmpty", "isIP", "isInt", "isNumber", "isPhone", "isString", "on", "trim"]
-			},
-
-			/**
-			 * Iterates an object and executes generate() on the children,
-			 * supports 3 levels deep
-			 *
-			 * @param s {object} The object to iterate
-			 */
-			elements : function (s) {
-				var i, x, y;
-
-				for (i in s) {
-					if (!s.hasOwnProperty(i)) continue;
-					this.generate(i, i, "apis");
-					for (x in s[i]) {
-						if (!s[i].hasOwnProperty(x) || /bind|prototype/.test(x) || i === "$") continue;
-
-						var id  = i+"-"+x,
-							key = i+"."+x;
-
-						if (typeof $("#"+i+"-sub") === "undefined" && typeof $("#"+i) !== "undefined") {
-							$("#"+i).style.listStyleType = "square";
-							$("#"+i).create("ul", {id: i+"-sub", "class": "sub"}).hide();
-						}
-						this.generate(x, key, i+"-sub", id);
-						for (y in s[i][x]) {
-							if (!s[i][x].hasOwnProperty(y) || y === "prototype") continue;
-
-							var id  = i+"-"+x+"-"+y,
-								key = i+"."+x+"."+y;
-
-							if (typeof $("#"+i+"-"+x+"-sub") === "undefined" && typeof $("#"+i+"-"+x) !== "undefined") {
-								$("#"+i+"-"+x).style.listStyleType = "square";
-								$("#"+i+"-"+x).create("ul", {id: i+"-"+x+"-sub", "class": "sub"}).hide();
-							}
-							this.generate(y, key, i+"-"+x+"-sub", id);
-						}
-					}
-				}
-			},
-
-			/**
-			 * Generates the HTML elements for the API widget
-			 *
-			 * @param item {object} The item to add to the tree
-			 * @param key {string} The record key
-			 * @param target {string} The target element to add the item to
-			 */
-			generate : function (item, key, target, id){
-				if (typeof $("#"+target) === "undefined") return;
-				id = id || item.replace(/(\&|,|(\s)|\/)/gi,"").toLowerCase();
-				if (id === "$") id = "helper";
-
-				var dashboard = window.dashboard;
-
-				$("#"+target).create("li", {id: id})
-				             .create("a", {id: id+"-anchor", innerHTML: item, "class": "nav"})
-							 .on("click", function(){
-								var list   = $("#"+this.parentNode.id+"-sub"),
-									record = api.data.get(key),
-									panel;
-
-								if (typeof list !== "undefined") {
-									switch ($.el.hidden(list)) {
-										case true:
-											this.parentNode.style.listStyleType = "circle";
-											list.show();
-											break;
-										case false:
-											this.parentNode.style.listStyleType = "square";
-											list.hide();
-											break;
-									}
-								}
-								panel = $("#copy").clear().create("article");
-								if (typeof record !== "undefined") {
-									panel.create("h2").text(record.key);
-									panel.create("h3").text(record.data.type);
-									panel.create("p").text(record.data.description.replace(/\n/g, "<br />"));
-									if (record.data.sample !== null) {
-										panel.create("h4").text("Sample");
-										panel.create("code").text(record.data.sample.replace(/\n/g, "<br />"));
-									};
-								}
-								else panel.create("h2").text("Could not find the requested record");
-							});
-			},
-
-			/**
-			 * Creates the API widget using abaaso
-			 */
-			render : function () {
-				this.elements({prototypes: this.structure(this.prototypes)});
-				this.elements(this.structure(abaaso));
-			},
-
-			/**
-			 * Returns the abaaso library structure with API URIs as a property
-			 *
-			 * @returns {object}
-			 */
-			structure : function (s) {
-				var m = 3,
-				    r = new RegExp("function|string"),
-				    i, structure, getChildren;
-
-				/**
-				 * Finds the children of o
-				 *
-				 * @param o {object} The object to iterate
-				 * @returns {object}
-				 */
-				getChildren = function (o, x) {
-					var c = {};
-
-					// Max recusion is 3 levels
-					x = x || 1;
-					if (x >= m) return;
-
-					switch (true) {
-						case o instanceof Array:
-							o.each(function (v, k) { c[v] = r.test(typeof v) ? {} : getChildren(v, (x + 1)); });
-							break;
-						case o instanceof Object:
-							$.iterate(o, function (v, k) { c[k] = r.test(typeof v) ? {} : getChildren(v, (x + 1)); });
-							break;
-					}
-
-					return c;
-				};
-
-				structure = getChildren(s);
-
-				// Cleaning up the object
-				if (s === abaaso) {
-					structure.id              = {};
-					structure.hidden          = {};
-					structure.ready           = {};
-					structure.version         = {};
-					structure.data.uri        = {};
-					structure.data.callback   = {};
-					structure.data.key        = {};
-					structure.data.keys       = {};
-					structure.data.parentNode = {};
-					structure.data.records    = {};
-					structure.data.source     = {};
-					structure.data.total      = {};
-					structure.data.views      = {};
-					structure.state.current   = {};
-					delete structure.constructor;
-					delete structure.callback;
-					delete structure.data.methods;
-					delete structure.data._uri;
-					delete structure.state._current;
-					delete structure.dashboard;
-					delete structure.error.log;
-					delete structure.timer;
-					delete structure.route;
-					delete structure.tabs;
-				}
-
-				return structure;
-			}
-		};
+			ready, render;
 
 		// abaaso listeners
 		ready = function ($, dashboard) {
 			var uri = {
-				api     : "http://api.abaaso.com", //?callback=?",
 				collabs : "https://api.github.com/repos/avoidwork/abaaso/collaborators?callback=?",
 				tumblr  : "http://api.tumblr.com/v2/blog/attackio.tumblr.com/posts?api_key=cm7cZbxWpFDtv8XFD5XFuWsn5MnzupVpUtaCjYIJAurfPj5B1V&tag=abaaso&limit=1000000&jsonp=?",
 				twitter : "http://search.twitter.com/search.json?callback=?&from=abaaso"
 			};
 
 			// Consuming APIs
-			$.store(dashboard.api);
-			dashboard.api.data.key = "name";
-			typeof dashboard.api.data.setUri === "function" ? dashboard.api.data.setUri(uri.api) : dashboard.api.data.uri = uri.api;
-
 			$.store(dashboard.blog);
 			dashboard.blog.data.key         = "id";
 			dashboard.blog.data.callback    = "jsonp";
@@ -274,18 +90,7 @@
 
 			$.route.set("api", function () {
 				obj = $("section[data-hash='api']")[0];
-				var guid = $.guid(),
-				    fn   = function () {
-				    	if (dashboard.api.data.total > 0) {
-				    		dashboard.api.render();
-				    		return false;
-				    	}
-				    };
-
-				if (obj.innerHTML.isEmpty()) obj.on("afterGet", function () {
-					this.un("afterGet", guid);
-					$.repeat(fn, 10, "api");
-				}, guid).get("views/api.htm");
+				if (obj.innerHTML.isEmpty()) obj.get("views/api.htm");
 			});
 
 			$.route.set("error", function () {
@@ -322,7 +127,6 @@
 
 		// @constructor
 		return {
-			api     : api,
 			blog    : blog,
 			collabs : collabs,
 			ready   : ready,
