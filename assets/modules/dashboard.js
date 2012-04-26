@@ -89,8 +89,8 @@
 			});
 
 			$.route.set("api", function () {
-				obj = $("section[data-hash='api']")[0];
-				if (obj.innerHTML.isEmpty()) obj.get("views/api.htm");
+				$("section[data-hash='api']").html("Redirecting to Github");
+				location = "https://github.com/avoidwork/abaaso/wiki";
 			});
 
 			$.route.set("error", function () {
