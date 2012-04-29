@@ -2,7 +2,7 @@
  * abaaso dashboard
  *
  * @author Jason Mulligan <jason.mulligan@avoidwork.com>
- * @version 2.4.2
+ * @version 3.0
  */
 (function (global) {
 	"use strict";
@@ -13,41 +13,32 @@
 		    twitter = {
 			    id      : "twitter",
 			    display : function (index) {
-			    	index   = index || 0;
-			    	var obj = $("#twitter"),
-			    	    r   = this.data.get(index);
+			    	index = index || 0;
+			    	var r = this.data.get(index);
 
-			    	if (typeof obj !== "undefined") typeof r !== "undefined" ? obj.text(r.data.text) : obj.loading();
+			    	$("#twitter").create("p").text(typeof r !== "undefined" ? r.data.text : "Nothing in the fire hose");
 			    }
 			},
 			ready, render;
 
-		// abaaso listeners
-		ready = function ($, dashboard) {
-			var uri = {
-				collabs : "https://api.github.com/repos/avoidwork/abaaso/collaborators?callback=?",
-				tumblr  : "http://api.tumblr.com/v2/blog/attackio.tumblr.com/posts?api_key=cm7cZbxWpFDtv8XFD5XFuWsn5MnzupVpUtaCjYIJAurfPj5B1V&tag=abaaso&limit=1000000&jsonp=?",
-				twitter : "http://search.twitter.com/search.json?callback=?&from=abaaso"
-			};
+		ready = function ($, d) {
+			$.store(d.blog);
+			d.blog.data.key         = "id";
+			d.blog.data.callback    = "jsonp";
+			d.blog.data.source      = "response";
+			d.blog.data.uri         = "http://api.tumblr.com/v2/blog/attackio.tumblr.com/posts?api_key=cm7cZbxWpFDtv8XFD5XFuWsn5MnzupVpUtaCjYIJAurfPj5B1V&tag=abaaso&limit=1000000&jsonp=?";
 
-			// Consuming APIs
-			$.store(dashboard.blog);
-			dashboard.blog.data.key         = "id";
-			dashboard.blog.data.callback    = "jsonp";
-			dashboard.blog.data.source      = "response";
-			typeof dashboard.blog.data.setUri === "function" ? dashboard.blog.data.setUri(uri.tumblr) : dashboard.blog.data.uri = uri.tumblr;
+			$.store(d.collabs);
+			d.collabs.data.key      = "id";
+			d.collabs.data.callback = "callback";
+			d.collabs.data.source   = "data";
+			d.collabs.data.uri      = "https://api.github.com/repos/avoidwork/abaaso/collaborators?callback=?";
 
-			$.store(dashboard.collabs);
-			dashboard.collabs.data.source   = "data";
-			dashboard.collabs.data.key      = "id";
-			dashboard.collabs.data.callback = "callback";
-			typeof dashboard.collabs.data.setUri === "function" ? dashboard.api.data.setUri(uri.collabs) : dashboard.collabs.data.uri = uri.collabs;
-
-			$.store(dashboard.twitter);
-			dashboard.twitter.data.key      = "id";
-			dashboard.twitter.data.callback = "callback";
-			dashboard.twitter.on("afterDataSync", function() { this.display(); }, "sync");
-			typeof dashboard.twitter.data.setUri === "function" ? dashboard.twitter.data.setUri(uri.twitter) : dashboard.twitter.data.uri = uri.twitter;
+			$.store(d.twitter);
+			d.twitter.data.key      = "id";
+			d.twitter.data.callback = "callback";
+			d.twitter.on("afterDataSync", function() { this.display(); }, "sync");
+			d.twitter.data.uri      = "http://search.twitter.com/search.json?callback=?&from=abaaso";
 		};
 
 		render = function ($, dashboard) {
@@ -59,12 +50,10 @@
 
 			// Setting routing
 			$.route.set("download", function () {
-				obj = $("section[data-hash='download']")[0];
-				if (obj.innerHTML.isEmpty()) obj.get("views/download.htm");
+				$("section[data-hash='download']")[0].get("views/download.htm");
 			});
 
 			$.route.set("blog", function () {
-				obj = $("section[data-hash='blog']")[0];
 				var fn  = function () {
 					if (dashboard.blog.data.total > 0) {
 						var items = dashboard.blog.data.get(0, 9), d, o;
@@ -82,9 +71,12 @@
 						obj.create("p").create("a", {innerHTML: "Read more on attack.io", href: "http://attack.io"});
 						return false;
 					}
+					else obj.create("p").html("No posts to display.");
 				};
 
+				obj = $("section[data-hash='blog']")[0];
 				obj.loading();
+
 				$.repeat(fn, 10, "blog");
 			});
 
@@ -94,18 +86,15 @@
 			});
 
 			$.route.set("error", function () {
-				obj = $("section[data-hash='main']")[0].addClass("active").removeClass("hidden");
-				obj.get("views/error.htm");
+				$("section[data-hash='main']")[0].get("views/error.htm");
 			});
 
 			$.route.set("examples", function () {
-				obj = $("section[data-hash='examples']")[0];
-				if (obj.innerHTML.isEmpty()) obj.get("views/examples.htm");
+				$("section[data-hash='examples']")[0].get("views/examples.htm");
 			});
 
 			$.route.set("main", function () {
-				obj = $("section[data-hash='main']")[0];
-				if (obj.innerHTML.isEmpty()) obj.get("views/intro.htm");
+				$("section[data-hash='main']")[0].get("views/intro.htm");
 			});
 
 			// Prepping the UI
@@ -135,9 +124,14 @@
 		};
 	});
 
-	define("dashboard", ["abaaso", "abaaso.tabs"], function (abaaso, tabs) {
+	define("dashboard", ["abaaso", "abaaso.tabs"], function (abaaso) {
 		var $ = global[abaaso.aliased],
 		    d = dashboard($);
+
+		if ($.client.ie && $.client.version < 9) {
+			location = "upgrade.html";
+			return;
+		}
 
 		$.repeat(function () {
 			if (/loaded|complete/.test(document.readyState) && typeof $("body")[0] !== "undefined") {
