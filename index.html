@@ -10,9 +10,7 @@
 <script type="text/javascript" src="assets/require.js"></script>
 <script type="text/javascript">
 require.config({baseUrl: "assets/modules"});
-require(["dashboard"], function (dashboard) {
-  window.dashboard = dashboard;
-});
+require(["dashboard"]);
 </script>
 <script type="text/javascript">
   var _gauges = _gauges || [];
@@ -32,13 +30,14 @@ require(["dashboard"], function (dashboard) {
 	<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
 <![endif]-->
 </head>
-
 <body>
-<article id="stage">
-  <header><h1>abaaso</h1></header>
-</article>
-<footer>Copyright &copy <year></year> <a href="http://avoidwork.com">Jason Mulligan</a> | <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD 3 Licensed</a> | <version></version></footer>
+<header class="shadow bottom padded">
+  <h1>abaaso</h1>
+</header>
+<article id="stage"></article>
+<footer>
+  Copyright &copy <year></year> <a href="http://avoidwork.com">Jason Mulligan</a> | <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD 3 Licensed</a> | <version></version>
+</footer>
 <a href="https://github.com/avoidwork/abaaso"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
-<div id="gradient"></div>
 </body>
 </html>
