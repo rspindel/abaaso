@@ -34,8 +34,8 @@
 					d = item.data.date.replace(/\s.*/, "").explode("-"); // Parsing String because some browsers will not cast to Date
 					o = obj.create("article");
 					o.create("h3").create("a", {href: item.data.post_url, innerHTML: item.data.title});
-					o.create("date").text($.label.month[parseInt(d[1] -1 ).toString()]+" "+d[2]+", "+d[0]);
-					o.create("entry").text(item.data.body);
+					o.create("date").html($.label.month[parseInt(d[1] -1 ).toString()]+" "+d[2]+", "+d[0]);
+					o.create("entry").html(item.data.body);
 				});
 				obj.create("p").create("a", {innerHTML: "Read more on attack.io", href: "http://attack.io"});
 			}
@@ -99,8 +99,8 @@
 
 			// Prepping the UI
 			$.loading.url = "assets/loading.gif";
-			$("version").text($.version);
-			$("year").text(new Date().getFullYear());
+			$("version").html($.version);
+			$("year").html(new Date().getFullYear());
 			$("section").on("beforeGet", function () { this.loading(); }, "loading");
 			$("section[data-hash='main']").first().on("afterGet", function () { twitter.display(); }, "twitter");
 			$("ul.tab a").addClass("shadow round button padded");
