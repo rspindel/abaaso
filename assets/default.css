@@ -60,7 +60,6 @@ header h1 img {
 }
 
 ul.tab {
-	display    : inline-block;
 	float      : right;
 	vertical-align : middle;
 }
@@ -77,7 +76,6 @@ ul.tab li:last-child {
 section.root {
 	margin-top : 25px;
 	clear      : both;
-	display    : inline-block;
 }
 
 div ul li {
