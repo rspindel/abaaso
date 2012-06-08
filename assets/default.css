@@ -72,6 +72,10 @@ ul.tab li:last-child {
 	margin     : 0 0 0 0;
 }
 
+section.tab {
+    display    : inline-block;
+}
+
 section.root {
 	margin-top : 25px;
 	clear      : both;
