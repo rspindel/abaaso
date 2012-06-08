@@ -27,7 +27,7 @@
 			    obj   = $("section[data-hash='blog']").first(),
 			    d, o;
 
-			obj.clear();
+			obj.clear().html("<h2>Blog</h2");
 
 			if (typeof items.first() !== "undefined") {
 				items.each(function (item) {
