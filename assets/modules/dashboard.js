@@ -17,7 +17,7 @@
 			    	var r = this.data.get(index),
 			    	    t = $("#twitter");
 
-			    	if (typeof t !== "undefined") t.clear().create("p").text(typeof r !== "undefined" ? r.data.text : "Nothing in the fire hose");
+			    	if (typeof t !== "undefined") t.clear().create("p").html(typeof r !== "undefined" ? r.data.text : "Nothing in the fire hose");
 			    }
 			},
 			displayBlog, ready, render;
