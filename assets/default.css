@@ -60,7 +60,6 @@ header h1 img {
 }
 
 ul.tab {
-	float      : right;
 	vertical-align : middle;
 }
 
@@ -76,6 +75,7 @@ ul.tab li:last-child {
 section.root {
 	margin-top : 25px;
 	clear      : both;
+	text-align : left;
 }
 
 div ul li {
@@ -110,8 +110,12 @@ footer {
 	min-height : 500px;
 }
 
+#stage {
+	text-align : right;
+}
+
 .active {
-	color   : #000;
+	color      : #000;
 }
 
 .col {
