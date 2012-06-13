@@ -72,11 +72,12 @@
 		/**
 		 * Initializes the routing by loading the default OR the first route registered
 		 * 
-		 * @return {Undefined} undefined
+		 * @return {String} Route being loaded
 		 */
 		init = function () {
 			if (!/\w/.test(document.location.hash)) document.location.hash = "!/" + ($.route.default !== null ? $.route.default : $.array.cast(routes, true).remove("error").first());
 			else load(document.location.hash);
+			return document.location.hash.replace(/\#|\!\//g, "");
 		};
 
 		/**

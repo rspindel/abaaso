@@ -11,7 +11,7 @@
 
 		$.route.default = "main";
 
-		$.route.set("main", function () { $("section[data-hash='main']").first().get("views/intro.htm"); })
+		$.route.set("main", function () { $("section[data-hash='main']").first().get("views/intro.htm"); });
 
 		$.route.set("download", function () { $("section[data-hash='download']").first().get("views/download.htm"); });
 		
