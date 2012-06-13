@@ -1,2 +1,4 @@
 require.config({baseUrl: "modules"});
-require(["dashboard"]);
+require(["dashboard"], function (dashboard) {
+	window.dashboard = dashboard;
+});
