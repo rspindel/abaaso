@@ -71,8 +71,7 @@
 		};
 
 		render = function ($, d) {
-			var stage  = $("#stage"),
-			    obj, root;
+			var stage = $("#stage");
 
 			// Creating tabs
 			stage.tabs(["Main", "API", "Blog", "Download", "Examples"]);
@@ -86,11 +85,8 @@
 			$("ul.tab a").addClass("shadow round button padded");
 			$("body").css("opacity", 1);
 
-			// Setting routing
-			require(["routes"], function () {
-				var hash = $.route.init();
-				$.tabs.active(hash);
-			});
+			// Setting routing, setting the active tab
+			require(["routes"], function () { $.tabs.active($.route.init()); });
 		};
 
 		// @constructor
