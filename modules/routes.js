@@ -17,7 +17,7 @@
 		
 		$.route.set("blog", function () {
 			$("section[data-hash='blog']").first().loading();
-			displayBlog(d.blog.data);
+			dashboard.blog.display();
 		});
 		
 		$.route.set("api", function () {
