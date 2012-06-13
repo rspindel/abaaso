@@ -1,0 +1,38 @@
+/**
+ * Copyright (c) 2012, Jason Mulligan <jason.mulligan@avoidwork.com>
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of abaaso.datalist nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL JASON MULLIGAN BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+/**
+ * abaaso.datalist
+ * 
+ * DataList module
+ *
+ * @author Jason Mulligan <jason.mulligan@avoidwork.com>
+ * @link http://avoidwork.com
+ * @requires abaaso 2.1.6
+ * @version 1.0.4
+ */
+(function(a){"use strict";var b,c;b=function(b,c,d,e,f,g){var h=a[abaaso.aliased],i;if(b instanceof Element&&typeof c=="object"&&!!/string|object/.test(typeof d))return i=b.create("ul",{"class":"list"}),this.element=i,this.callback=e||null,this.filter=f||null,this.placeholder=g||"",this.order="",this.ready=!1,this.template=d,this.sensitivity="ci",this.store=c,this.store.parentNode.on("afterDataSync",function(){this.refresh()},"refresh-"+i.id,this),this.store.parentNode.on("afterDataDelete",function(a){h("#"+i.id+" li[data-key='"+a.key+"']").destroy()},"delete-"+i.id,this),this.refresh(),this;throw Error(h.label.error.invalidArguments)},b.prototype.refresh=function(){var b=a[abaaso.aliased],c=this.element,d=typeof this.template=="object",e=!d&&String(this.template).replace(/{{|}}/g,"")===this.store.key,f=[],g=[],h=this,i=b.encode(this.template).indexOf("data-key")<0,j=typeof this.callback=="function",k=/{{.*}}/g,l=new RegExp,m=[],n;return this.ready||(this.ready=!0,this.store.parentNode.on("afterDataSet",function(a){this.refresh()},"set-"+c.id,this)),this.store.parentNode.fire("beforeDataListRefresh"),d?n=function(a){var c=b.encode(h.template);return c=c.replace("{{"+h.store.key+"}}",a.key),b.iterate(a.data,function(a,d){l.compile("{{"+d+"}}","g"),c=c.replace(l,b.encode(a).replace(/(^")|("$)/g,""))}),c=b.decode(c.replace(k,h.placeholder)),{li:c}}:n=function(a){var c=String(h.template);return c=c.replace("{{"+h.store.key+"}}",a.key),b.iterate(a.data,function(a,b){l.compile("{{"+b+"}}","g"),c=c.replace(l,a)}),{li:c.replace(k,h.placeholder)}},f=this.order.isEmpty()?this.store.get():this.store.sort(this.order,!1,this.sensitivity),f.each(function(a){h.filter!==null&&h.filter instanceof Object?b.iterate(h.filter,function(b,c){if(m.index(a.key)>-1)return;var d=0,e=new RegExp,f;b=b.explode(),f=b.length;for(d=0;d<f;d++){e.compile(b[d],"i");if(c===h.store.key&&e.test(a.key)||typeof a.data[c]!="undefined"&&e.test(a.data[c])){m.push(a.key),g.push({key:a.key,template:n(a)});return}}}):g.push({key:a.key,template:n(a)})}),c.clear(),g.each(function(a){var d=b.genId();b.on("afterCreate",function(c){b.un("afterCreate",d),i&&c.data("key",a.key),j&&h.callback(c)},d),c.tpl(a.template)}),this.store.parentNode.fire("afterDataListRefresh"),this},b.prototype.sort=function(b,c){var d=a[abaaso.aliased];if(typeof b!="string")throw Error(d.label.error.invalidArguments);return this.store.parentNode.fire("beforeDataListSort"),this.order=b,this.sensitivity=c||"ci",this.refresh(),this.store.parentNode.fire("afterDataListSort"),this},c=function(a){return a.module("datalist",b),a.datalist},typeof define=="function"?define(["abaaso"],function(a){return c(a)}):abaaso.on("init",function(){c(abaaso)},"abaaso.datalist")})(this)
