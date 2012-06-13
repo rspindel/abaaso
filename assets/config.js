@@ -1,2 +1,2 @@
-require.config({baseUrl: "assets/modules"});
+require.config({baseUrl: "assets"});
 require(["dashboard"]);
