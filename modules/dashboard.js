@@ -76,27 +76,6 @@
 			// Creating tabs
 			stage.tabs(["Main", "API", "Blog", "Download", "Examples"]);
 
-			// Setting routing
-			$.route.set("download", function () { $("section[data-hash='download']").first().get("views/download.htm"); });
-			$.route.set("blog", function () {
-				$("section[data-hash='blog']").first().loading();
-				displayBlog(d.blog.data);
-			});
-			$.route.set("api", function () {
-				$("section[data-hash='api']").first().html("Redirecting to Github");
-				location = "https://github.com/avoidwork/abaaso/wiki";
-			});
-			$.route.set("error", function () {
-				var guid = $.guid(true);
-
-				$("section[data-hash='main']").first().on("afterGet", function () {
-					this.un("afterGet", guid);
-					$.tabs.active("main");
-				}, guid).get("views/error.htm");
-			});
-			$.route.set("examples", function () { $("section[data-hash='examples']").first().get("views/examples.htm"); });
-			$.route.set("main", function () { $("section[data-hash='main']").first().get("views/intro.htm"); });
-
 			// Prepping the UI
 			$.loading.url = "assets/loading.gif";
 			$("version").html($.version);
@@ -106,12 +85,8 @@
 			$("ul.tab a").addClass("shadow round button padded");
 			$("body").css("opacity", 1);
 
-			// Setting the hash
-			if (!/\w/.test(location.hash)) location.hash = "#!/main";
-			else {
-				$.tabs.active(location.hash);
-				$.route.load(location.hash);
-			}
+			// Setting routing
+			require(["routes"], function () { $.route.init(); });
 		};
 
 		// @constructor
@@ -124,7 +99,7 @@
 		};
 	});
 
-	define("dashboard", ["abaaso", "abaaso.tabs"], function (abaaso) {
+	define("dashboard", ["abaaso", "abaaso.tabs", "abaaso.datalist"], function (abaaso) {
 		var $ = global[abaaso.aliased],
 		    d = dashboard($);
 
