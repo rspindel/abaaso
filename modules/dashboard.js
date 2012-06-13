@@ -87,7 +87,10 @@
 			$("body").css("opacity", 1);
 
 			// Setting routing
-			require(["routes"], function () { $.tabs.active($.route.init()); });
+			require(["routes"], function () {
+				var hash = $.route.init();
+				$.tabs.active(hash);
+			});
 		};
 
 		// @constructor
