@@ -31,7 +31,7 @@
 
 			if (typeof items.first() !== "undefined") {
 				items.each(function (item) {
-					if (typeof item.data === "undefined") debugger;
+					if (typeof item === "undefined") return; // Empty response from the API
 					d = item.data.date.replace(/\s.*/, "").explode("-"); // Parsing String because some browsers will not cast to Date
 					o = obj.create("article");
 					o.create("h3").create("a", {href: item.data.post_url, innerHTML: item.data.title});
