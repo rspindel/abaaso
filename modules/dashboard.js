@@ -52,8 +52,8 @@
 
 			$.store(blog);
 			blog.on("beforeDataBatch", function (e) { $.log(e.length || "zero"); });
-			blog.on("beforeDataSet", function (e) { debugger; $.log("setting record"); })
-			blog.on("afterDataSync", function () { displayBlog(this.data); });
+			blog.on("beforeDataSet", function (e) { $.log(e.key); })
+			blog.on("afterDataSync", function (e) { debugger; displayBlog(this.data); });
 			blog.data.key         = "id";
 			blog.data.callback    = "jsonp";
 			blog.data.source      = "response";
