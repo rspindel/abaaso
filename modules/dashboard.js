@@ -23,7 +23,7 @@
 			displayBlog, ready, render;
 
 		displayBlog = function (data) {
-			var items = data.get(0, 9),
+			var items = data.range(0, 9),
 			    obj   = $("section[data-hash='blog']").first(),
 			    d, o;
 
@@ -51,7 +51,7 @@
 			    twitter = d.twitter;
 
 			$.store(blog);
-			blog.on("afterDataSync", function (e) { displayBlog(this.data); });
+			blog.on("afterDataSync", function (data) { displayBlog(data); });
 			blog.data.key         = "id";
 			blog.data.callback    = "jsonp";
 			blog.data.source      = "response";
