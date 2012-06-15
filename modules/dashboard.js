@@ -58,7 +58,6 @@
 			data.callback    = "jsonp";
 			data.source      = "response";
 			data.uri         = "http://api.tumblr.com/v2/blog/attackio.tumblr.com/posts?api_key=cm7cZbxWpFDtv8XFD5XFuWsn5MnzupVpUtaCjYIJAurfPj5B1V&tag=abaaso&limit=1000000&jsonp=?";
-			blog.display     = function () { displayBlog(blog.data); }; // public hook to this method
 
 			$.store(collabs);
 			collabs.data.key      = "id";
@@ -86,6 +85,7 @@
 			$("section").on("beforeGet", function () { this.loading(); }, "loading");
 			$("section[data-hash='main']").first().on("afterGet", function () { twitter.display(); }, "twitter");
 			$("ul.tab a").addClass("shadow round button padded");
+			$("section[data-hash='blog']").first().loading();
 			$("body").css("opacity", 1);
 
 			// Setting routing, setting the active tab

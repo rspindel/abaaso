@@ -15,11 +15,6 @@
 
 		$.route.set("download", function () { $("section[data-hash='download']").first().get("views/download.htm"); });
 		
-		$.route.set("blog", function () {
-			$("section[data-hash='blog']").first().loading();
-			dashboard.blog.display();
-		});
-		
 		$.route.set("api", function () {
 			$("section[data-hash='api']").first().html("Redirecting to Github");
 			location = "https://github.com/avoidwork/abaaso/wiki";
