@@ -51,9 +51,7 @@
 			    twitter = d.twitter;
 
 			$.store(blog);
-			blog.on("beforeDataBatch", function (e) { $.log(e.length || "zero"); });
-			blog.on("beforeDataSet", function (e) { $.log(e.key); })
-			blog.on("afterDataSync", function (e) { debugger; displayBlog(this.data); });
+			blog.on("afterDataSync", function (e) { displayBlog(this.data); });
 			blog.data.key         = "id";
 			blog.data.callback    = "jsonp";
 			blog.data.source      = "response";
