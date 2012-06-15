@@ -48,16 +48,14 @@
 		ready = function ($, d) {
 			var blog    = d.blog,
 			    collabs = d.collabs,
-			    twitter = d.twitter,
-			    data;
+			    twitter = d.twitter;
 
 			$.store(blog);
-			data = blog.data;
-			blog.on("afterDataSync", function () { displayBlog(data); });
-			data.key         = "id";
-			data.callback    = "jsonp";
-			data.source      = "response";
-			data.uri         = "http://api.tumblr.com/v2/blog/attackio.tumblr.com/posts?api_key=cm7cZbxWpFDtv8XFD5XFuWsn5MnzupVpUtaCjYIJAurfPj5B1V&tag=abaaso&limit=1000000&jsonp=?";
+			blog.on("afterDataSync", function () { debugger; displayBlog(this.data); });
+			blog.data.key         = "id";
+			blog.data.callback    = "jsonp";
+			blog.data.source      = "response";
+			blog.data.uri         = "http://api.tumblr.com/v2/blog/attackio.tumblr.com/posts?api_key=cm7cZbxWpFDtv8XFD5XFuWsn5MnzupVpUtaCjYIJAurfPj5B1V&tag=abaaso&limit=1000000&jsonp=?";
 
 			$.store(collabs);
 			collabs.data.key      = "id";
