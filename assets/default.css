@@ -82,7 +82,7 @@ section.root {
 	text-align : left;
 }
 
-div ul li {
+li {
 	margin     : 0 0 5pt 0;
 	list-style-type : none;
 }
