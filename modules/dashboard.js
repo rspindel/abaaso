@@ -24,7 +24,7 @@
 
 		displayBlog = function () {
 			var obj      = $("section[data-hash='blog']").first(),
-			    template = "<article><h3><a href={{post_url}}>{{title}}</a></h3><div class='date'>{{date}}</div><div>{{body}}</div></article>";
+			    template = "<article><h3><a href={{post_url}}>{{title}}</a></h3><div class='date'>{{date}}</div>{{body}}</article>";
 
 			blog.on("afterDataListRefresh", function (element) {
 				element.find("li div.date").each(function (i) {
