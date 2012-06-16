@@ -22,24 +22,19 @@
 			},
 			displayBlog, ready, render;
 
-		displayBlog = function (data) {
-			var items    = data.range(0, 9),
-			    obj      = $("section[data-hash='blog']").first(),
-			    template = "<article><h3><a href={{post_url}}>{{title}}</a></h3><date>{{date}}</date><entry>{{body}}</entry></article>",
-			    datalist, fn;
+		displayBlog = function () {
+			var obj      = $("section[data-hash='blog']").first(),
+			    template = "<article><h3><a href={{post_url}}>{{title}}</a></h3><date>{{date}}</date><entry>{{body}}</entry></article>";
 
-			fn = function (obj) {
-				var el = obj.find("date").first();
-				el.text(moment(el.text()).format('dddd, MMMM Do YYYY, h:mm:ss a'));
-			};
+			blog.parentNode.on("afterDataListRefresh", function () {
+				blog.datalist.element.find("li > date").each(function (i) {
+					i.text(moment(i.text()).format("dddd, MMMM Do YYYY, h:mm a"));
+				});
+			}, "moment", blog);
 
 			obj.html("<h2>Blog</h2>");
-
-			blog.data.total > 0 ? datalist = new $.datalist(obj, blog.data, template, {callback: fn, start: 0, end: 9}) : obj.create("p").html("No posts to display.");
-
+			blog.data.total > 0 ? blog.datalist = new $.datalist(obj, blog.data, template, {start: 0, end: 9}) : obj.create("p").html("No posts to display.");
 			obj.create("p").create("a", {innerHTML: "Read more on attack.io", href: "http://attack.io"});
-
-			blog.datalist = datalist;
 		};
 
 		ready = function ($, d) {
@@ -48,7 +43,7 @@
 			    twitter = d.twitter;
 
 			$.store(blog);
-			blog.on("afterDataSync", function (data) { displayBlog(data); });
+			blog.on("afterDataSync", function () { displayBlog(); });
 			blog.data.key         = "id";
 			blog.data.callback    = "jsonp";
 			blog.data.source      = "response";
