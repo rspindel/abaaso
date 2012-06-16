@@ -23,24 +23,23 @@
 			displayBlog, ready, render;
 
 		displayBlog = function (data) {
-			var items = data.range(0, 9),
-			    obj   = $("section[data-hash='blog']").first(),
-			    d, o;
+			var items    = data.range(0, 9),
+			    obj      = $("section[data-hash='blog']").first(),
+			    template = "<article><h3><a href={{post_url}}>{{title}}</a></h3><date>{{date}}</date><entry>{{body}}</entry></article>",
+			    datalist, fn;
+
+			fn = function (obj) {
+				var el = obj.find("date").first();
+				el.text(moment(el.text()).format('dddd, MMMM Do YYYY, h:mm:ss a'));
+			};
 
 			obj.html("<h2>Blog</h2>");
 
-			if (typeof items.first() !== "undefined") {
-				items.each(function (item) {
-					if (typeof item === "undefined") return; // Empty response from the API
-					d = item.data.date.replace(/\s.*/, "").explode("-"); // Parsing String because some browsers will not cast to Date
-					o = obj.create("article");
-					o.create("h3").create("a", {href: item.data.post_url, innerHTML: item.data.title});
-					o.create("date").html($.label.month[parseInt(d[1] -1 ).toString()]+" "+d[2]+", "+d[0]);
-					o.create("entry").html(item.data.body);
-				});
-				obj.create("p").create("a", {innerHTML: "Read more on attack.io", href: "http://attack.io"});
-			}
-			else obj.create("p").html("No posts to display.");
+			blog.data.total > 0 ? datalist = new $.datalist(obj, blog.data, template, {callback: fn, start: 0, end: 9}) : obj.create("p").html("No posts to display.");
+
+			obj.create("p").create("a", {innerHTML: "Read more on attack.io", href: "http://attack.io"});
+
+			blog.datalist = datalist;
 		};
 
 		ready = function ($, d) {
