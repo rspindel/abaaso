@@ -24,16 +24,17 @@
 
 		displayBlog = function () {
 			var obj      = $("section[data-hash='blog']").first(),
-			    template = "<article><h3><a href={{post_url}}>{{title}}</a></h3><div class='date'>{{date}}</div>{{body}}</article>";
+			    template = "<article><h3><a href={{post_url}}>{{title}}</a></h3><div class='date'>{{date}}</div>{{body}}</article>",
+			    fn;
 
-			blog.on("afterDataListRefresh", function (element) {
-				element.find("li div.date").each(function (i) {
+			fn = function (element) {
+				element.find("article > div.date").each(function (i) {
 					i.text(moment(i.text()).format("dddd, MMMM Do YYYY"));
 				});
-			}, "moment");
+			};
 
 			obj.html("<h2>Blog</h2>");
-			blog.data.total > 0 ? blog.datalist = new $.datalist(obj, blog.data, template, {start: 0, end: 9}) : obj.create("p").html("No posts to display.");
+			blog.data.total > 0 ? blog.datalist = new $.datalist(obj, blog.data, template, {callback: fn, start: 0, end: 9}) : obj.create("p").html("No posts to display.");
 			obj.create("p").create("a", {innerHTML: "Read more on attack.io", href: "http://attack.io"});
 		};
 
