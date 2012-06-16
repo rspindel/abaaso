@@ -23,7 +23,7 @@
 		});
 		
 		$.route.set("error", function () {
-			var guid = $.guid(true);
+			var guid = $.genId();
 
 			$("section[data-hash='main']").first().on("afterGet", function () {
 				this.un("afterGet", guid);
