@@ -28,7 +28,7 @@
 
 			blog.on("afterDataListRefresh", function (element) {
 				element.find("li date").each(function (i) {
-					i.text(moment(i.text()).format("dddd, MMMM Do YYYY, h:mm a"));
+					i.text(moment(i.text()).format("dddd, MMMM Do YYYY"));
 				});
 			}, "moment");
 
