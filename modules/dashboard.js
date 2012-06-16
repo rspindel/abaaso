@@ -26,11 +26,11 @@
 			var obj      = $("section[data-hash='blog']").first(),
 			    template = "<article><h3><a href={{post_url}}>{{title}}</a></h3><date>{{date}}</date><entry>{{body}}</entry></article>";
 
-			blog.parentNode.on("afterDataListRefresh", function () {
-				blog.datalist.element.find("li > date").each(function (i) {
+			blog.on("afterDataListRefresh", function () {
+				this.datalist.element.find("li > date").each(function (i) {
 					i.text(moment(i.text()).format("dddd, MMMM Do YYYY, h:mm a"));
 				});
-			}, "moment", blog);
+			}, "moment");
 
 			obj.html("<h2>Blog</h2>");
 			blog.data.total > 0 ? blog.datalist = new $.datalist(obj, blog.data, template, {start: 0, end: 9}) : obj.create("p").html("No posts to display.");
