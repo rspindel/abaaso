@@ -24,10 +24,10 @@
 
 		displayBlog = function () {
 			var obj      = $("section[data-hash='blog']").first(),
-			    template = "<article><h3><a href={{post_url}}>{{title}}</a></h3><date>{{date}}</date><entry>{{body}}</entry></article>";
+			    template = "<article><h3><a href={{post_url}}>{{title}}</a></h3><div class='date'>{{date}}</div><div>{{body}}</div></article>";
 
 			blog.on("afterDataListRefresh", function (element) {
-				element.find("li date").each(function (i) {
+				element.find("li div.date").each(function (i) {
 					i.text(moment(i.text()).format("dddd, MMMM Do YYYY"));
 				});
 			}, "moment");
