@@ -1,5 +1,10 @@
-require.config({baseUrl: "modules"});
-require(["dashboard", "moment.min"], function (dashboard, moment) {
+require.config({
+	baseUrl : "modules",
+	paths   : {
+		"moment" : "moment.min"
+	}
+});
+require(["dashboard", "moment"], function (dashboard, moment) {
 	window.dashboard = dashboard;
 	window.moment    = moment;
 });
