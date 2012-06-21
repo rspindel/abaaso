@@ -44,7 +44,7 @@
  * @author Jason Mulligan <jason.mulligan@avoidwork.com>
  * @link http://abaaso.com/
  * @module abaaso
- * @version 2.2.9
+ * @version 2.2.8
  */
 (function (global) {
 "use strict";
@@ -567,27 +567,25 @@ if (typeof global.abaaso === "undefined") global.abaaso = (function () {
 			    o       = {},
 			    allow   = null,
 			    expires = new Date(),
-			    regex   = new RegExp(),
 			    header, value;
 
 			headers.each(function (h) {
 				if (!h.isEmpty()) {
-					utility.compile(regex, "\\s");
 					header        = h.toString();
-					value         = header.substr((header.indexOf(':') + 1), header.length).replace(regex, "");
-					header        = header.substr(0, header.indexOf(':')).replace(regex, "");
+					value         = header.substr((header.indexOf(':') + 1), header.length).replace(/\s/, "");
+					header        = header.substr(0, header.indexOf(':')).replace(/\s/, "");
 					header        = (function () { var x = []; header.explode("-").each(function (i) { x.push(i.capitalize()) }); return x.join("-"); })();
 					items[header] = value;
-					if (utility.compile(regex, "^(allow|access-control-allow-methods)$", "i") && regex.test(header)) allow = value;
+					if (/allow|access-control-allow-methods/i.test(header)) allow = value;
 				}
 			});
 
 			switch (true) {
-				case typeof utility.compile(regex, "no") && items["Cache-Control"] !== "undefined" && regex.test(items["Cache-Control"]):
-				case typeof items["Pragma"] !== "undefined" && reg.test(items["Pragma"]):
+				case typeof items["Cache-Control"] !== "undefined" && /no/.test(items["Cache-Control"]):
+				case typeof items["Pragma"] !== "undefined" && /no/.test(items["Pragma"]):
 					break;
-				case typeof items["Cache-Control"] !== "undefined" && utility.compile(regex, "d{1,}") && regex.test(items["Cache-Control"]):
-					expires = expires.setSeconds(expires.getSeconds() + parseInt(regex.exec(items["Cache-Control"])[0]));
+				case typeof items["Cache-Control"] !== "undefined" && /\d/.test(items["Cache-Control"]):
+					expires = expires.setSeconds(expires.getSeconds() + parseInt(/\d{1,}/.exec(items["Cache-Control"])[0]));
 					break;
 				case typeof items["Expires"] !== "undefined":
 					expires = new Date(items["Expires"]);
@@ -711,24 +709,22 @@ if (typeof global.abaaso === "undefined") global.abaaso = (function () {
 		 * @private
 		 */
 		request : function (uri, type, success, failure, args, headers) {
-			var regex = new RegExp("post|put", "i"),
-			    cors, xhr, payload, cached, typed, guid, contentType, fail, timeout, doc, ab;
+			if (/post|put/i.test(type) && typeof args === "undefined") throw Error(label.error.invalidArguments);
 
-			if (regex.test(type) && typeof args === "undefined") throw Error(label.error.invalidArguments);
+			type    = type.toLowerCase();
+			headers = headers instanceof Object ? headers : null;
 
-			type        = type.toLowerCase();
-			headers     = headers instanceof Object ? headers : null;
-			cors        = client.cors(uri);
-			xhr         = (client.ie && client.version < 10 && cors) ? new XDomainRequest() : new XMLHttpRequest();
-			payload     = regex.test(type) && typeof args !== "undefined" ? args : null;
-			cached      = type === "get" ? cache.get(uri) : false;
-			typed       = type.capitalize();
-			guid        = utility.guid(true);
-			contentType = null;
-			fail        = function (arg) { uri.fire("failed" + typed, arg); };
-			timeout     = function (arg) { uri.fire("timeout" + typed, arg); };
-			doc         = (typeof Document !== "undefined");
-			ab          = (typeof ArrayBuffer !== "undefined");
+			var cors         = client.cors(uri),
+			    xhr          = (client.ie && client.version < 10 && cors) ? new XDomainRequest() : new XMLHttpRequest(),
+			    payload      = /post|put/i.test(type) && typeof args !== "undefined" ? args : null,
+			    cached       = type === "get" ? cache.get(uri) : false,
+			    typed        = type.capitalize(),
+			    guid         = utility.guid(true),
+			    contentType  = null,
+			    fail         = function (arg) { uri.fire("failed" + typed, arg); },
+			    timeout      = function (arg) { uri.fire("timeout" + typed, arg); },
+			    doc          = (typeof Document !== "undefined"),
+			    ab           = (typeof ArrayBuffer !== "undefined");
 
 			if (type === "delete") {
 				uri.on("afterDelete", function () {
@@ -769,7 +765,7 @@ if (typeof global.abaaso === "undefined") global.abaaso = (function () {
 					if (payload !== null) {
 						if (payload.hasOwnProperty("xml")) payload = payload.xml;
 						if (doc && payload instanceof Document) payload = xml.decode(payload);
-						if (typeof payload === "string" && utility.compile(regex, "<[^>]+>[^<]*]+>") && regex.test(payload)) contentType = "application/xml";
+						if (typeof payload === "string" && /<[^>]+>[^<]*]+>/.test(payload)) contentType = "application/xml";
 						if (!(ab && payload instanceof ArrayBuffer) && payload instanceof Object) {
 							contentType = "application/json";
 							payload = json.encode(payload);
@@ -796,7 +792,7 @@ if (typeof global.abaaso === "undefined") global.abaaso = (function () {
 				}
 				catch (e) {
 					error(e, arguments, this, true);
-					uri.fire("failed" + typed, xhr);
+					uri.fire("failed" + typed);
 				}
 			}
 			return uri;
@@ -826,8 +822,7 @@ if (typeof global.abaaso === "undefined") global.abaaso = (function () {
 		 */
 		response : function (xhr, uri, type) {
 			var typed = type.toLowerCase().capitalize(),
-			    l     = location,
-			    regex = new RegExp();
+			    l     = location;
 
 			switch (true) {
 				case xhr.readyState === 2:
@@ -854,16 +849,16 @@ if (typeof global.abaaso === "undefined") global.abaaso = (function () {
 								switch (true) {
 									case type === "head":
 										return uri.fire("afterHead", o.headers);
-									case type !== "delete" && utility.compile(regex, "200|301") && regex.test(xhr.status):
+									case type !== "delete" && /200|301/.test(xhr.status):
 										t = typeof o.headers["Content-Type"] !== "undefined" ? o.headers["Content-Type"] : "";
 										switch (true) {
-											case (utility.compile(regex, "json|plain|javascript") && regex.test(t) || t.isEmpty()) && utility.compile(regex, "[\\{\\[].*[\\}\\]]") && Boolean(x = json.decode(regex.exec(xhr.responseText), true)):
+											case (/json|plain|javascript/.test(t) || t.isEmpty()) && Boolean(x = json.decode(/[\{\[].*[\}\]]/.exec(xhr.responseText), true)):
 												r = x;
 												break;
-											case (utility.compile(regex, "xml") && regex.test(t) && String(xhr.responseText).isEmpty() && xhr.responseXML !== null):
+											case (/xml/.test(t) && String(xhr.responseText).isEmpty() && xhr.responseXML !== null):
 												r = xml.decode(typeof xhr.responseXML.xml !== "undefined" ? xhr.responseXML.xml : xhr.responseXML);
 												break;
-											case (utility.compile(regex, "<[^>]+>[^<]*]+>") && regex.test(xhr.responseText)):
+											case (/<[^>]+>[^<]*]+>/.test(xhr.responseText)):
 												r = xml.decode(xhr.responseText);
 												break;
 											default:
@@ -926,7 +921,11 @@ if (typeof global.abaaso === "undefined") global.abaaso = (function () {
 						case Boolean(x = json.decode(/[\{\[].*[\}\]]/.exec(xhr.responseText))):
 							r = x;
 							break;
+<<<<<<< HEAD
 						case (utility.compile(regex, "<[^>]+>[^<]*]+>") && regex.test(xhr.responseText)):
+=======
+						case (/<[^>]+>[^<]*]+>/.test(xhr.responseText)):
+>>>>>>> parent of 3274ce4... Refactored regex usage throughout multiple classes & methods, found a couple of non element.data() (related) attributes set
 							r = xml.decode(xhr.responseText);
 							break;
 						default:
@@ -1412,8 +1411,7 @@ if (typeof global.abaaso === "undefined") global.abaaso = (function () {
 				handler = function (event) {
 					var form    = event.srcElement.parentNode,
 					    nodes   = $("#" + form.id + " input"),
-					    regex   = new RegExp("(.*)\\["),
-					    entity  = nodes[0].name.match(regexp)[1],
+					    entity  = nodes[0].name.match(/(.*)\[/)[1],
 					    result  = true,
 					    newData = {},
 					    guid;
@@ -1427,9 +1425,8 @@ if (typeof global.abaaso === "undefined") global.abaaso = (function () {
 							self.parentNode.fire("failedDataFormSubmit");
 							break;
 						case true:
-							utility.compile(regex, "button|submit|reset");
 							nodes.each(function (i) {
-								if (typeof i.type !== "undefined" && regex.test(i.type)) return;
+								if (typeof i.type !== "undefined" && /button|submit|reset/.test(i.type)) return;
 								utility.define(i.name.replace("[", ".").replace("]", ""), i.value, newData);
 							});
 							guid = utility.genId(true);
@@ -2225,7 +2222,6 @@ if (typeof global.abaaso === "undefined") global.abaaso = (function () {
 		 */
 		has : function (obj, arg) {
 			var result = element.find(obj, arg);
-
 			return (!isNaN(result.length) && result.length > 0);
 		},
 
@@ -2267,7 +2263,7 @@ if (typeof global.abaaso === "undefined") global.abaaso = (function () {
 					obj.hidden = true;
 					break;
 				default:
-					element.data(obj, "display", obj.style.display);
+					obj["data-display"] = obj.style.display;
 					obj.style.display = "none";
 			}
 			obj.fire("afterHide");
@@ -2413,15 +2409,19 @@ if (typeof global.abaaso === "undefined") global.abaaso = (function () {
 		 * @return {Mixed} Element, Array of Elements or undefined
 		 */
 		show : function (obj) {
-			var value;
-
 			obj = utility.object(obj);
 			if (obj instanceof Array) return obj.each(function (i) { element.show(i); });
 
 			if (!(obj instanceof Element)) throw Error(label.error.invalidArguments);
 
 			obj.fire("beforeShow");
-			typeof obj.hidden === "boolean" ? obj.hidden = false : obj.style.display = ((value = element.data(obj, "display")) && value !== null ? value : "inherit");
+			switch (true) {
+				case typeof obj.hidden === "boolean":
+					obj.hidden = false;
+					break;
+				default:
+					obj.style.display = obj.getAttribute("data-display") !== null ? obj.getAttribute("data-display") : "inherit";
+			}
 			obj.fire("afterShow");
 			return obj;
 		},
@@ -2434,12 +2434,16 @@ if (typeof global.abaaso === "undefined") global.abaaso = (function () {
 		 * @return {Object} Size {x:, y:}, Array of sizes or undefined
 		 */
 		size : function (obj) {
+<<<<<<< HEAD
 			var result = [],
 			    num, height, width;
+=======
+			var num, x, y;
+>>>>>>> parent of 3274ce4... Refactored regex usage throughout multiple classes & methods, found a couple of non element.data() (related) attributes set
 
 			obj = utility.object(obj);
-
 			if (obj instanceof Array) {
+				var result = [];
 				obj.each(function (i) { result.push(element.size(i)); });
 				return result;
 			}
@@ -2539,16 +2543,14 @@ if (typeof global.abaaso === "undefined") global.abaaso = (function () {
 		 * @return {Object} Element or Array of Elements
 		 */
 		val : function (obj, value) {
-			var output = null,
-			    regex  = new RegExp(),
-			    get    = (typeof value === "undefined"),
-			    items, fn;
+			var output = null, items;
 
 			obj = utility.object(obj);
 			if (obj instanceof Array) return obj.each(function (i) { element.val(i, value); });
 
 			if (!(obj instanceof Element)) throw Error(label.error.invalidArguments);
 
+<<<<<<< HEAD
 			if (get) fn = function (i) {
 				if (output !== null) return;
 				if (i.checked) output = i.value;
@@ -2596,6 +2598,52 @@ if (typeof global.abaaso === "undefined") global.abaaso = (function () {
 						typeof obj.value !== "undefined" ? obj.value = value : element.text(obj, value);
 				}
 				output = obj;
+=======
+			switch (true) {
+				case typeof value === "undefined":
+					switch (true) {
+						case (/radio|checkbox/gi.test(obj.type)):
+							if (obj.name.isEmpty()) throw Error(label.error.expectedProperty);
+							items = $("input[name='" + obj.name + "']");
+							items.each(function (i) {
+								if (output !== null) return;
+								if (i.checked) output = i.value;
+							});
+							break;
+						case (/select/gi.test(obj.type)):
+							output = obj.options[obj.selectedIndex].value;
+							break;
+						default:
+							output = typeof obj.value !== "undefined" ? obj.value : element.text(obj);
+					}
+					break;
+				default:
+					value = String(value);
+					switch (true) {
+						case (/radio|checkbox/gi.test(obj.type)):
+							items = $("input[name='" + obj.name + "']");
+							items.each(function (i) {
+								if (output !== null) return;
+								if (i.value === value) {
+									i.checked = true;
+									output    = i;
+								}
+							});
+							break;
+						case (/select/gi.test(obj.type)):
+							array.cast(obj.options).each(function (i) {
+								if (output !== null) return;
+								if (i.value === value) {
+									i.selected = true;
+									output     = i;
+								}
+							});
+							break;
+						default:
+							typeof obj.value !== "undefined" ? obj.value = value : element.text(obj, value);
+					}
+					output = obj;
+>>>>>>> parent of 3274ce4... Refactored regex usage throughout multiple classes & methods, found a couple of non element.data() (related) attributes set
 			}
 			return output;
 		}
@@ -2943,21 +2991,21 @@ if (typeof global.abaaso === "undefined") global.abaaso = (function () {
 		 * @return {Mixed} Entity, Array of Entities or undefined
 		 */
 		add : function (obj, event, fn, id, scope, state) {
-			obj       = utility.object(obj);
-			scope     = scope || abaaso;
-			state     = state || abaaso.state.current;
-			var regex = new RegExp("\\w"),
-			    instance, l, o, n, c, item, add, reg;
+			obj   = utility.object(obj);
+			scope = scope || abaaso;
+			state = state || abaaso.state.current;
 
 			if (obj instanceof Array) return obj.each(function (i) { observer.add(i, event, fn, id, scope, state); });
 
-			if (typeof id === "undefined" || !regex.test(id)) id = utility.guid(true);
+			if (typeof id === "undefined" || !/\w/.test(id)) id = utility.guid(true);
 
-			instance = null;
-			l        = observer.listeners;
-			o        = observer.id(obj);
-			n        = false;
-			c        = abaaso.state.current;
+			var instance = null,
+			    regex    = new RegExp(),
+			    l        = observer.listeners,
+			    o        = this.id(obj),
+			    n        = false,
+			    c        = abaaso.state.current,
+			    item, add, reg;
 
 			if (typeof o === "undefined" || typeof event === "undefined" || typeof fn !== "function") throw Error(label.error.invalidArguments);
 
@@ -4266,10 +4314,9 @@ if (typeof global.abaaso === "undefined") global.abaaso = (function () {
 			try {
 				if (typeof arg === "undefined") throw Error(label.error.invalidArguments);
 
-				wrap      = !(wrap === false);
-				var x     =  wrap ? "<xml>" : "",
-				    top   = !(arguments[2] === false),
-				    regex =  new RegExp(),
+				wrap = !(wrap === false);
+				var x    = wrap ? "<xml>" : "",
+				    top  = !(arguments[2] === false),
 				    node, i;
 
 				if (arg !== null && typeof arg.xml !== "undefined") arg = arg.xml;
@@ -4277,8 +4324,13 @@ if (typeof global.abaaso === "undefined") global.abaaso = (function () {
 
 				node = function (name, value) {
 					var output = "<n>v</n>";
+<<<<<<< HEAD
 					if (utility.compile(regex, "\\&|\<|\>|\"|\'|\\t|\\r|\\n|\\@|\\$", "g") && regex.test(value) && utility.compile(regex, "v")) output = output.replace(regex, "<![CDATA[v]]>");
 					return output.replace("<n>", "<" + name + ">").replace("</n>", "</" + name + ">").replace(">v</", ">" + value + "</").replace("[v]", "[" + value + "]");
+=======
+					if (/\&|\<|\>|\"|\'|\t|\r|\n|\@|\$/g.test(value)) output = output.replace(/v/, "<![CDATA[v]]>");
+					return output.replace(/n/g, name).replace(/v/, value);
+>>>>>>> parent of 3274ce4... Refactored regex usage throughout multiple classes & methods, found a couple of non element.data() (related) attributes set
 				}
 
 				switch (true) {
@@ -4288,8 +4340,7 @@ if (typeof global.abaaso === "undefined") global.abaaso = (function () {
 						x += node("item", arg);
 						break;
 					case typeof arg === "object":
-						utility.compile(regex, "item|xml", "g");
-						utility.iterate(arg, function (v, k) { x += xml.encode(v, (typeof v === "object"), false).replace(regex, isNaN(k) ? k : "item"); });
+						utility.iterate(arg, function (v, k) { x += xml.encode(v, (typeof v === "object"), false).replace(/item|xml/g, isNaN(k) ? k : "item"); });
 						break;
 				}
 
@@ -4693,7 +4744,7 @@ if (typeof global.abaaso === "undefined") global.abaaso = (function () {
 			return observer.remove.call(observer, o, e, i, s);
 		},
 		update          : element.update,
-		version         : "2.2.9"
+		version         : "2.2.8"
 	};
 })();
 if (typeof abaaso.bootstrap === "function") abaaso.bootstrap();
