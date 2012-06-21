@@ -438,12 +438,12 @@ if (typeof global.abaaso === "undefined") global.abaaso = (function () {
 		ie      : (function () { return /msie/i.test(navigator.userAgent); })(),
 		ios     : (function () { return /ipad|iphone/i.test(navigator.userAgent); })(),
 		linux   : (function () { return /linux|bsd|unix/i.test(navigator.userAgent); })(),
-		mobile  : (function () { abaaso.client.mobile = this.mobile = /blackberry|iphone|webos/i.test(navigator.userAgent) || (/android/i.test(navigator.userAgent) && (abaaso.client.size.height < 720 || abaaso.client.size.width < 720)); }),
+		mobile  : (function () { abaaso.client.mobile = this.mobile = /blackberry|iphone|webos/i.test(navigator.userAgent) || (/android/i.test(navigator.userAgent) && (abaaso.client.size.x < 720 || abaaso.client.size.y < 720)); }),
 		playbook: (function () { return /playbook/i.test(navigator.userAgent); })(),
 		opera   : (function () { return /opera/i.test(navigator.userAgent); })(),
 		osx     : (function () { return /macintosh/i.test(navigator.userAgent); })(),
 		safari  : (function () { return /safari/i.test(navigator.userAgent.replace(/chrome.*/i, "")); })(),
-		tablet  : (function () { abaaso.client.tablet = this.tablet = /ipad|playbook|webos/i.test(navigator.userAgent) || (/android/i.test(navigator.userAgent) && (abaaso.client.size.height >= 720 || abaaso.client.size.width >= 720)); }),
+		tablet  : (function () { abaaso.client.tablet = this.tablet = /ipad|playbook|webos/i.test(navigator.userAgent) || (/android/i.test(navigator.userAgent) && (abaaso.client.size.x >= 720 || abaaso.client.size.y >= 720)); }),
 		webos   : (function () { return /webos/i.test(navigator.userAgent); })(),
 		windows : (function () { return /windows/i.test(navigator.userAgent); })(),
 		version : (function () {
@@ -921,11 +921,7 @@ if (typeof global.abaaso === "undefined") global.abaaso = (function () {
 						case Boolean(x = json.decode(/[\{\[].*[\}\]]/.exec(xhr.responseText))):
 							r = x;
 							break;
-<<<<<<< HEAD
-						case (utility.compile(regex, "<[^>]+>[^<]*]+>") && regex.test(xhr.responseText)):
-=======
 						case (/<[^>]+>[^<]*]+>/.test(xhr.responseText)):
->>>>>>> parent of 3274ce4... Refactored regex usage throughout multiple classes & methods, found a couple of non element.data() (related) attributes set
 							r = xml.decode(xhr.responseText);
 							break;
 						default:
@@ -945,12 +941,16 @@ if (typeof global.abaaso === "undefined") global.abaaso = (function () {
 		 * Returns the visible area of the View
 		 *
 		 * @method size
-		 * @return {Object} Describes the View {height: n, width: n}
+		 * @return {Object} Describes the View {x: ?, y: ?}
 		 */
 		size : function () {
-			var attr = typeof document.documentElement !== "undefined" ? "documentElement" : "body";
+			var x = 0,
+			    y = 0;
 
-			return {height: document[attr].clientHeight, width: document[attr].clientWidth};
+			x = typeof document.documentElement !== "undefined" ? document.documentElement.clientWidth  : document.body.clientWidth;
+			y = typeof document.documentElement !== "undefined" ? document.documentElement.clientHeight : document.body.clientHeight;
+
+			return {x: x, y: y};
 		}
 	};
 
@@ -1490,7 +1490,7 @@ if (typeof global.abaaso === "undefined") global.abaaso = (function () {
 			 * @return {Mixed} Individual record, or Array of records
 			 */
 			get : function (record, end) {
-				var records = utility.clone(this.records),
+				var records = this.records.clone(),
 				    obj     = this.parentNode,
 				    r;
 
@@ -1627,10 +1627,10 @@ if (typeof global.abaaso === "undefined") global.abaaso = (function () {
 				if (!create && this.views[view] instanceof Array) return this.views[view];
 				if (this.total === 0) return [];
 
-				records = utility.clone(this.records);
+				records = this.records.clone();
 
 				crawl = function (q, data) {
-					var queries = utility.clone(q),
+					var queries = q.clone(),
 					    query   = q.first(),
 					    sorted  = {},
 					    result  = [];
@@ -1739,11 +1739,11 @@ if (typeof global.abaaso === "undefined") global.abaaso = (function () {
 
 						if (self.source !== null && typeof arg[self.source] !== "undefined") arg = arg[self.source];
 
-						if (arg instanceof Array) data = utility.clone(arg);
+						if (arg instanceof Array) data = arg.clone();
 						else utility.iterate(arg, function (i) {
 							if (!found && i instanceof Array) {
 								found = true;
-								data  = utility.clone(i);
+								data  = i.clone();
 							}
 						});
 
@@ -2434,12 +2434,7 @@ if (typeof global.abaaso === "undefined") global.abaaso = (function () {
 		 * @return {Object} Size {x:, y:}, Array of sizes or undefined
 		 */
 		size : function (obj) {
-<<<<<<< HEAD
-			var result = [],
-			    num, height, width;
-=======
 			var num, x, y;
->>>>>>> parent of 3274ce4... Refactored regex usage throughout multiple classes & methods, found a couple of non element.data() (related) attributes set
 
 			obj = utility.object(obj);
 			if (obj instanceof Array) {
@@ -2460,10 +2455,10 @@ if (typeof global.abaaso === "undefined") global.abaaso = (function () {
 				return !isNaN(parseInt(n)) ? parseInt(n) : 0;
 			};
 
-			height = obj.offsetHeight + num(obj.style.paddingTop)  + num(obj.style.paddingBottom) + num(obj.style.borderTop)  + num(obj.style.borderBottom);
-			width  = obj.offsetWidth  + num(obj.style.paddingLeft) + num(obj.style.paddingRight)  + num(obj.style.borderLeft) + num(obj.style.borderRight);
+			x = obj.offsetHeight + num(obj.style.paddingTop)  + num(obj.style.paddingBottom) + num(obj.style.borderTop)  + num(obj.style.borderBottom);
+			y = obj.offsetWidth  + num(obj.style.paddingLeft) + num(obj.style.paddingRight)  + num(obj.style.borderLeft) + num(obj.style.borderRight);
 
-			return {height: height, width: width};
+			return {x: x, y: y};
 		},
 
 		/**
@@ -2550,55 +2545,6 @@ if (typeof global.abaaso === "undefined") global.abaaso = (function () {
 
 			if (!(obj instanceof Element)) throw Error(label.error.invalidArguments);
 
-<<<<<<< HEAD
-			if (get) fn = function (i) {
-				if (output !== null) return;
-				if (i.checked) output = i.value;
-			};
-			else if (utility.compile(regex, "radio|checkbox", "i") && regex.test(obj.type)) fn = function (i) {
-				if (output !== null) return;
-				if (i.value === value) {
-					i.checked = true;
-					output    = i;
-				}
-			};
-			else fn = function (i) {
-				if (output !== null) return;
-				if (i.value === value) {
-					i.selected = true;
-					output     = i;
-				}
-			};
-
-			if (typeof value === "undefined") {
-				switch (true) {
-					case (utility.compile(regex, "radio|checkbox", "i") && regex.test(obj.type)):
-						if (obj.name.isEmpty()) throw Error(label.error.expectedProperty);
-						items = $("input[name='" + obj.name + "']");
-						items.each(fn);
-						break;
-					case (utility.compile(regex, "select", "i") && regex.test(obj.type)):
-						output = obj.options[obj.selectedIndex].value;
-						break;
-					default:
-						output = typeof obj.value !== "undefined" ? obj.value : element.text(obj);
-				}
-			}
-			else {
-				value = String(value);
-				switch (true) {
-					case utility.compile(regex, "radio|checkbox", "i") && regex.test(obj.type):
-						items = $("input[name='" + obj.name + "']");
-						items.each(fn);
-						break;
-					case utility.compile(regex, "select", "i") && regex.test(obj.type):
-						array.cast(obj.options).each(fn);
-						break;
-					default:
-						typeof obj.value !== "undefined" ? obj.value = value : element.text(obj, value);
-				}
-				output = obj;
-=======
 			switch (true) {
 				case typeof value === "undefined":
 					switch (true) {
@@ -2643,7 +2589,6 @@ if (typeof global.abaaso === "undefined") global.abaaso = (function () {
 							typeof obj.value !== "undefined" ? obj.value = value : element.text(obj, value);
 					}
 					output = obj;
->>>>>>> parent of 3274ce4... Refactored regex usage throughout multiple classes & methods, found a couple of non element.data() (related) attributes set
 			}
 			return output;
 		}
@@ -4324,13 +4269,8 @@ if (typeof global.abaaso === "undefined") global.abaaso = (function () {
 
 				node = function (name, value) {
 					var output = "<n>v</n>";
-<<<<<<< HEAD
-					if (utility.compile(regex, "\\&|\<|\>|\"|\'|\\t|\\r|\\n|\\@|\\$", "g") && regex.test(value) && utility.compile(regex, "v")) output = output.replace(regex, "<![CDATA[v]]>");
-					return output.replace("<n>", "<" + name + ">").replace("</n>", "</" + name + ">").replace(">v</", ">" + value + "</").replace("[v]", "[" + value + "]");
-=======
 					if (/\&|\<|\>|\"|\'|\t|\r|\n|\@|\$/g.test(value)) output = output.replace(/v/, "<![CDATA[v]]>");
 					return output.replace(/n/g, name).replace(/v/, value);
->>>>>>> parent of 3274ce4... Refactored regex usage throughout multiple classes & methods, found a couple of non element.data() (related) attributes set
 				}
 
 				switch (true) {
