@@ -926,7 +926,7 @@ if (typeof global.abaaso === "undefined") global.abaaso = (function () {
 						case Boolean(x = json.decode(/[\{\[].*[\}\]]/.exec(xhr.responseText))):
 							r = x;
 							break;
-						case (utility.compile("<[^>]+>[^<]*]+>") && regex.test(xhr.responseText)):
+						case (utility.compile(regex, "<[^>]+>[^<]*]+>") && regex.test(xhr.responseText)):
 							r = xml.decode(xhr.responseText);
 							break;
 						default:
@@ -2557,7 +2557,7 @@ if (typeof global.abaaso === "undefined") global.abaaso = (function () {
 				if (output !== null) return;
 				if (i.checked) output = i.value;
 			};
-			else if (utility.compile("radio|checkbox", "i") && regex.test(obj.type)) fn = function (i) {
+			else if (utility.compile(regex, "radio|checkbox", "i") && regex.test(obj.type)) fn = function (i) {
 				if (output !== null) return;
 				if (i.value === value) {
 					i.checked = true;
