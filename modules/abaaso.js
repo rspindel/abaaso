@@ -951,7 +951,7 @@ if (typeof global.abaaso === "undefined") global.abaaso = (function () {
 		size : function () {
 			var attr = typeof document.documentElement !== "undefined" ? "documentElement" : "body";
 
-			return {height: document[attr].clientWidth, width: document[attr].clientHeight};
+			return {height: document[attr].clientHeight, width: document[attr].clientWidth};
 		}
 	};
 
