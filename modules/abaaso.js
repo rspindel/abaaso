@@ -1493,7 +1493,7 @@ if (typeof global.abaaso === "undefined") global.abaaso = (function () {
 			 * @return {Mixed} Individual record, or Array of records
 			 */
 			get : function (record, end) {
-				var records = this.records.clone(),
+				var records = utility.clone(this.records),
 				    obj     = this.parentNode,
 				    r;
 
@@ -1630,10 +1630,10 @@ if (typeof global.abaaso === "undefined") global.abaaso = (function () {
 				if (!create && this.views[view] instanceof Array) return this.views[view];
 				if (this.total === 0) return [];
 
-				records = this.records.clone();
+				records = utility.clone(this.records);
 
 				crawl = function (q, data) {
-					var queries = q.clone(),
+					var queries = utility.clone(q),
 					    query   = q.first(),
 					    sorted  = {},
 					    result  = [];
@@ -1742,11 +1742,11 @@ if (typeof global.abaaso === "undefined") global.abaaso = (function () {
 
 						if (self.source !== null && typeof arg[self.source] !== "undefined") arg = arg[self.source];
 
-						if (arg instanceof Array) data = arg.clone();
+						if (arg instanceof Array) data = utility.clone(arg);
 						else utility.iterate(arg, function (i) {
 							if (!found && i instanceof Array) {
 								found = true;
-								data  = i.clone();
+								data  = utility.clone(i);
 							}
 						});
 
