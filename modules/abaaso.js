@@ -4278,7 +4278,7 @@ if (typeof global.abaaso === "undefined") global.abaaso = (function () {
 				node = function (name, value) {
 					var output = "<n>v</n>";
 					if (utility.compile(regex, "\\&|\<|\>|\"|\'|\\t|\\r|\\n|\\@|\\$", "g") && regex.test(value) && utility.compile(regex, "v")) output = output.replace(regex, "<![CDATA[v]]>");
-					return output.replace("<n>", "<" + name + ">").replace("</n>", "</" + name + ">").replace(">v</", ">" + value + "</");
+					return output.replace("<n>", "<" + name + ">").replace("</n>", "</" + name + ">").replace(">v</", ">" + value + "</").replace("[v]", "[" + value + "]");
 				}
 
 				switch (true) {
