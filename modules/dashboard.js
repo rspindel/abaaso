@@ -65,8 +65,8 @@
 
 			// Prepping the UI
 			$.loading.url = "assets/loading.gif";
-			$("version").html($.version);
-			$("year").html(new Date().getFullYear());
+			$("#version").html($.version);
+			$("#year").html(new Date().getFullYear());
 			$("section").on("beforeGet", function () { this.loading(); }, "loading");
 			$("section[data-hash='main']").first().on("afterGet", function () { twitter.display(); }, "twitter");
 			$("ul.tab a").addClass("shadow round button padded");

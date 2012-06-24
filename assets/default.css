@@ -59,6 +59,9 @@ header h1 img {
 	padding-top : 5px;
 }
 
+ul.root {
+	margin-top  : -40px;
+}
 ul.tab {
 	vertical-align : middle;
 }
