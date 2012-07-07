@@ -28,7 +28,7 @@
 			$("section[data-hash='main']").first().on("afterGet", function () {
 				this.un("afterGet", guid);
 				$.tabs.active("main");
-				$.defer(function () { $.route.load($.route.initial); }, 5000);
+				$.defer(function () { $.route.hash($.route.initial); }, 5000);
 			}, guid).get("views/error.htm");
 		});
 		
