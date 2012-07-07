@@ -9,7 +9,7 @@
 		var $     = global[abaaso.aliased],
 		    stage = $("#stage");
 
-		$.route.default = "main";
+		$.route.initial = "main";
 
 		$.route.set("main", function () { $("section[data-hash='main']").first().get("views/intro.htm"); });
 
@@ -28,7 +28,7 @@
 			$("section[data-hash='main']").first().on("afterGet", function () {
 				this.un("afterGet", guid);
 				$.tabs.active("main");
-				$.defer(function () { location.hash = $.route.default; }, 5000);
+				$.defer(function () { $.route.load($.route.initial); }, 5000);
 			}, guid).get("views/error.htm");
 		});
 		
